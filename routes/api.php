@@ -24,7 +24,8 @@ use App\Http\Controllers\EmployeeTypeController;
 use App\Http\Controllers\TrainingInfoController;
 use App\Http\Controllers\WorkExperienceController;
 use App\Http\Controllers\LevelOfEducationController;
-use App\Http\Controllers\TerritoriesController;
+use App\Http\Controllers\TerritoryController;
+use App\Models\territory;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,7 +91,7 @@ Route::resource('/department', DepartmentController::class);
 Route::resource('/designation', DesignationController::class);
 Route::resource('/empType', EmployeeTypeController::class);
 Route::resource('/area', AreaController::class);
-Route::resource('/territory', TerritoriesController::class);
+Route::resource('/territory', TerritoryController::class);
 Route::resource('/official', OfficialController::class);
 
 

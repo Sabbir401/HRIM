@@ -482,8 +482,8 @@ onMounted(() => getData());
       </div>
 
       <div class="d-flex justify-content-end">
-        <button type="reset" class="btn btn-danger btn-lg m-3">Reset</button>
-        <button type="submit" class="btn btn-primary btn-lg m-3">Save</button>
+        <button type="reset" class="btn btn-danger m-3 p-2"><i class="fa-solid fa-x"></i> | Reset</button>
+        <button type="submit" class="btn btn-success m-3 p-2"><i class="fa-solid fa-check"></i> | Save</button>
       </div>
     </form>
 

@@ -316,11 +316,8 @@ const submit = () => {
               </div>
             </div>
           </div>
-
-          <button type="submit" class="btn btn-primary mr-2">
-            {{ updateinfo }}
-          </button>
-          <button class="btn btn-dark" @click.stop="closeModal">Cancel</button>
+          <button type="submit" class="btn btn-success m-3 p-2"><i class="fa-solid fa-check"></i> | {{ updateinfo }}</button>
+          <button type="reset" class="btn btn-danger m-3 p-2" @click.stop="closeModal"><i class="fa-solid fa-x"></i> | Cancel</button>
         </form>
       </div>
     </div>

@@ -9,8 +9,8 @@ const isLoading = ref(true);
 const error = ref(null);
 const empEdit = ref(null);
 const heading = ref(null);
-const query = ref("");
-const loading = ref(false);
+const filter = ref("");
+const results = ref("");
 
 const getData = async (page = 1) => {
     try {
@@ -24,23 +24,19 @@ const getData = async (page = 1) => {
 };
 
 const searchemp = async () => {
-    if (query.value.length > 0) {
-        loading.value = true;
+    if (filter.value.length > 0) {
         try {
-            const response = await axios.get("/api/employee/search", {
+            const response = await axios.get("api/employee/search", {
                 params: {
-                    query: query.value,
+                    query: filter.value,
                 },
             });
-            results.value = response.data;
+            employees.value = response.data;
         } catch (error) {
             console.error(error);
-        } finally {
-            loading.value = false;
         }
     } else {
-        results.value = [];
-        loading.value = false;
+        getData();
     }
 };
 
@@ -107,15 +103,19 @@ onMounted(() => getData());
                             class="form-control"
                             id="exampleInputUsername1"
                             placeholder="Search..."
-                            v-model="query"
+                            v-model.trim="filter"
                         />
                     </div>
-                    <div v-if="loading">Loading...</div>
-                    <ul v-else>
-                        <li v-for="result in results" :key="result.id">
-                            {{ result.Full_Name }}
-                        </li>
-                    </ul>
+                    <div class="p-2">
+                        <button
+                            style="float: left"
+                            type="button"
+                            class="btn btn-success py-1"
+                            @click="searchemp"
+                        >
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="table-responsive">

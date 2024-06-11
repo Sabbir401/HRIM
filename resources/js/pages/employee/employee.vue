@@ -16,16 +16,6 @@ const empEdit = ref([]);
 
 const getData = async () => {
     try {
-        // const responseBlood = await axios.get("/api/blood");
-        // const responseReligion = await axios.get("/api/religion");
-        // const responseCompany = await axios.get("/api/company");
-        // const responsePhone = await axios.get("/api/phone");
-
-        // bloods.value = responseBlood.data;
-        // religions.value = responseReligion.data;
-        // companies.value = responseCompany.data;
-        // phones.value = responsePhone.data;
-
         if (empId) {
             editHandler();
         }

@@ -27,10 +27,11 @@ class EmployeeController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->input('search');
-        $results = employee::where('Full_Name', 'LIKE', "%{$query}%")->get();
-
+        $query = $request->input('query');
+        $results = employee::where('Full_Name', 'LIKE', "%{$query}%")->paginate(50);
+       
         return response()->json($results);
+
     }
 
 
