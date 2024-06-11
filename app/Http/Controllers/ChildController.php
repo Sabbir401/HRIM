@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\territories;
+use App\Models\child;
 use Illuminate\Http\Request;
 
-class TerritoriesController extends Controller
+class ChildController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $territory = territories::all();
-
-        return response()->json($territory);
+        //
     }
 
     /**
@@ -36,7 +34,7 @@ class TerritoriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(territories $territories)
+    public function show(child $child)
     {
         //
     }
@@ -44,7 +42,7 @@ class TerritoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(territories $territories)
+    public function edit(child $child)
     {
         //
     }
@@ -52,7 +50,7 @@ class TerritoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, territories $territories)
+    public function update(Request $request, child $child)
     {
         //
     }
@@ -60,7 +58,7 @@ class TerritoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(territories $territories)
+    public function destroy(child $child)
     {
         //
     }

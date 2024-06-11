@@ -1,6 +1,6 @@
 <template>
     <main class="centered-content">
-        <h1>Welcome to <br> <br>ARTISAN BUSINESS NETWORK BANGLADESH</h1>
+        <h1>Welcome to <br> <br>HUMAN RESOURCE INFORMATION MANAGEMENT</h1>
     </main>
 </template>
 

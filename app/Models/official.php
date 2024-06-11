@@ -50,7 +50,7 @@ class official extends Model
 
     public function territory()
     {
-        return $this->belongsTo(territories::class, 'Territory_Id');
+        return $this->belongsTo(territory::class, 'Territory_Id');
     }
 
     public function supervisor()

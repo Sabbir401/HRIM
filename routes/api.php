@@ -11,7 +11,6 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\NomineeController;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\ChildrenController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\OfficialController;
 use App\Http\Controllers\ReligionController;
@@ -20,6 +19,7 @@ use App\Http\Controllers\BloodGroupController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\AcademicInfoController;
+use App\Http\Controllers\ChildController;
 use App\Http\Controllers\EmployeeTypeController;
 use App\Http\Controllers\TrainingInfoController;
 use App\Http\Controllers\WorkExperienceController;
@@ -40,6 +40,13 @@ use App\Http\Controllers\TerritoriesController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/link-storage',function(){
+    $targetFolder = $_SERVER['DOCUMENT_ROOT'].'/storage/app/public';
+	$linkFolder = $_SERVER['DOCUMENT_ROOT'].'/public/storage';
+	symlink($targetFolder,$linkFolder);
+});
+
 
 
 
@@ -69,7 +76,7 @@ Route::resource('/company', CompanyController::class);
 Route::resource('/phone', CountryController::class);
 Route::resource('/employee', EmployeeController::class);
 Route::resource('/nominee', NomineeController::class);
-Route::resource('/child', ChildrenController::class);
+Route::resource('/child', ChildController::class);
 Route::resource('/education', LevelOfEducationController::class);
 Route::resource('/board', BoardController::class);
 Route::resource('/degree', DegreeController::class);

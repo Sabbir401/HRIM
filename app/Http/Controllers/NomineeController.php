@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\children;
+use App\Models\child;
 use App\Models\nominee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +42,7 @@ class NomineeController extends Controller
             'Personal_Address' => $request->input('nominee.presentAddress'),
         ]);
 
-        $store = children::create([
+        $store = child::create([
             'EID' => $request->input('child.eid'),
             'Child_Name' => $request->input('child.childName'),
             'NID' => $request->input('child.nid'),
@@ -97,7 +97,7 @@ class NomineeController extends Controller
     public function update(Request $request, $id)
     {
         $nominee = Nominee::where('EID', $id)->first();
-        $child = children::where('EID', $id)->first();
+        $child = child::where('EID', $id)->first();
 
     if ($nominee) {
         $nominee->update([

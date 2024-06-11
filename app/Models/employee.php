@@ -67,6 +67,6 @@ class employee extends Model
     }
     public function child()
     {
-        return $this->hasMany(children::class, 'EID');
+        return $this->hasMany(child::class, 'EID');
     }
 }
