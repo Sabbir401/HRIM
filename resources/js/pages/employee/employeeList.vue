@@ -132,7 +132,7 @@ onMounted(() => getData());
                             </tr>
                         </thead>
                         <tbody>
-                            <tr
+                            <tr class="ver-align"
                                 v-for="(employee, index) in employees.data"
                                 :key="employee.id"
                             >

@@ -119,7 +119,7 @@ class EmployeeController extends Controller
         $emp = employee::find($id);
 
         if (!$emp) {
-            return response()->json(['message' => 'Store not found'], 404);
+            return response()->json(['message' => 'Employee not found'], 404);
         }
         return response()->json($emp);
     }
@@ -174,13 +174,14 @@ class EmployeeController extends Controller
         return response()->json($employee);
     }
 
+
     public function update(Request $request, $id)
     {
         // try {
             DB::beginTransaction();
             $employee = employee::find($id);
             $employee->update([
-                'Company_Id' => $request->input('companyId'),
+                'Company_Id' => $request->companyId,
                 'Employee_Id' => $request->input('employeeId'),
                 'Card_No' => $request->input('cardNo'),
                 'Full_Name' => $request->input('fullName'),

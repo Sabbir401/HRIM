@@ -71,40 +71,18 @@ const getData = async () => {
 
 watch(empEdit, (newEmpData) => {
   if (newEmpData) {
-    official.value.departmentId = newEmpData.department.Name;
-    official.value.designationId = newEmpData.designation.Name;
-    official.value.employeeGrade = newEmpData.Employee_Grade;
-    official.value.areaId = newEmpData.area.Name;
-    official.value.territoryId = newEmpData.territory.Name;
-    official.value.employeeTypeId = newEmpData.Employee_type_Id;
-    official.value.supervisorId = newEmpData.supervisor.Full_Name;
-    official.value.jobLocation = newEmpData.country.Name;
-    official.value.doj = newEmpData.DOJ;
-    official.value.doc= newEmpData.DOC;
-    official.value.provationPeriod = newEmpData.Provation_period;
-    official.value.shift = newEmpData.Shift;
-
-    if (newEmpData.department) {
-      official.value.departmentId = newEmpData.department.id;
-    }
-    if (newEmpData.designation) {
-      official.value.designationId = newEmpData.designation.id;
-    }
-    if (newEmpData.area) {
-      official.value.areaId = newEmpData.area.id;
-    }
-    if (newEmpData.territory) {
-      official.value.territoryId = newEmpData.territory.id;
-    }
-    if (newEmpData.employeeType) {
-      official.value.employeeTypeId = newEmpData.employeeType.id;
-    }
-    if (newEmpData.supervisor) {
-      official.value.supervisorId = newEmpData.supervisor.id;
-    }
-    if (newEmpData.country) {
-      official.value.jobLocation = newEmpData.country.id;
-    }
+    newEmpData.department ? official.value.departmentId = newEmpData.department.id : official.value.departmentId = "";
+    newEmpData.designation ? official.value.designationId = newEmpData.designation.id : official.value.designationId = "";
+    newEmpData.Employee_Grade ? official.value.employeeGrade = newEmpData.Employee_Grade : official.value.employeeGrade = "";
+    newEmpData.area ? official.value.areaId = newEmpData.area.id : official.value.areaId = "";
+    newEmpData.territory ? official.value.territoryId = newEmpData.territory.id : official.value.territoryId = "";
+    newEmpData.employee_type ? official.value.employeeTypeId = newEmpData.employee_type.id : official.value.employeeTypeId = "";
+    newEmpData.supervisor ? official.value.supervisorId = newEmpData.supervisor.id : official.value.supervisorId = "";
+    newEmpData.country ? official.value.jobLocation = newEmpData.country.id : official.value.jobLocation = "";
+    newEmpData.DOJ ? official.value.doj = newEmpData.DOJ : official.value.doj = "";
+    newEmpData.DOC ? official.value.doc = newEmpData.DOC : official.value.doc = "";
+    newEmpData.Provation_period ? official.value.provationPeriod = newEmpData.Provation_period : official.value.provationPeriod = "";
+    newEmpData.Shift ? official.value.shift = newEmpData.Shift : official.value.shift = "";
   }
 });
 

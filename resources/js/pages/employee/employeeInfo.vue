@@ -45,47 +45,42 @@ watch(
   () => empEdit.value,
   (newEmpData) => {
     if (newEmpData) {
-      employee.value.companyId = newEmpData.company.Name;
-      employee.value.employeeId = newEmpData.Employee_Id;
-      employee.value.cardNo = newEmpData.Card_No;
-      employee.value.fullName = newEmpData.Full_Name;
-      employee.value.fatherName = newEmpData.Father_Name;
-      employee.value.motherName = newEmpData.Mother_Name;
-      employee.value.spouseName = newEmpData.Spouse_Name;
-      employee.value.maritalStatus = newEmpData.Marital_Status;
-      employee.value.dob = newEmpData.DOB;
-      employee.value.pob = newEmpData.Place_of_Birth;
-      employee.value.presentAddress = newEmpData.Present_Address;
-      employee.value.permanentAddress = newEmpData.Permanent_Address;
-      employee.value.officialContact = newEmpData.Contact_No;
-      employee.value.emergencyContact = newEmpData.Emergency_Contact;
-      employee.value.gender = newEmpData.Gender;
-      employee.value.personalEmail = newEmpData.Personal_Email;
-      employee.value.officialEmail = newEmpData.Official_Email;
-      employee.value.religion = newEmpData.Religion_Id;
-      employee.value.bloodGroup = newEmpData.Blood_Group_Id;
-      employee.value.nationality = newEmpData.Nationality;
-      employee.value.nid = newEmpData.NID;
+      newEmpData.company ? employee.value.companyId = newEmpData.Company_Id : employee.value.companyId = "";
+      newEmpData.Employee_Id ? employee.value.employeeId = newEmpData.Employee_Id : employee.value.employeeId = "";
+      newEmpData.Card_No ? employee.value.cardNo = newEmpData.Card_No : employee.value.cardNo = "";
+      newEmpData.Full_Name ? employee.value.fullName = newEmpData.Full_Name : employee.value.fullName = "";
+      newEmpData.Father_Name ? employee.value.fatherName = newEmpData.Father_Name : employee.value.fatherName = "";
+      newEmpData.Mother_Name ? employee.value.motherName = newEmpData.Mother_Name : employee.value.motherName = "";
+      newEmpData.Spouse_Name ? employee.value.spouseName = newEmpData.Spouse_Name : employee.value.spouseName = "";
+      newEmpData.Marital_Status ? employee.value.maritalStatus = newEmpData.Marital_Status : employee.value.maritalStatus = "";
+      newEmpData.DOB ? employee.value.dob = newEmpData.DOB : employee.value.dob = "";
+      newEmpData.Place_of_Birth ? employee.value.pob = newEmpData.Place_of_Birth : employee.value.pob = "";
+      newEmpData.Present_Address ? employee.value.presentAddress = newEmpData.Present_Address : employee.value.presentAddress = "";
+      newEmpData.Permanent_Address ? employee.value.permanentAddress = newEmpData.Permanent_Address : employee.value.permanentAddress = "";
+      newEmpData.Contact_No ? employee.value.officialContact = newEmpData.Contact_No : employee.value.officialContact = "";
+      newEmpData.Emergency_Contact ? employee.value.emergencyContact = newEmpData.Emergency_Contact : employee.value.emergencyContact = "";
+      newEmpData.Gender ? employee.value.gender = newEmpData.Gender : employee.value.gender = "";
+      newEmpData.Personal_Email ? employee.value.personalEmail = newEmpData.Personal_Email : employee.value.personalEmail = "";
+      newEmpData.Official_Email ? employee.value.officialEmail = newEmpData.Official_Email : employee.value.officialEmail = "";
+      newEmpData.blood ? employee.value.bloodGroup = newEmpData.Blood_Group_Id : employee.value.bloodGroup = "";
+      newEmpData.religion ? employee.value.religion = newEmpData.Religion_Id : employee.value.religion = "";  
+      newEmpData.Nationality ? employee.value.nationality = newEmpData.Nationality : employee.value.nationality = "";  
+      newEmpData.NID ? employee.value.nid = newEmpData.NID : employee.value.nid = "";  
 
-      if (newEmpData.company) {
-        employee.value.companyId = newEmpData.company.id;
-      }
-      if (newEmpData.blood) {
-        employee.value.bloodGroup = newEmpData.blood.id;
-      }
-      if (newEmpData.religion) {
-        employee.value.religion = newEmpData.religion.id;
-      }
 
-      if (newEmpData.academic) {
-        newEmpData.academic.forEach((academic) => {});
-      }
-      if (newEmpData.training) {
-        newEmpData.training.forEach((training) => {});
-      }
-      if (newEmpData.experience) {
-        newEmpData.experience.forEach((experience) => {});
-      }
+      // if (newEmpData.company) {
+      //   employee.value.companyId = newEmpData.company.id;
+      // }
+      
+      // if (newEmpData.academic) {
+      //   newEmpData.academic.forEach((academic) => {});
+      // }
+      // if (newEmpData.training) {
+      //   newEmpData.training.forEach((training) => {});
+      // }
+      // if (newEmpData.experience) {
+      //   newEmpData.experience.forEach((experience) => {});
+      // }
     }
   }
 );
@@ -302,8 +297,7 @@ onMounted(() => getData());
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
           <label for="exampleInputEmail1" class=""
-            >Marital Status<i class="fa fa-birthday-cake" aria-hidden="true"></i
-          ></label>
+            >Marital Status</label>
           <select
             v-model="employee.maritalStatus"
             name=""

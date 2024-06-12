@@ -78,7 +78,7 @@ class NomineeController extends Controller
             ->where('EID',$id)
             ->get();
 
-        $child = DB::table('childrens')
+        $child = DB::table('children')
             ->select('*')
             ->where('EID',$id)
             ->get();

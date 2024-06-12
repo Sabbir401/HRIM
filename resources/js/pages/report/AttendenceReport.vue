@@ -166,7 +166,7 @@ onMounted(() => getData());
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row mt-3">
                                     <div class="col-lg-12">
                                         <input
                                             type="submit"
@@ -197,7 +197,7 @@ onMounted(() => getData());
                 <div class="card-body">
                     <h4 class="card-title">Attendence table</h4>
                     <div class="table-responsive">
-                        <table class="table table-dark">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>Date</th>

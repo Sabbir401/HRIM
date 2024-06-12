@@ -20,7 +20,7 @@
                         aria-controls="collapseLayouts"
                     >
                         <div class="sb-nav-link-icon">
-                            <i class="fas fa-columns"></i>
+                            <i class="fa-solid fa-wrench"></i>
                         </div>
                         Setup
                         <div class="sb-sidenav-collapse-arrow">
@@ -51,6 +51,43 @@
                             >
                         </nav>
                     </div>
+
+                    <a
+                        class="nav-link collapsed"
+                        href="#"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapsePages"
+                        aria-expanded="false"
+                        aria-controls="collapsePages"
+                    >
+                        <div class="sb-nav-link-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        Report
+                        <div class="sb-sidenav-collapse-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                    </a>
+                    <div
+                        class="collapse"
+                        id="collapsePages"
+                        aria-labelledby="headingTwo"
+                        data-bs-parent="#sidenavAccordion"
+                    >
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <Router-Link
+                                class="nav-link"
+                                :to="{ name: 'AttendenceReport' }"
+                                >Attendence</Router-Link
+                            >
+                            <!-- <a class="nav-link" href="register.html"
+                                >Register</a
+                            >
+                            <a class="nav-link" href="password.html"
+                                >Forgot Password</a
+                            > -->
+                        </nav>
+                    </div>
                     <!-- <a
                         class="nav-link collapsed"
                         href="#"
@@ -62,7 +99,7 @@
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-book-open"></i>
                         </div>
-                        Pages
+                        Report
                         <div class="sb-sidenav-collapse-arrow">
                             <i class="fas fa-angle-down"></i>
                         </div>

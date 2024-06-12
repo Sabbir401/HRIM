@@ -1,6 +1,7 @@
 <template>
     <main class="centered-content">
-        <h1>Welcome to <br> <br>HUMAN RESOURCE INFORMATION MANAGEMENT</h1>
+        <div><img src="/public/storage/uploads/1718087744_artisan.png" height="300px" width="350px" /></div>
+        <h1>Welcome to <br><span class="highlight">HUMAN RESOURCE INFORMATION MANAGEMENT</span></h1>
     </main>
 </template>
 
@@ -8,7 +9,6 @@
 .centered-content {
     display: flex;
     width: 100%;
-    margin-top: 150px;
     height: 100vh; /* Full viewport height */
     text-align: center;
     flex-direction: column; /* Ensure content stacks vertically */
@@ -18,5 +18,11 @@ h1 {
     margin: 0;
     font-size: 50px;
     font-weight: 700;
+}
+
+.highlight{
+    font-size: 40px;
+    font-weight: 700;
+    color: #3a6b4c;
 }
 </style>
