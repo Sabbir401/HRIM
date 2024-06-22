@@ -99,7 +99,6 @@ class OfficialController extends Controller
         
         $official = official::find($official_id->id);
 
-        // dd($official_id);
         $official->update([
             'EID' => $request->input('eid'),
             'Department_Id' => $request->input('departmentId'),

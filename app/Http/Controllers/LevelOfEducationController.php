@@ -52,6 +52,7 @@ class LevelOfEducationController extends Controller
         $degree = DB::table('level_of_educations')
             ->select('id', 'Name')
             ->where('education_id', $id)
+            ->orderBy('Name', 'asc')
             ->get();
 
         return response()->json($degree);

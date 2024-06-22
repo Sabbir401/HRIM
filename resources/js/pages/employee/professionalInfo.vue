@@ -53,9 +53,18 @@ const workClose = () => {
 
 const getData = async () => {
     try {
-        const responseAcademic = await axios.get(`/api/academic/${eid}`);
-        const responseTraining = await axios.get(`/api/training/${eid}`);
-        const responseWork = await axios.get(`/api/work/${eid}`);
+        const [
+        responseAcademic,
+        responseTraining,
+        responseWork,
+        ] = await axios.all([
+            axios.get(`/api/academic/${eid}`),
+            axios.get(`/api/training/${eid}`),
+            axios.get(`/api/work/${eid}`),
+        ]);
+        // const responseAcademic = await axios.get(`/api/academic/${eid}`);
+        // const responseTraining = await axios.get(`/api/training/${eid}`);
+        // const responseWork = await axios.get(`/api/work/${eid}`);
 
         academics.value = responseAcademic.data;
         trainings.value = responseTraining.data;

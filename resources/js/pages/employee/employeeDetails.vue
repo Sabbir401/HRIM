@@ -61,7 +61,7 @@ onMounted(() => getData());
     <div class="col-lg-4 col-md-4 col-sm-6 border">
       <div class="card mb-3 mt-3">
         <div class="card-body text-center">
-          <div v-for="i in emp_img" :key="i.id"><img :src="i.img_url" height="100%" width="100%" /></div>
+          <div v-for="i in emp_img" :key="i.id"><img :src="i.img_url" height="50%" width="50%" /></div>
           <h4 class="pt-3 text-success">{{ emp.Full_Name }}</h4>
           <p class="m-0" v-for="desig in emp.official" :key="desig.id">
             {{ desig.designation.Name }}

@@ -10,28 +10,28 @@ const route = useRoute();
 const empId = parseInt(route.params.id);
 
 const employee = ref({
-  companyId: "",
-  employeeId: "",
-  cardNo: "",
-  fullName: "",
-  fatherName: "",
-  motherName: "",
-  spouseName: "",
-  maritalStatus: "",
-  dob: "",
-  pob: "",
-  presentAddress: "",
-  permanentAddress: "",
-  officialContact: "",
-  emergencyContact: "",
-  gender: "",
-  personalEmail: "",
-  officialEmail: "",
-  religion: "",
-  bloodGroup: "",
-  nationality: "",
-  nid: "",
-  photo: null,
+    companyId: "",
+    employeeId: "",
+    cardNo: "",
+    fullName: "",
+    fatherName: "",
+    motherName: "",
+    spouseName: "",
+    maritalStatus: "",
+    dob: "",
+    pob: "",
+    presentAddress: "",
+    permanentAddress: "",
+    officialContact: "",
+    emergencyContact: "",
+    gender: "",
+    personalEmail: "",
+    officialEmail: "",
+    religion: "",
+    bloodGroup: "",
+    nationality: "",
+    nid: "",
+    photo: null,
 });
 
 const bloods = ref([]);
@@ -42,159 +42,212 @@ const error = ref([]);
 const empEdit = ref([]);
 
 watch(
-  () => empEdit.value,
-  (newEmpData) => {
-    if (newEmpData) {
-      newEmpData.company ? employee.value.companyId = newEmpData.Company_Id : employee.value.companyId = "";
-      newEmpData.Employee_Id ? employee.value.employeeId = newEmpData.Employee_Id : employee.value.employeeId = "";
-      newEmpData.Card_No ? employee.value.cardNo = newEmpData.Card_No : employee.value.cardNo = "";
-      newEmpData.Full_Name ? employee.value.fullName = newEmpData.Full_Name : employee.value.fullName = "";
-      newEmpData.Father_Name ? employee.value.fatherName = newEmpData.Father_Name : employee.value.fatherName = "";
-      newEmpData.Mother_Name ? employee.value.motherName = newEmpData.Mother_Name : employee.value.motherName = "";
-      newEmpData.Spouse_Name ? employee.value.spouseName = newEmpData.Spouse_Name : employee.value.spouseName = "";
-      newEmpData.Marital_Status ? employee.value.maritalStatus = newEmpData.Marital_Status : employee.value.maritalStatus = "";
-      newEmpData.DOB ? employee.value.dob = newEmpData.DOB : employee.value.dob = "";
-      newEmpData.Place_of_Birth ? employee.value.pob = newEmpData.Place_of_Birth : employee.value.pob = "";
-      newEmpData.Present_Address ? employee.value.presentAddress = newEmpData.Present_Address : employee.value.presentAddress = "";
-      newEmpData.Permanent_Address ? employee.value.permanentAddress = newEmpData.Permanent_Address : employee.value.permanentAddress = "";
-      newEmpData.Contact_No ? employee.value.officialContact = newEmpData.Contact_No : employee.value.officialContact = "";
-      newEmpData.Emergency_Contact ? employee.value.emergencyContact = newEmpData.Emergency_Contact : employee.value.emergencyContact = "";
-      newEmpData.Gender ? employee.value.gender = newEmpData.Gender : employee.value.gender = "";
-      newEmpData.Personal_Email ? employee.value.personalEmail = newEmpData.Personal_Email : employee.value.personalEmail = "";
-      newEmpData.Official_Email ? employee.value.officialEmail = newEmpData.Official_Email : employee.value.officialEmail = "";
-      newEmpData.blood ? employee.value.bloodGroup = newEmpData.Blood_Group_Id : employee.value.bloodGroup = "";
-      newEmpData.religion ? employee.value.religion = newEmpData.Religion_Id : employee.value.religion = "";  
-      newEmpData.Nationality ? employee.value.nationality = newEmpData.Nationality : employee.value.nationality = "";  
-      newEmpData.NID ? employee.value.nid = newEmpData.NID : employee.value.nid = "";  
+    () => empEdit.value,
+    (newEmpData) => {
+        if (newEmpData) {
+            newEmpData.company
+                ? (employee.value.companyId = newEmpData.Company_Id)
+                : (employee.value.companyId = "");
+            newEmpData.Employee_Id
+                ? (employee.value.employeeId = newEmpData.Employee_Id)
+                : (employee.value.employeeId = "");
+            newEmpData.Card_No
+                ? (employee.value.cardNo = newEmpData.Card_No)
+                : (employee.value.cardNo = "");
+            newEmpData.Full_Name
+                ? (employee.value.fullName = newEmpData.Full_Name)
+                : (employee.value.fullName = "");
+            newEmpData.Father_Name
+                ? (employee.value.fatherName = newEmpData.Father_Name)
+                : (employee.value.fatherName = "");
+            newEmpData.Mother_Name
+                ? (employee.value.motherName = newEmpData.Mother_Name)
+                : (employee.value.motherName = "");
+            newEmpData.Spouse_Name
+                ? (employee.value.spouseName = newEmpData.Spouse_Name)
+                : (employee.value.spouseName = "");
+            newEmpData.Marital_Status
+                ? (employee.value.maritalStatus = newEmpData.Marital_Status)
+                : (employee.value.maritalStatus = "");
+            newEmpData.DOB
+                ? (employee.value.dob = newEmpData.DOB)
+                : (employee.value.dob = "");
+            newEmpData.Place_of_Birth
+                ? (employee.value.pob = newEmpData.Place_of_Birth)
+                : (employee.value.pob = "");
+            newEmpData.Present_Address
+                ? (employee.value.presentAddress = newEmpData.Present_Address)
+                : (employee.value.presentAddress = "");
+            newEmpData.Permanent_Address
+                ? (employee.value.permanentAddress =
+                      newEmpData.Permanent_Address)
+                : (employee.value.permanentAddress = "");
+            newEmpData.Contact_No
+                ? (employee.value.officialContact = newEmpData.Contact_No)
+                : (employee.value.officialContact = "");
+            newEmpData.Emergency_Contact
+                ? (employee.value.emergencyContact =
+                      newEmpData.Emergency_Contact)
+                : (employee.value.emergencyContact = "");
+            newEmpData.Gender
+                ? (employee.value.gender = newEmpData.Gender)
+                : (employee.value.gender = "");
+            newEmpData.Personal_Email
+                ? (employee.value.personalEmail = newEmpData.Personal_Email)
+                : (employee.value.personalEmail = "");
+            newEmpData.Official_Email
+                ? (employee.value.officialEmail = newEmpData.Official_Email)
+                : (employee.value.officialEmail = "");
+            newEmpData.blood
+                ? (employee.value.bloodGroup = newEmpData.Blood_Group_Id)
+                : (employee.value.bloodGroup = "");
+            newEmpData.religion
+                ? (employee.value.religion = newEmpData.Religion_Id)
+                : (employee.value.religion = "");
+            newEmpData.Nationality
+                ? (employee.value.nationality = newEmpData.Nationality)
+                : (employee.value.nationality = "");
+            newEmpData.NID
+                ? (employee.value.nid = newEmpData.NID)
+                : (employee.value.nid = "");
 
+            // if (newEmpData.company) {
+            //   employee.value.companyId = newEmpData.company.id;
+            // }
 
-      // if (newEmpData.company) {
-      //   employee.value.companyId = newEmpData.company.id;
-      // }
-      
-      // if (newEmpData.academic) {
-      //   newEmpData.academic.forEach((academic) => {});
-      // }
-      // if (newEmpData.training) {
-      //   newEmpData.training.forEach((training) => {});
-      // }
-      // if (newEmpData.experience) {
-      //   newEmpData.experience.forEach((experience) => {});
-      // }
+            // if (newEmpData.academic) {
+            //   newEmpData.academic.forEach((academic) => {});
+            // }
+            // if (newEmpData.training) {
+            //   newEmpData.training.forEach((training) => {});
+            // }
+            // if (newEmpData.experience) {
+            //   newEmpData.experience.forEach((experience) => {});
+            // }
+        }
     }
-  }
 );
 
 const getData = async () => {
-  try {
-    const responseBlood = await axios.get("/api/blood");
-    const responseReligion = await axios.get("/api/religion");
-    const responseCompany = await axios.get("/api/company");
-    const responsePhone = await axios.get("/api/phone");
+    try {
+        const [
+            responseBlood,
+            responseReligion,
+            responseCompany,
+            responsePhone,
+        ] = await axios.all([
+            axios.get("/api/blood"),
+            axios.get("/api/religion"),
+            axios.get("/api/company"),
+            axios.get("/api/phone"),
+        ]);
 
-    bloods.value = responseBlood.data;
-    religions.value = responseReligion.data;
-    companies.value = responseCompany.data;
-    phones.value = responsePhone.data;
+        bloods.value = responseBlood.data;
+        religions.value = responseReligion.data;
+        companies.value = responseCompany.data;
+        phones.value = responsePhone.data;
 
-    if (empId) {
-      editHandler();
+        if (empId) {
+            editHandler();
+        }
+    } catch (err) {
+        error.value = err.message || "Error fetching data";
+    } finally {
     }
-    
-  } catch (err) {
-    error.value = err.message || "Error fetching data";
-  } finally {
-  }
 };
 
 const store = useStore();
 
 const resetForm = () => {
-  Object.keys(employee.value).forEach((key) => {
-    if (typeof employee.value[key] === "string") {
-      employee.value[key] = "";
-    }
-  });
+    Object.keys(employee.value).forEach((key) => {
+        if (typeof employee.value[key] === "string") {
+            employee.value[key] = "";
+        }
+    });
 };
 
 const editHandler = async () => {
-  try {
-    const response = await axios.get(`/api/employee/${empId}/edit`);
-    empEdit.value = response.data;
-  } catch (err) {
-    console.error("Error fetching store data for editing:", err);
-  }
+    try {
+        const response = await axios.get(`/api/employee/${empId}/edit`);
+        empEdit.value = response.data;
+    } catch (err) {
+        console.error("Error fetching store data for editing:", err);
+    }
 };
 
 const getImage = (e) => {
-  employee.photo = e.target.files[0];
+    employee.photo = e.target.files[0];
 
-  //   console.log(employee.photo);
+    //   console.log(employee.photo);
 };
 
 const submitForm = async () => {
-  const config = {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  };
-  const formdata = new FormData();
+    const config = {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    };
+    const formdata = new FormData();
 
-  formdata.append("file", employee.photo);
+    formdata.append("file", employee.photo);
 
-  for (const key in employee.value) {
-    if (employee.value.hasOwnProperty(key) && key !== "photo") {
-      formdata.append(key, employee.value[key]);
+    for (const key in employee.value) {
+        if (employee.value.hasOwnProperty(key) && key !== "photo") {
+            formdata.append(key, employee.value[key]);
+        }
     }
-  }
-  console.log(formdata);
+    console.log(formdata);
 
-  try {
-    const response = await axios.post("/api/employee", formdata, config);
-    if (response.data.success) {
-      store.dispatch("setEmployeeId", response.data.empid);
-      resetForm();
-      alert("Successfully Inserted");
+    try {
+        const response = await axios.post("/api/employee", formdata, config);
+        if (response.data.success) {
+            store.dispatch("setEmployeeId", response.data.empid);
+            resetForm();
+            alert("Successfully Inserted");
+        }
+    } catch (err) {
+        console.error("Error submitting form:", err);
     }
-  } catch (err) {
-    console.error("Error submitting form:", err);
-  }
 };
 
 const update = async () => {
-  const config = {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  };
-  let data = new FormData();
+    const config = {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    };
+    let data = new FormData();
 
-  data.append("file", employee.photo);
-  console.log(data);
-  for (const key in employee.value) {
-    if (employee.value.hasOwnProperty(key) && key !== "photo") {
-      data.append(key, employee.value[key]);
+    data.append("file", employee.photo);
+    console.log(data);
+    for (const key in employee.value) {
+        if (employee.value.hasOwnProperty(key) && key !== "photo") {
+            data.append(key, employee.value[key]);
+        }
     }
-  }
 
-  try {
-    const response = await axios.post(`/api/employee/${empId}`, data, config);
-    if (response.data.success) {
-      alert("Successfully Updated");
-      resetForm();
+    try {
+        const response = await axios.post(
+            `/api/employee/${empId}`,
+            data,
+            config
+        );
+        if (response.data.success) {
+            alert("Successfully Updated");
+            resetForm();
+        }
+    } catch (error) {
+        console.error("Error updating employee:", error);
+        // Handle the error, e.g., display an error message
     }
-  } catch (error) {
-    console.error("Error updating employee:", error);
-    // Handle the error, e.g., display an error message
-  }
 };
 
 const submit = () => {
-  if (empId) {
-    update();
-  } else {
-    submitForm();
-  }
+    if (empId) {
+        update();
+    } else {
+        submitForm();
+    }
 };
 
 // const chooseMount = async () => {
@@ -208,278 +261,315 @@ onMounted(() => getData());
 </script>
 
 <template>
-  <div class="mt-5">
-    <form @submit.prevent="submit">
-      <div class="row mb-3">
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="" class="">Company Name*</label>
-          <select
-            v-model="employee.companyId"
-            name=""
-            id=""
-            class="form-control"
-          >
-            <option selected disabled>select</option>
-            <option
-              v-for="company in companies"
-              :key="company.id"
-              :value="company.id"
-            >
-              {{ company.Name }}
-            </option>
-          </select>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Employee ID*</label>
-          <input
-            type="text"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.employeeId"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Card No</label>
-          <input
-            type="text"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.cardNo"
-          />
-        </div>
-      </div>
+    <div class="mt-5">
+        <form @submit.prevent="submit">
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="" class="">Company Name*</label>
+                    <select
+                        v-model="employee.companyId"
+                        name=""
+                        id=""
+                        class="form-control"
+                    >
+                        <option selected disabled>select</option>
+                        <option
+                            v-for="company in companies"
+                            :key="company.id"
+                            :value="company.id"
+                        >
+                            {{ company.Name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class=""
+                        >Employee ID*</label
+                    >
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.employeeId"
+                    />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class="">Card No</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.cardNo"
+                    />
+                </div>
+            </div>
 
-      <div class="row mb-3">
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Full Name*</label>
-          <input
-            type="text"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.fullName"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Father's Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.fatherName"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Mother's Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.motherName"
-          />
-        </div>
-      </div>
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class="">Full Name*</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.fullName"
+                    />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class=""
+                        >Father's Name</label
+                    >
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.fatherName"
+                    />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class=""
+                        >Mother's Name</label
+                    >
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.motherName"
+                    />
+                </div>
+            </div>
 
-      <div class="row mb-3">
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Spouse Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.spouseName"
-          />
-        </div>
-        <div class="col-lg-2 col-md-3 col-sm-6">
-          <label for="exampleInputEmail1" class=""
-            >Marital Status</label>
-          <select
-            v-model="employee.maritalStatus"
-            name=""
-            id=""
-            class="form-control"
-          >
-            <option selected disabled>-select-</option>
-            <option value="M">Married</option>
-            <option value="U">Unmarried</option>
-          </select>
-        </div>
-        <div class="col-lg-2 col-md-3 col-sm-6">
-          <label for="exampleInputEmail1" class="">Date of Birth*</label>
-          <input
-            type="date"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.dob"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Place of Birth</label>
-          <input
-            type="text"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.pob"
-          />
-        </div>
-      </div>
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class="">Spouse Name</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.spouseName"
+                    />
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <label for="exampleInputEmail1" class=""
+                        >Marital Status</label
+                    >
+                    <select
+                        v-model="employee.maritalStatus"
+                        name=""
+                        id=""
+                        class="form-control"
+                    >
+                        <option selected disabled>-select-</option>
+                        <option value="M">Married</option>
+                        <option value="U">Unmarried</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <label for="exampleInputEmail1" class=""
+                        >Date of Birth*</label
+                    >
+                    <input
+                        type="date"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.dob"
+                    />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class=""
+                        >Place of Birth</label
+                    >
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.pob"
+                    />
+                </div>
+            </div>
 
-      <div class="row mb-3">
-        <div class="col-lg-6 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Present Address</label>
-          <textarea
-            class="form-control"
-            id="exampleFormControlTextarea1"
-            rows="2"
-            v-model="employee.presentAddress"
-          ></textarea>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Permanent Address</label>
-          <textarea
-            class="form-control"
-            id="exampleFormControlTextarea1"
-            rows="2"
-            v-model="employee.permanentAddress"
-          ></textarea>
-        </div>
-      </div>
+            <div class="row mb-3">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class=""
+                        >Present Address</label
+                    >
+                    <textarea
+                        class="form-control"
+                        id="exampleFormControlTextarea1"
+                        rows="2"
+                        v-model="employee.presentAddress"
+                    ></textarea>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class=""
+                        >Permanent Address</label
+                    >
+                    <textarea
+                        class="form-control"
+                        id="exampleFormControlTextarea1"
+                        rows="2"
+                        v-model="employee.permanentAddress"
+                    ></textarea>
+                </div>
+            </div>
 
-      <div class="row mb-3">
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Official Contact</label>
-          <input
-            type="text"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.officialContact"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Emergency Contact</label>
-          <input
-            type="text"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.emergencyContact"
-          />
-        </div>
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class=""
+                        >Official Contact</label
+                    >
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.officialContact"
+                    />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class=""
+                        >Emergency Contact</label
+                    >
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.emergencyContact"
+                    />
+                </div>
 
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="" class="">Gender</label>
-          <select v-model="employee.gender" name="" id="" class="form-control">
-            <option selected disabled>-select-</option>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-            <option value="O">Other</option>
-          </select>
-        </div>
-      </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="" class="">Gender</label>
+                    <select
+                        v-model="employee.gender"
+                        name=""
+                        id=""
+                        class="form-control"
+                    >
+                        <option selected disabled>-select-</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                        <option value="O">Other</option>
+                    </select>
+                </div>
+            </div>
 
-      <div class="row mb-3">
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Personal Email</label>
-          <input
-            type="email"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.personalEmail"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Official Email</label>
-          <input
-            type="email"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.officialEmail"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="" class="">Religion</label>
-          <select
-            v-model="employee.religion"
-            name=""
-            id=""
-            class="form-control"
-          >
-            <option selected disabled>select</option>
-            <option
-              v-for="religion in religions"
-              :key="religion.id"
-              :value="religion.id"
-            >
-              {{ religion.Name }}
-            </option>
-          </select>
-        </div>
-      </div>
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class=""
+                        >Personal Email</label
+                    >
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.personalEmail"
+                    />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class=""
+                        >Official Email</label
+                    >
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.officialEmail"
+                    />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="" class="">Religion</label>
+                    <select
+                        v-model="employee.religion"
+                        name=""
+                        id=""
+                        class="form-control"
+                    >
+                        <option selected disabled>select</option>
+                        <option
+                            v-for="religion in religions"
+                            :key="religion.id"
+                            :value="religion.id"
+                        >
+                            {{ religion.Name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
 
-      <div class="row mb-3">
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="" class="">Blood Group</label>
-          <select
-            v-model="employee.bloodGroup"
-            name=""
-            id=""
-            class="form-control"
-          >
-            <option selected disabled>select</option>
-            <option v-for="blood in bloods" :key="blood.id" :value="blood.id">
-              {{ blood.Name }}
-            </option>
-          </select>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">Nationality</label>
-          <input
-            type="text"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.nationality"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <label for="exampleInputEmail1" class="">NID</label>
-          <input
-            type="text"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            v-model="employee.nid"
-          />
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <label for="exampleInputEmail1" class="">Upload Photo</label>
-          <input
-            type="file"
-            class="form-control"
-            id="disabledTextInput"
-            aria-describedby="emailHelp"
-            @change="getImage"
-          />
-        </div>
-      </div>
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="" class="">Blood Group</label>
+                    <select
+                        v-model="employee.bloodGroup"
+                        name=""
+                        id=""
+                        class="form-control"
+                    >
+                        <option selected disabled>select</option>
+                        <option
+                            v-for="blood in bloods"
+                            :key="blood.id"
+                            :value="blood.id"
+                        >
+                            {{ blood.Name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class="">Nationality</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.nationality"
+                    />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <label for="exampleInputEmail1" class="">NID</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        v-model="employee.nid"
+                    />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <label for="exampleInputEmail1" class=""
+                        >Upload Photo</label
+                    >
+                    <input
+                        type="file"
+                        class="form-control"
+                        id="disabledTextInput"
+                        aria-describedby="emailHelp"
+                        @change="getImage"
+                    />
+                </div>
+            </div>
 
-      <div class="d-flex justify-content-end">
-        <button type="reset" class="btn btn-danger m-3 p-2"><i class="fa-solid fa-x"></i> | Reset</button>
-        <button type="submit" class="btn btn-success m-3 p-2"><i class="fa-solid fa-check"></i> | Save</button>
-      </div>
-    </form>
-
-  </div>
+            <div class="d-flex justify-content-end">
+                <button type="reset" class="btn btn-danger m-3 p-2">
+                    <i class="fa-solid fa-x"></i> | Reset
+                </button>
+                <button type="submit" class="btn btn-success m-3 p-2">
+                    <i class="fa-solid fa-check"></i> | Save
+                </button>
+            </div>
+        </form>
+    </div>
 </template>

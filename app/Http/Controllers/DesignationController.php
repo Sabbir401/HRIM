@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\designation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DesignationController extends Controller
 {
@@ -36,9 +37,15 @@ class DesignationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(designation $designation)
+    public function show($id)
     {
-        //
+        $designation = DB::table('designations')
+            ->select('id', 'Name')
+            ->where('Department_Id', $id)
+            ->orderBy('Name', 'asc')
+            ->get();
+
+        return response()->json($designation);
     }
 
     /**
