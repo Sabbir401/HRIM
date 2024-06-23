@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\academic_info;
 use Illuminate\Http\Request;
+use App\Models\academic_info;
+use Illuminate\Support\Facades\DB;
 
 class AcademicInfoController extends Controller
 {
@@ -75,9 +76,26 @@ class AcademicInfoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, academic_info $academic_info)
+    public function update(Request $request, $id)
     {
-        //
+        $academic = academic_info::findorfail($id);
+        $academic->update([
+            'Level_of_Education_Id' => $request->input('degreeId'),
+            'Board_Id' => $request->input('boardId'),
+            'Group' => $request->input('major'),
+            'Institute_Name' => $request->input('institute'),
+            'Scale_Id' => $request->input('scaleId'),
+            'Result' => $request->input('result'),
+            'Year_of_Passing' => $request->input('yop'),
+            'Acheivement' => $request->input('acheivement'),
+            'Remarks' => $request->input('remarks'),
+        ]);
+        $response = [
+            'success'   =>  true,
+            'message'   =>  'Successfully Updated',
+        ];
+
+        return response()->json($response);
     }
 
     /**

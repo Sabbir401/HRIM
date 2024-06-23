@@ -50,7 +50,17 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-
+        $request->validate([
+            'companyId' => 'required',
+            'employeeId' => 'required',
+            'fullName' => 'required',
+            'dob' => 'required',
+        ], [
+            'companyId.required' => 'The company ID is required.',
+            'employeeId.required' => 'The employee ID is required.',
+            'fullName.required' => 'The full name is required.',
+            'dob.required' => 'The date of birth is required.',
+        ]);
 
         $file_path = null;
 

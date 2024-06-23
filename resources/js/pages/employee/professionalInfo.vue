@@ -1,13 +1,20 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineAsyncComponent } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
-import academic from "../employee/component/academicComponent.vue";
-import training from "../employee/component/trainingComponent.vue";
-import work from "../employee/component/workComponent.vue";
 import { useStore } from "vuex";
-const route = useRoute();
 
+const academicComponent = defineAsyncComponent(() =>
+    import("../employee/component/academicComponent.vue")
+);
+const trainingComponent = defineAsyncComponent(() =>
+    import("../employee/component/trainingComponent.vue")
+);
+const workComponent = defineAsyncComponent(() =>
+    import("../employee/component/workComponent.vue")
+);
+
+const route = useRoute();
 const store = useStore();
 
 const isLoading = ref(true);
@@ -20,6 +27,10 @@ const empId = parseInt(route.params.id);
 const academics = ref([]);
 const trainings = ref([]);
 const works = ref([]);
+
+const academicId = ref();
+const trainingId = ref();
+const workId = ref();
 
 const academicModel = ref(false);
 const trainingModel = ref(false);
@@ -53,18 +64,12 @@ const workClose = () => {
 
 const getData = async () => {
     try {
-        const [
-        responseAcademic,
-        responseTraining,
-        responseWork,
-        ] = await axios.all([
-            axios.get(`/api/academic/${eid}`),
-            axios.get(`/api/training/${eid}`),
-            axios.get(`/api/work/${eid}`),
-        ]);
-        // const responseAcademic = await axios.get(`/api/academic/${eid}`);
-        // const responseTraining = await axios.get(`/api/training/${eid}`);
-        // const responseWork = await axios.get(`/api/work/${eid}`);
+        const [responseAcademic, responseTraining, responseWork] =
+            await axios.all([
+                axios.get(`/api/academic/${eid}`),
+                axios.get(`/api/training/${eid}`),
+                axios.get(`/api/work/${eid}`),
+            ]);
 
         academics.value = responseAcademic.data;
         trainings.value = responseTraining.data;
@@ -80,6 +85,7 @@ const editAcademmic = async (id) => {
     try {
         const response = await axios.get(`/api/academic/${id}/edit`);
         selectedStore.value = response.data;
+        academicId.value = id;
         academicOpened("Update");
     } catch (err) {
         console.error("Error fetching store data for editing:", err);
@@ -90,7 +96,19 @@ const editTraining = async (id) => {
     try {
         const response = await axios.get(`/api/training/${id}/edit`);
         selectedStore.value = response.data;
+        trainingId.value = id;
         trainingOpened("Update");
+    } catch (err) {
+        console.error("Error fetching store data for editing:", err);
+    }
+};
+
+const editWork = async (id) => {
+    try {
+        const response = await axios.get(`/api/work/${id}/edit`);
+        selectedStore.value = response.data;
+        workId.value = id;
+        workOpened("Update");
     } catch (err) {
         console.error("Error fetching store data for editing:", err);
     }
@@ -103,11 +121,14 @@ onMounted(() => getData());
 </script>
 
 <template>
-    <academic
+    <component
+        v-if="academicModel"
+        :is="academicComponent"
         :isOpen="academicModel"
         :editStore="selectedStore"
         :updateinfo="heading"
         :EID="eid"
+        :acaId="academicId"
         @modal-close="academicClose"
         @submit="submitHandler"
         name="first-modal"
@@ -140,7 +161,6 @@ onMounted(() => getData());
                                 <th>Institute</th>
                                 <th>Board</th>
                                 <th>Major Group</th>
-                                <th>Scale</th>
                                 <th>Result</th>
                                 <th>Years Of Passing</th>
                                 <th>Acheivement</th>
@@ -177,17 +197,16 @@ onMounted(() => getData());
                                 </td>
                                 <td>{{ academic.Group }}</td>
                                 <td>
+                                    {{ academic.Result }}
                                     {{
                                         academic.scale
                                             ? academic.scale.Name
                                             : "N/A"
                                     }}
                                 </td>
-                                <td>{{ academic.Result }}</td>
-                                <td>{{ academic.Result }}</td>
+                                <td>{{ academic.Year_of_Passing }}</td>
                                 <td>{{ academic.Acheivement }}</td>
                                 <td>{{ academic.Remarks }}</td>
-                                <td>{{ academic.Institute_Name }}</td>
                                 <td>
                                     <button
                                         class="btn btn-success"
@@ -204,11 +223,14 @@ onMounted(() => getData());
         </div>
     </div>
 
-    <training
+    <component
+        v-if="trainingModel"
+        :is="trainingComponent"
         :isOpen="trainingModel"
         :editStore="selectedStore"
         :updateinfo="heading"
         :EID="eid"
+        :trainId="trainingId"
         @modal-close="trainingClose"
         @submit="submitHandler"
         name="first-modal"
@@ -272,11 +294,14 @@ onMounted(() => getData());
         </div>
     </div>
 
-    <work
+    <component
+        v-if="workModel"
+        :is="workComponent"
         :isOpen="workModel"
         :editStore="selectedStore"
         :updateinfo="heading"
         :EID="eid"
+        :workId="workId"
         @modal-close="workClose"
         @submit="submitHandler"
         name="first-modal"
@@ -308,14 +333,13 @@ onMounted(() => getData());
                                 <th>Company Name</th>
                                 <th>Company Business</th>
                                 <th>Company Address</th>
+                                <th>Department</th>
                                 <th>Designation</th>
-                                <th>Job Nature</th>
                                 <th>From Date</th>
                                 <th>To Date</th>
                                 <th>Job Responsibility</th>
                                 <th>Last Salary</th>
                                 <th>Continuing</th>
-                                <th>Remarks</th>
                                 <th>Operations</th>
                             </tr>
                         </thead>
@@ -333,7 +357,7 @@ onMounted(() => getData());
                                 <td>
                                     <button
                                         class="btn btn-success"
-                                        @click="editHandler(academic.id)"
+                                        @click="editWork(work.id)"
                                     >
                                         Edit
                                     </button>

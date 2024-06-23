@@ -71,9 +71,23 @@ class TrainingInfoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, training_info $training_info)
+    public function update(Request $request, $id)
     {
-        //
+        $training = training_info::findorfail($id);
+        $training->update([
+            'Training_Title' => $request->input('traningTitle'),
+            'Organized_By' => $request->input('organizedBy'),
+            'Topic_Covered' => $request->input('topicCovered'),
+            'From_Date' => $request->input('fromDate'),
+            'To_Date' => $request->input('toDate'),
+            'Remarks' => $request->input('remarks'),
+        ]);
+        $response = [
+            'success'   =>  true,
+            'message'   =>  'Successfully Updated',
+        ];
+
+        return response()->json($response);
     }
 
     /**

@@ -110,20 +110,6 @@ watch(
             newEmpData.NID
                 ? (employee.value.nid = newEmpData.NID)
                 : (employee.value.nid = "");
-
-            // if (newEmpData.company) {
-            //   employee.value.companyId = newEmpData.company.id;
-            // }
-
-            // if (newEmpData.academic) {
-            //   newEmpData.academic.forEach((academic) => {});
-            // }
-            // if (newEmpData.training) {
-            //   newEmpData.training.forEach((training) => {});
-            // }
-            // if (newEmpData.experience) {
-            //   newEmpData.experience.forEach((experience) => {});
-            // }
         }
     }
 );
@@ -162,6 +148,8 @@ const resetForm = () => {
     Object.keys(employee.value).forEach((key) => {
         if (typeof employee.value[key] === "string") {
             employee.value[key] = "";
+        } else {
+            employee.value[key] = null; // or any other default value you prefer
         }
     });
 };
@@ -196,7 +184,6 @@ const submitForm = async () => {
             formdata.append(key, employee.value[key]);
         }
     }
-    console.log(formdata);
 
     try {
         const response = await axios.post("/api/employee", formdata, config);
@@ -206,7 +193,7 @@ const submitForm = async () => {
             alert("Successfully Inserted");
         }
     } catch (err) {
-        console.error("Error submitting form:", err);
+        error.value = err.response.data.errors;
     }
 };
 
@@ -265,7 +252,10 @@ onMounted(() => getData());
         <form @submit.prevent="submit">
             <div class="row mb-3">
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <label for="" class="">Company Name*</label>
+                    <label for="" class=""
+                        >Company Name* 
+                        <span class="text-danger">{{ error.companyId ? error.companyId[0] : "" }}</span></label
+                    >
                     <select
                         v-model="employee.companyId"
                         name=""
@@ -284,7 +274,8 @@ onMounted(() => getData());
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <label for="exampleInputEmail1" class=""
-                        >Employee ID*</label
+                        >Employee ID*
+                        <span class="text-danger">{{ error.employeeId ? error.employeeId[0] : "" }}</span></label
                     >
                     <input
                         type="text"
@@ -308,7 +299,10 @@ onMounted(() => getData());
 
             <div class="row mb-3">
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <label for="exampleInputEmail1" class="">Full Name*</label>
+                    <label for="exampleInputEmail1" class=""
+                        >Full Name*
+                        <span class="text-danger">{{ error.fullName ? error.fullName[0] : "" }}</span></label
+                    >
                     <input
                         type="text"
                         class="form-control"
@@ -371,7 +365,7 @@ onMounted(() => getData());
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
                     <label for="exampleInputEmail1" class=""
-                        >Date of Birth*</label
+                        >Date of Birth* <span class="text-danger">{{ error.dob ? error.dob[0] : "" }}</span></label
                     >
                     <input
                         type="date"

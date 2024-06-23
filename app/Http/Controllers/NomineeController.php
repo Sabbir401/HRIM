@@ -30,7 +30,16 @@ class NomineeController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        $request->validate([
+            'nominee.nomineeName' => 'required',
+            'nominee.dob' => 'required',
+            'nominee.contactNo' => 'required',
+        ], [
+            'nominee.nomineeName.required' => 'The Nominee Name is required.',
+            'nominee.dob.required' => 'The Nominee Date of Birth is required.',
+            'nominee.contactNo.required' => 'The Contact No is required.',
+        ]);
+
         $store = nominee::create([
             'EID' => $request->input('nominee.eid'),
             'Nominee_Name' => $request->input('nominee.nomineeName'),

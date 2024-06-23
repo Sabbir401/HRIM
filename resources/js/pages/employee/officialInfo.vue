@@ -10,7 +10,6 @@ const store = useStore();
 
 const empId = parseInt(route.params.id);
 
-
 const official = ref({
     eid: store.state.employeeId || empId,
     departmentId: "",
@@ -40,13 +39,6 @@ const empEdit = ref([]);
 
 const getData = async () => {
     try {
-        // const responseDepartment = await axios.get("/api/department");
-        // const responseEmpType = await axios.get("/api/empType");
-        // const responseArea = await axios.get("/api/area");
-        // const responseTerritory = await axios.get("/api/territory");
-        // const responseSuper = await axios.get("/api/employee/allemp");
-        // const responseCountry = await axios.get("/api/phone");
-
         const [
             responseDepartment,
             responseEmpType,
@@ -79,11 +71,12 @@ const getData = async () => {
     }
 };
 
-watch(empEdit, (newEmpData) => {
+watch(empEdit, async (newEmpData) => {
     if (newEmpData) {
         newEmpData.department
-            ? (official.value.departmentId = newEmpData.department.id)
-            : (official.value.departmentId = "");
+        ? (official.value.departmentId = newEmpData.department.id)
+        : (official.value.departmentId = "");
+        await getDepartment(newEmpData.department.id);
         newEmpData.designation
             ? (official.value.designationId = newEmpData.designation.id)
             : (official.value.designationId = "");
@@ -126,19 +119,19 @@ const getDepartment = async (id) => {
         designations.value = response.data;
     } catch (error) {
         console.error("Error updating store:", error);
-        // Handle the error, e.g., display an error message
     }
 };
 
 const resetForm = () => {
-    Object.keys(employee.value).forEach((key) => {
-        if (typeof employee.value[key] === "string") {
-            employee.value[key] = "";
+    Object.keys(official.value).forEach((key) => {
+        if (typeof official.value[key] === "string") {
+            official.value[key] = "";
+        } else {
+            official.value[key] = null; // or any other default value you prefer
         }
     });
 };
 
-// const store = useStore();
 
 const editHandler = async () => {
     try {
@@ -157,7 +150,7 @@ const submitForm = async () => {
             resetForm();
         }
     } catch (err) {
-        console.error("Error submitting form:", err);
+        error.value = err.response.data.errors;
     }
 };
 
@@ -173,7 +166,6 @@ const update = async () => {
         }
     } catch (error) {
         console.error("Error updating store:", error);
-        // Handle the error, e.g., display an error message
     }
 };
 
@@ -195,7 +187,12 @@ onMounted(() => getData());
         <form @submit.prevent="submit">
             <div class="row mb-3">
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <label for="" class="">Department*</label>
+                    <label for="" class=""
+                        >Department*
+                        <span class="text-danger">{{
+                            error.departmentId ? error.departmentId[0] : ""
+                        }}</span>
+                    </label>
                     <select
                         class="form-control"
                         name="status"
@@ -214,7 +211,9 @@ onMounted(() => getData());
                     </select>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <label for="" class="">Designation*</label>
+                    <label for="" class="">Designation* <span class="text-danger">{{
+                            error.designationId ? error.designationId[0] : ""
+                        }}</span></label>
                     <select
                         class="form-control"
                         name="status"
@@ -232,7 +231,9 @@ onMounted(() => getData());
                     </select>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <label for="" class="">Employee Grade*</label>
+                    <label for="" class="">Employee Grade* <span class="text-danger">{{
+                            error.employeeGrade ? error.employeeGrade[0] : ""
+                        }}</span></label>
                     <select
                         name=""
                         id=""
@@ -302,7 +303,9 @@ onMounted(() => getData());
                     </select>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <label for="" class="">Employee Type*</label>
+                    <label for="" class="">Employee Type* <span class="text-danger">{{
+                            error.employeeTypeId ? error.employeeTypeId[0] : ""
+                        }}</span></label>
                     <select
                         class="form-control"
                         name="status"

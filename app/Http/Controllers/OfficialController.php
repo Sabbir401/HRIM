@@ -30,6 +30,18 @@ class OfficialController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'departmentId' => 'required',
+            'designationId' => 'required',
+            'employeeGrade' => 'required',
+            'employeeTypeId' => 'required',
+        ], [
+            'departmentId.required' => 'The Department Name is required.',
+            'designationId.required' => 'The Designation is required.',
+            'employeeGrade.required' => 'The Employee Grade is required.',
+            'employeeTypeId.required' => 'The Employee Type is required.',
+        ]);
+
         $store = official::create([
             'EID' => $request->input('eid'),
             'Department_Id' => $request->input('departmentId'),

@@ -2,8 +2,7 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
-import moment from 'moment'
-
+import moment from "moment";
 
 const employees = ref([]);
 const error = ref([]);
@@ -21,14 +20,14 @@ const getData = async () => {
 };
 
 const getEmployee = async (id) => {
-  try {
-    const response = await axios.get(`/api/employee/${id}/edit`);
-    // const responseoff = await axios.get(`/api/official/${id}/edit`);
-    emp.value = response.data;
-    officials.value = responseoff.data;
-  } catch (error) {
-    console.error("Error getting employee:", error);
-  }
+    try {
+        const response = await axios.get(`/api/employee/${id}/edit`);
+        // const responseoff = await axios.get(`/api/official/${id}/edit`);
+        emp.value = response.data;
+        officials.value = responseoff.data;
+    } catch (error) {
+        console.error("Error getting employee:", error);
+    }
 };
 
 onMounted(() => getData());
@@ -61,9 +60,9 @@ onMounted(() => getData());
                 <tr>
                     <th>Name</th>
                     <td>
-                        <select 
-                        v-model="empselect"
-                        @change="getEmployee(empselect)"
+                        <select
+                            v-model="empselect"
+                            @change="getEmployee(empselect)"
                         >
                             <option selected disabled>select</option>
                             <option
@@ -82,7 +81,13 @@ onMounted(() => getData());
                 </tr>
                 <tr>
                     <th>Designation</th>
-                    <td v-for="off in emp.official" :key="off.id">{{ off.designation.Name }}</td>
+                    <td v-for="off in emp.official" :key="off.id">
+                        {{
+                            off.designation && off.designation.Name
+                                ? off.designation.Name
+                                : ""
+                        }}
+                    </td>
                     <td>CL</td>
                     <td></td>
                     <td></td>
@@ -90,7 +95,13 @@ onMounted(() => getData());
                 </tr>
                 <tr>
                     <th>Department</th>
-                    <td v-for="off in emp.official" :key="off.id">{{ off.department.Name }}</td>
+                    <td v-for="off in emp.official" :key="off.id">
+                        {{
+                            off.department && off.department.Name
+                                ? off.department.Name
+                                : ""
+                        }}
+                    </td>
                     <td>SL</td>
                     <td></td>
                     <td></td>
@@ -107,14 +118,14 @@ onMounted(() => getData());
                 <tr>
                     <th>Date of Joining</th>
                     <td>{{ officials.DOJ }}</td>
-                    <td>CL</td>
+                    <td>Others</td>
                     <td></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
                     <th>Date</th>
-                    <td>{{ moment(new Date()).format('DD-MM-YYYY') }}</td>
+                    <td>{{ moment(new Date()).format("DD-MM-YYYY") }}</td>
                     <td>Comments</td>
                     <td colspan="3"></td>
                 </tr>

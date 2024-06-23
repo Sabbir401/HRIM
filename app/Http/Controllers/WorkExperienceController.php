@@ -64,17 +64,37 @@ class WorkExperienceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(work_experience $work_experience)
+    public function edit($id)
     {
-        //
+        $work = work_experience::find($id);
+
+        return response()->json($work);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, work_experience $work_experience)
+    public function update(Request $request, $id)
     {
-        //
+        $work = work_experience::findorfail($id);
+        $work->update([
+            'Company_Name' => $request->input('companyName'),
+            'Company_Business' => $request->input('companyBusiness'),
+            'Company_Address' => $request->input('companyAddress'),
+            'Designation' => $request->input('designation'),
+            'Department' => $request->input('department'),
+            'From_Date' => $request->input('fromDate'),
+            'To_Date' => $request->input('toDate'),
+            'Responsibilities' => $request->input('jobRes'),
+            'Last_Salary' => $request->input('lastSalary'),
+            'Continuing' => $request->input('continuing'),
+        ]);
+        $response = [
+            'success'   =>  true,
+            'message'   =>  'Successfully Updated',
+        ];
+
+        return response()->json($response);
     }
 
     /**

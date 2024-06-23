@@ -28,8 +28,8 @@ return new class extends Migration
             $table->string('Contact_No', 30)->nullable();
             $table->string('Emergency_Contact', 30)->nullable();
             $table->string('Gender', 30)->nullable();
-            $table->string('Personal_Email', 30)->nullable();
-            $table->string('Official_Email', 30)->nullable();
+            $table->string('Personal_Email', 255)->nullable();
+            $table->string('Official_Email', 255)->nullable();
             $table->unsignedBigInteger('Blood_Group_Id')->nullable();
             $table->unsignedBigInteger('Religion_Id')->nullable();
             $table->string('Nationality', 50)->nullable();
