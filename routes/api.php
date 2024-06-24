@@ -19,6 +19,7 @@ use App\Http\Controllers\BloodGroupController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\AcademicInfoController;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\EmployeeTypeController;
 use App\Http\Controllers\TrainingInfoController;
@@ -66,6 +67,7 @@ Route::get('/empimg/{id}', [EmpImgController::class, 'edit']);
 Route::post('/employee/{id}', [EmployeeController::class, 'update']);
 Route::get('/employee/allemp', [EmployeeController::class, 'allemp']);
 Route::get('/employee/search', [EmployeeController::class, 'search']);
+Route::get('/branch', [BranchController::class, 'index']);
 
 
 

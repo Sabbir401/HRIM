@@ -57,8 +57,9 @@ class official extends Model
     {
         return $this->belongsTo(employee::class, 'Supervisor_Id');
     }
-    public function country()
+
+    public function branch()
     {
-        return $this->belongsTo(country::class, 'Job_Location_Id');
+        return $this->belongsTo(branch::class, 'Job_Location_Id');
     }
 }

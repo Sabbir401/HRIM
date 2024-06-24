@@ -90,7 +90,7 @@ onMounted(() => getData());
                             <button
                                 style="float: left"
                                 type="button"
-                                class="btn btn-success py-1"
+                                class="btn-plus"
                             >
                                 <i class="fa-solid fa-plus"></i>
                             </button>
@@ -144,7 +144,7 @@ onMounted(() => getData());
                                 <td>{{ employee.Official_Email }}</td>
                                 <td>
                                     <button
-                                        class="btn btn-primary mr-2 p-1 mx-2"
+                                        class="custom-btn btn-13"
                                         @click="
                                             router.push(
                                                 `/empdetails/${employee.id}`
@@ -154,7 +154,7 @@ onMounted(() => getData());
                                         <i class="fa-regular fa-user"></i>
                                     </button>
                                     <button
-                                        class="btn btn-success p-1"
+                                        class="custom-btn btn-15 mx-2"
                                         @click="
                                             router.push(
                                                 `/employee/${employee.id}`

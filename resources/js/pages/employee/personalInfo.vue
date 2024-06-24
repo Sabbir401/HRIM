@@ -300,10 +300,10 @@ onMounted(() => getData());
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                <button type="reset" class="btn btn-danger m-3 p-2">
+                <button type="reset" class="custom-btn btn-12 m-3 p-2">
                     <i class="fa-solid fa-x"></i> | Reset
                 </button>
-                <button type="submit" class="btn btn-success m-3 p-2">
+                <button type="submit" class="custom-btn btn-13 m-3 p-2">
                     <i class="fa-solid fa-check"></i> | Save
                 </button>
             </div>

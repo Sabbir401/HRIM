@@ -145,7 +145,7 @@ onMounted(() => getData());
                         <button
                             @click="academicOpened('Save')"
                             type="button"
-                            class="btn btn-success btn-icon"
+                            class="btn-plus"
                         >
                             <i class="fa-solid fa-plus"></i>
                         </button>
@@ -209,10 +209,12 @@ onMounted(() => getData());
                                 <td>{{ academic.Remarks }}</td>
                                 <td>
                                     <button
-                                        class="btn btn-success"
+                                        class="custom-btn btn-15"
                                         @click="editAcademmic(academic.id)"
                                     >
-                                        Edit
+                                        <i
+                                            class="fa-regular fa-pen-to-square"
+                                        ></i>
                                     </button>
                                 </td>
                             </tr>
@@ -247,7 +249,7 @@ onMounted(() => getData());
                         <button
                             @click="trainingOpened('Save')"
                             type="button"
-                            class="btn btn-success btn-icon"
+                            class="btn-plus"
                         >
                             <i class="fa-solid fa-plus"></i>
                         </button>
@@ -280,10 +282,12 @@ onMounted(() => getData());
                                 <td>{{ training.Remarks }}</td>
                                 <td>
                                     <button
-                                        class="btn btn-success"
+                                        class="custom-btn btn-15"
                                         @click="editTraining(training.id)"
                                     >
-                                        Edit
+                                        <i
+                                            class="fa-regular fa-pen-to-square"
+                                        ></i>
                                     </button>
                                 </td>
                             </tr>
@@ -319,7 +323,7 @@ onMounted(() => getData());
                             @click="workOpened('Save')"
                             style="float: left"
                             type="button"
-                            class="btn btn-success btn-icon"
+                            class="btn-plus"
                         >
                             <i class="fa-solid fa-plus"></i>
                         </button>
@@ -348,18 +352,21 @@ onMounted(() => getData());
                                 <td>{{ work.Company_Name }}</td>
                                 <td>{{ work.Company_Business }}</td>
                                 <td>{{ work.Company_Address }}</td>
-                                <td>{{ work.Designation }}</td>
                                 <td>{{ work.Department }}</td>
+                                <td>{{ work.Designation }}</td>
                                 <td>{{ work.From_Date }}</td>
                                 <td>{{ work.To_Date }}</td>
+                                <td>{{ work.Responsibilities }}</td>
                                 <td>{{ work.Last_Salary }}</td>
                                 <td>{{ work.Continuing }}</td>
                                 <td>
                                     <button
-                                        class="btn btn-success"
+                                        class="custom-btn btn-15"
                                         @click="editWork(work.id)"
                                     >
-                                        Edit
+                                        <i
+                                            class="fa-regular fa-pen-to-square"
+                                        ></i>
                                     </button>
                                 </td>
                             </tr>
@@ -371,4 +378,3 @@ onMounted(() => getData());
     </div>
 </template>
 
-<style scoped></style>

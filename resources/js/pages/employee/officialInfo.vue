@@ -32,7 +32,7 @@ const areas = ref([]);
 const territories = ref([]);
 const emptypes = ref([]);
 const supervisor = ref([]);
-const countries = ref([]);
+const branches = ref([]);
 
 const error = ref([]);
 const empEdit = ref([]);
@@ -45,14 +45,14 @@ const getData = async () => {
             responseArea,
             responseTerritory,
             responseSuper,
-            responseCountry,
+            responseBranch,
         ] = await axios.all([
             axios.get("/api/department"),
             axios.get("/api/empType"),
             axios.get("/api/area"),
             axios.get("/api/territory"),
             axios.get("/api/employee/allemp"),
-            axios.get("/api/phone"),
+            axios.get("/api/branch"),
         ]);
 
         departments.value = responseDepartment.data;
@@ -60,7 +60,7 @@ const getData = async () => {
         areas.value = responseArea.data;
         territories.value = responseTerritory.data;
         supervisor.value = responseSuper.data;
-        countries.value = responseCountry.data;
+        branches.value = responseBranch.data;
 
         if (empId) {
             editHandler();
@@ -388,11 +388,11 @@ onMounted(() => getData());
                     >
                         <option selected disabled>select</option>
                         <option
-                            v-for="country in countries"
-                            :key="country.id"
-                            :value="country.id"
+                            v-for="branch in branches"
+                            :key="branch.id"
+                            :value="branch.id"
                         >
-                            {{ country.Name }}
+                            {{ branch.Name }}
                         </option>
                     </select>
                 </div>
@@ -412,10 +412,10 @@ onMounted(() => getData());
             </div>
 
             <div class="d-flex justify-content-end">
-                <button type="reset" class="btn btn-danger m-3 p-2">
+                <button type="reset" class="custom-btn btn-12 m-3 p-2">
                     <i class="fa-solid fa-x"></i> | Reset
                 </button>
-                <button type="submit" class="btn btn-success m-3 p-2">
+                <button type="submit" class="custom-btn btn-13 m-3 p-2">
                     <i class="fa-solid fa-check"></i> | Save
                 </button>
             </div>

@@ -333,12 +333,12 @@ const submit = () => {
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success m-3 p-2">
+                    <button type="submit" class="custom-btn btn-13 m-3 p-2">
                         <i class="fa-solid fa-check"></i> | {{ updateinfo }}
                     </button>
                     <button
                         type="reset"
-                        class="btn btn-danger m-3 p-2"
+                        class="custom-btn btn-12 m-3 p-2"
                         @click.stop="closeModal"
                     >
                         <i class="fa-solid fa-x"></i> | Cancel

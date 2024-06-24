@@ -87,7 +87,7 @@ class OfficialController extends Controller
             'employeeType',
             'territory',
             'supervisor',
-            'country'
+            'branch'
 
         ])->where('EID', $id)->first();
         // dd($official);

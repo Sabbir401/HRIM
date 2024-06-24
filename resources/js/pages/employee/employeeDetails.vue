@@ -234,7 +234,7 @@ onMounted(() => getData());
             </tr>
             <tr>
               <th class="p-2">Job Location</th>
-              <td class="p-2">{{ off.country ? off.country.Name : '' }}</td>
+              <td class="p-2">{{ off.branch ? off.branch.Name : '' }}</td>
               <th class="p-2">Shift</th>
               <td class="p-2">{{ mapShift(emp.Shift) }}</td>
             </tr>

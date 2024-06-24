@@ -52,12 +52,13 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'companyId' => 'required',
-            'employeeId' => 'required',
+            'employeeId' => 'required|unique:employees,Employee_Id',
             'fullName' => 'required',
             'dob' => 'required',
         ], [
             'companyId.required' => 'The company ID is required.',
             'employeeId.required' => 'The employee ID is required.',
+            'employeeId.unique' => 'The employee ID has already been taken.',
             'fullName.required' => 'The full name is required.',
             'dob.required' => 'The date of birth is required.',
         ]);
@@ -160,7 +161,7 @@ class EmployeeController extends Controller
             'official.employeeType',
             'official.territory',
             'official.supervisor',
-            'official.country',
+            'official.branch',
         ])->find($id);
 
         if (!$employee) {
