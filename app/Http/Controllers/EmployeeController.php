@@ -16,7 +16,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employee = employee::with('company', 'blood', 'religion')->paginate(50);
+        $employee = employee::orderBy('Employee_Id', 'asc')->paginate(50);
         return response()->json($employee);
     }
 

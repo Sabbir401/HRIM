@@ -118,7 +118,15 @@ const routes = [
     {
         path: "/leave",
         name: "Leave",
-        component: () => import('./pages/employee/leave.vue'),
+        component: () => import('./pages/leave/leave.vue'),
+        meta: {
+            requireAuth: true,
+        },
+    },
+    {
+        path: "/leave-apply",
+        name: "LeaveApply",
+        component: () => import('./pages/leave/leaveApplication.vue'),
         meta: {
             requireAuth: true,
         },

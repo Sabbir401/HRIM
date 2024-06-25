@@ -88,6 +88,40 @@
                             > -->
                         </nav>
                     </div>
+
+                    <a
+                        class="nav-link collapsed"
+                        href="#"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseLayout"
+                        aria-expanded="false"
+                        aria-controls="collapseLayout"
+                    >
+                        <div class="sb-nav-link-icon">
+                            <i class="fa-solid fa-wrench"></i>
+                        </div>
+                        Leave
+                        <div class="sb-sidenav-collapse-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                    </a>
+
+                    <div
+                        class="collapse"
+                        id="collapseLayout"
+                        aria-labelledby="headingTwo"
+                        data-bs-parent="#sidenavAccordion"
+                    >
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <Router-Link
+                                class="nav-link"
+                                :to="{ name: 'LeaveApply' }"
+                                >Leave Application</Router-Link
+                            >
+                        </nav>
+                    </div>
+
+
                     <!-- <a
                         class="nav-link collapsed"
                         href="#"
