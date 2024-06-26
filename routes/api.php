@@ -22,6 +22,8 @@ use App\Http\Controllers\AcademicInfoController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\EmployeeTypeController;
+use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\TrainingInfoController;
 use App\Http\Controllers\WorkExperienceController;
 use App\Http\Controllers\LevelOfEducationController;
@@ -66,6 +68,7 @@ Route::post('/employee/{id}', [EmployeeController::class, 'update']);
 Route::get('/employee/allemp', [EmployeeController::class, 'allemp']);
 Route::get('/employee/search', [EmployeeController::class, 'search']);
 Route::get('/branch', [BranchController::class, 'index']);
+Route::get('/leave-type', [LeaveTypeController::class, 'index']);
 
 
 

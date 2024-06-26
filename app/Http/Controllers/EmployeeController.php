@@ -92,7 +92,7 @@ class EmployeeController extends Controller
 
         if ($request->hasFile('file')) {
             $request->validate([
-                'file' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,xlsx,pdf|max:2048'
+                'file' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,xlsx,pdf|max:10'
             ]);
 
             $file_name = time() . '_' . $request->file->getClientOriginalName();
@@ -218,7 +218,7 @@ class EmployeeController extends Controller
 
         if ($request->hasFile('file')) {
             $request->validate([
-                'file' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,xlsx,pdf|max:2048'
+                'file' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,xlsx,pdf|max:10'
             ]);
 
             $existingImage = emp_img::where('EID', $employee->id)->first();

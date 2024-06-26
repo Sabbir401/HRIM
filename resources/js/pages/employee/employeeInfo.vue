@@ -40,6 +40,7 @@ const companies = ref([]);
 const phones = ref([]);
 const error = ref([]);
 const empEdit = ref([]);
+const fileSizeWarning = ref();
 
 watch(
     () => empEdit.value,
@@ -163,10 +164,17 @@ const editHandler = async () => {
     }
 };
 
-const getImage = (e) => {
-    employee.photo = e.target.files[0];
 
-    //   console.log(employee.photo);
+
+const getImage = (e) => {
+    const file = e.target.files[0];
+    if (file.size > 512000) {
+        fileSizeWarning.value = true;
+        e.target.value = null;
+    } else {
+        fileSizeWarning.value = false;
+        employee.photo = e.target.files[0];
+    }
 };
 
 const submitForm = async () => {
@@ -225,7 +233,6 @@ const update = async () => {
         }
     } catch (error) {
         console.error("Error updating employee:", error);
-        // Handle the error, e.g., display an error message
     }
 };
 
@@ -237,12 +244,6 @@ const submit = () => {
     }
 };
 
-// const chooseMount = async () => {
-//   getData();
-//   if (empId) {
-//     editHandler();
-//   }
-// };
 
 onMounted(() => getData());
 </script>
@@ -253,8 +254,10 @@ onMounted(() => getData());
             <div class="row mb-3">
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <label for="" class=""
-                        >Company Name* 
-                        <span class="text-danger">{{ error.companyId ? error.companyId[0] : "" }}</span></label
+                        >Company Name*
+                        <span class="text-danger">{{
+                            error.companyId ? error.companyId[0] : ""
+                        }}</span></label
                     >
                     <select
                         v-model="employee.companyId"
@@ -275,7 +278,9 @@ onMounted(() => getData());
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <label for="exampleInputEmail1" class=""
                         >Employee ID*
-                        <span class="text-danger">{{ error.employeeId ? error.employeeId[0] : "" }}</span></label
+                        <span class="text-danger">{{
+                            error.employeeId ? error.employeeId[0] : ""
+                        }}</span></label
                     >
                     <input
                         type="text"
@@ -301,7 +306,9 @@ onMounted(() => getData());
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <label for="exampleInputEmail1" class=""
                         >Full Name*
-                        <span class="text-danger">{{ error.fullName ? error.fullName[0] : "" }}</span></label
+                        <span class="text-danger">{{
+                            error.fullName ? error.fullName[0] : ""
+                        }}</span></label
                     >
                     <input
                         type="text"
@@ -365,7 +372,10 @@ onMounted(() => getData());
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
                     <label for="exampleInputEmail1" class=""
-                        >Date of Birth* <span class="text-danger">{{ error.dob ? error.dob[0] : "" }}</span></label
+                        >Date of Birth*
+                        <span class="text-danger">{{
+                            error.dob ? error.dob[0] : ""
+                        }}</span></label
                     >
                     <input
                         type="date"
@@ -544,7 +554,11 @@ onMounted(() => getData());
             <div class="row mb-3">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <label for="exampleInputEmail1" class=""
-                        >Upload Photo</label
+                        >Upload Photo
+                        <span v-if="fileSizeWarning" class="text-danger">
+                            File size exceeds 500 KB. Please choose a smaller
+                            file.
+                        </span></label
                     >
                     <input
                         type="file"

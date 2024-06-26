@@ -8,6 +8,8 @@ const empp = ref([]);
 const emp_img = ref([]);
 
 const error = ref([]);
+const fileSizeWarning = ref();
+const leaveType = ref();
 
 const form = ref({
     department: "",
@@ -20,8 +22,12 @@ const form = ref({
 
 const getData = async () => {
     try {
-        const responsedept = await axios.get("/api/department");
+        const [responsedept, responsetype] = await axios.all([
+            axios.get("/api/department"),
+            axios.get("/api/leave-type"),
+        ]);
         department.value = responsedept.data;
+        leaveType.value = responsetype.data;
     } catch (err) {
         error.value = err.message || "Error fetching data";
     } finally {
@@ -56,6 +62,17 @@ const resetForm = () => {
     });
 };
 
+const getImage = (e) => {
+    const file = e.target.files[0];
+    if (file.size > 512000) {
+        fileSizeWarning.value = true;
+        e.target.value = null;
+    } else {
+        fileSizeWarning.value = false;
+        employee.photo = e.target.files[0];
+    }
+};
+
 const submit = async () => {
     try {
         const response = await axios.post("/api/attendence", form.value);
@@ -80,7 +97,7 @@ onMounted(() => getData());
                         <h1 class="mb-5">Leave Apllication Form</h1>
                     </div>
                     <div class="d-flex">
-                        <div class="col-lg-8">
+                        <div class="col-lg-5">
                             <form class="forms-sample" @submit.prevent="submit">
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -169,7 +186,7 @@ onMounted(() => getData());
                                     </div>
                                 </div>
 
-                                <div class="row mb-3">
+                                <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1"
@@ -181,6 +198,50 @@ onMounted(() => getData());
                                                 rows="2"
                                             ></textarea>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"
+                                                >Leave Type</label
+                                            >
+                                            <select class="form-control" id="">
+                                                <option selected disabled>
+                                                    select
+                                                </option>
+                                                <option
+                                                    v-for="leave in leaveType"
+                                                    :key="leave.id"
+                                                    :value="leave.id"
+                                                >
+                                                    {{ leave.Name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="exampleInputEmail1" class=""
+                                            >Documents
+                                            <span
+                                                >(If sick leave is more than 2
+                                                days)</span
+                                            >
+                                            <div
+                                                v-if="fileSizeWarning"
+                                                class="text-danger"
+                                            >
+                                                File size exceeds 500 KB. Please
+                                                choose a smaller file.
+                                            </div></label
+                                        >
+                                        <input
+                                            type="file"
+                                            class="form-control"
+                                            id="disabledTextInput"
+                                            aria-describedby="emailHelp"
+                                            @change="getImage"
+                                        />
                                     </div>
                                 </div>
 
@@ -195,17 +256,50 @@ onMounted(() => getData());
                             </form>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-3 d-flex justify-content-center">
                             <div v-for="i in emp_img" :key="i.id">
                                 <img
                                     :src="i.img_url"
                                     height="100%"
-                                    width="300px"
-                                    style="
-                                        padding-right: 20%;
-                                        padding-left: 20%;
-                                    "
+                                    width="100%"
+                                    style="max-height: 200px; max-width: 200px"
                                 />
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div v-for="i in emp_img" :key="i.id">
+                                <table>
+                                    <tr>
+                                        <th>Leave Type</th>
+                                        <th>Entitled</th>
+                                        <th>Enjoyed</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Casual</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Sick</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Earned</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Other</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -214,3 +308,15 @@ onMounted(() => getData());
         </div>
     </div>
 </template>
+
+<style>
+th,
+td {
+    padding: 10px 3px;
+    border: 1px solid black;
+    text-align: center;
+}
+table {
+    width: 100%;
+}
+</style>
