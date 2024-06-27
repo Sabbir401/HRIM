@@ -85,6 +85,7 @@ Route::resource('/education', LevelOfEducationController::class);
 Route::resource('/board', BoardController::class);
 Route::resource('/degree', DegreeController::class);
 Route::resource('/scale', ScaleController::class);
+Route::resource('/leave', LeaveController::class);
 
 Route::resource('/academic', AcademicInfoController::class);
 Route::resource('/training', TrainingInfoController::class);

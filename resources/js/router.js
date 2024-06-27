@@ -132,6 +132,14 @@ const routes = [
         },
     },
     {
+        path: "/leave-status",
+        name: "LeaveStatus",
+        component: () => import('./pages/leave/leaveStatus.vue'),
+        meta: {
+            requireAuth: true,
+        },
+    },
+    {
         path: "/attendence",
         name: "Attendence",
         component: () => import('./pages/employee/attendence.vue'),

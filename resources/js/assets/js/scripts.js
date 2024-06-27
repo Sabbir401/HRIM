@@ -22,5 +22,9 @@ window.addEventListener('DOMContentLoaded', event => {
             localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
         });
     }
+    
+});
 
+new DataTable('#example', {
+    pagingType: 'simple_numbers'
 });

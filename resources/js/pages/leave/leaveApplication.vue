@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import { Bootstrap5Pagination } from "laravel-vue-pagination";
 
 const department = ref([]);
 const empp = ref([]);
@@ -10,14 +9,17 @@ const emp_img = ref([]);
 const error = ref([]);
 const fileSizeWarning = ref();
 const leaveType = ref();
+const leave = ref();
 
 const form = ref({
     department: "",
     Employee_Id: "",
-    Time_In: "",
-    Time_Out: "",
     From_Date: "",
     To_Date: "",
+    Purpose: "",
+    Leave_Type_Id: "",
+    Status: "Pending",
+    file: null,
 });
 
 const getData = async () => {
@@ -45,8 +47,12 @@ const getEmployee = async (id) => {
 
 const getEmployeeImg = async (id) => {
     try {
-        const responseimg = await axios.get(`/api/empimg/${id}`);
+        const [responseimg, responseleave] = await axios.all([
+            axios.get(`/api/empimg/${id}`),
+            axios.get(`/api/leave/${id}`),
+        ]);
         emp_img.value = responseimg.data;
+        leave.value = responseleave.data;
     } catch (error) {
         console.error("Error updating store:", error);
     }
@@ -69,20 +75,46 @@ const getImage = (e) => {
         e.target.value = null;
     } else {
         fileSizeWarning.value = false;
-        employee.photo = e.target.files[0];
+        form.file = e.target.files[0];
     }
 };
 
 const submit = async () => {
+    const config = {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    };
+    const formdata = new FormData();
+    formdata.append("file", form.file);
+
+    for (const key in form.value) {
+        if (form.value.hasOwnProperty(key) && key !== "file") {
+            formdata.append(key, form.value[key]);
+        }
+    }
+
     try {
-        const response = await axios.post("/api/attendence", form.value);
+        const response = await axios.post("/api/leave", formdata, config);
         if (response.data.success) {
             resetForm();
-            alert("Successfully Inserted Attendence");
+            alert("Apply Completed Successfully");
         }
-    } catch (error) {
-        console.error("Error submitting Attendence:", error);
+    } catch (err) {
+        error.value = err.response.data.errors;
     }
+};
+
+const totalDays = (start, end) => {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    const diffTime = Math.abs(endDate - startDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+};
+
+const openAttachment = (url) => {
+    window.open(url, "_blank");
 };
 
 onMounted(() => getData());
@@ -196,6 +228,7 @@ onMounted(() => getData());
                                                 class="form-control"
                                                 id="exampleFormControlTextarea1"
                                                 rows="2"
+                                                v-model="form.Purpose"
                                             ></textarea>
                                         </div>
                                     </div>
@@ -206,7 +239,11 @@ onMounted(() => getData());
                                             <label for="exampleInputEmail1"
                                                 >Leave Type</label
                                             >
-                                            <select class="form-control" id="">
+                                            <select
+                                                class="form-control"
+                                                v-model="form.Leave_Type_Id"
+                                                id=""
+                                            >
                                                 <option selected disabled>
                                                     select
                                                 </option>
@@ -249,7 +286,7 @@ onMounted(() => getData());
                                     <div class="col-lg-12">
                                         <input
                                             type="submit"
-                                            class="btn btn-success pl-2 form-control"
+                                            class="btn-submit"
                                         />
                                     </div>
                                 </div>
@@ -267,41 +304,74 @@ onMounted(() => getData());
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div v-for="i in emp_img" :key="i.id">
-                                <table>
-                                    <tr>
-                                        <th>Leave Type</th>
-                                        <th>Entitled</th>
-                                        <th>Enjoyed</th>
-                                        <th>Balance</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Casual</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Sick</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Earned</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Other</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </table>
-                            </div>
+                            <table class="leave-apply">
+                                <tr>
+                                    <th>Leave Type</th>
+                                    <th>Entitled</th>
+                                    <th>Enjoyed</th>
+                                    <th>Balance</th>
+                                </tr>
+                                <tr v-for="leave in leaveType" :key="leave.id">
+                                    <th>{{ leave.Name }}</th>
+                                    <td>{{ leave.Max_Days }}</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h1 class="mb-5">Leave Summery</h1>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>From Data</th>
+                                    <th>To Date</th>
+                                    <th>Total Days</th>
+                                    <th>Purpose</th>
+                                    <th>Status</th>
+                                    <th>Documents</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    class="ver-align"
+                                    v-for="(l, index) in leave"
+                                    :key="l.id"
+                                >
+                                    <td>{{ index + 1 }}</td>
+                                    <td>{{ l.From_Date }}</td>
+                                    <td>{{ l.To_Date }}</td>
+                                    <td>
+                                        {{ totalDays(l.From_Date, l.To_Date) }}
+                                    </td>
+                                    <td>{{ l.Purpose }}</td>
+                                    <td>{{ l.Status }}</td>
+                                    <td>
+                                        <button
+                                            v-if="l.Attachment_Url"
+                                            @click="
+                                                openAttachment(l.Attachment_Url)
+                                            "
+                                            class="custom-btn btn-15 mx-2"
+                                        >
+                                            <i
+                                                class="fa-solid fa-file-arrow-down"
+                                            ></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -310,13 +380,13 @@ onMounted(() => getData());
 </template>
 
 <style>
-th,
-td {
+.leave-apply th,
+.leave-apply td {
     padding: 10px 3px;
     border: 1px solid black;
     text-align: center;
 }
-table {
+.leave-apply {
     width: 100%;
 }
 </style>

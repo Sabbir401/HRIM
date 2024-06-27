@@ -18,7 +18,8 @@ return new class extends Migration
             $table->date('From_Date');
             $table->date('To_Date');
             $table->text('Purpose')->nullable();
-            $table->string('Status')->nullable();
+            $table->string('Status',20)->nullable();
+            $table->string('Attachment_Url',255)->nullable();
             $table->timestamps();
 
             $table->foreign('EID')->references('id')->on('employees')->onDelete('cascade');

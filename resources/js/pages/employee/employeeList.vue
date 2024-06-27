@@ -10,7 +10,6 @@ const error = ref(null);
 const empEdit = ref(null);
 const heading = ref(null);
 const filter = ref("");
-const results = ref("");
 
 const getData = async (page = 1) => {
     try {

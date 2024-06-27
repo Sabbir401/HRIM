@@ -118,6 +118,11 @@
                                 :to="{ name: 'LeaveApply' }"
                                 >Leave Application</Router-Link
                             >
+                            <Router-Link
+                                class="nav-link"
+                                :to="{ name: 'LeaveStatus' }"
+                                >Application Status</Router-Link
+                            >
                         </nav>
                     </div>
 

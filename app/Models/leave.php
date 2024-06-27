@@ -16,6 +16,7 @@ class leave extends Model
         'To_Date',
         'Purpose',
         'Status',
+        'Attachment_Url',
     ];
 
     public function employee()
