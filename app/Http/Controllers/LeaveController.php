@@ -96,8 +96,17 @@ class LeaveController extends Controller
      */
     public function show($id)
     {
-        $leave = leave::where('EID', $id)->get();
-        return response()->json($leave);
+        $leaves = leave::with('leave_type')->where('EID', $id)->get();
+
+        foreach ($leaves as $leave) {
+            $startDate = new \DateTime($leave->From_Date);
+            $endDate = new \DateTime($leave->To_Date);
+
+            $interval = $startDate->diff($endDate);
+            $leave->daysBetween = $interval->days;
+        }
+
+        return response()->json($leaves);
     }
 
     /**
@@ -105,9 +114,22 @@ class LeaveController extends Controller
      */
     public function edit(leave $id)
     {
-
     }
 
+    public function leaveSummery($id)
+    {
+        $leaves = leave::with('leave_type')->where('EID', $id)->get();
+
+        foreach ($leaves as $leave) {
+            $startDate = new \DateTime($leave->From_Date);
+            $endDate = new \DateTime($leave->To_Date);
+
+            $interval = $startDate->diff($endDate);
+            $leave->daysBetween = $interval->days;
+        }
+
+        return response()->json($leaves);
+    }
     /**
      * Update the specified resource in storage.
      */

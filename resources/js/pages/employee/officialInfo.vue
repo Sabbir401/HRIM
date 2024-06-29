@@ -24,6 +24,7 @@ const official = ref({
     doc: "",
     jobLocation: "",
     shift: "",
+    status: ""
 });
 
 const departments = ref([]);
@@ -33,6 +34,7 @@ const territories = ref([]);
 const emptypes = ref([]);
 const supervisor = ref([]);
 const branches = ref([]);
+const inactive = ref(false);
 
 const error = ref([]);
 const empEdit = ref([]);
@@ -74,8 +76,8 @@ const getData = async () => {
 watch(empEdit, async (newEmpData) => {
     if (newEmpData) {
         newEmpData.department
-        ? (official.value.departmentId = newEmpData.department.id)
-        : (official.value.departmentId = "");
+            ? (official.value.departmentId = newEmpData.department.id)
+            : (official.value.departmentId = "");
         await getDepartment(newEmpData.department.id);
         newEmpData.designation
             ? (official.value.designationId = newEmpData.designation.id)
@@ -110,6 +112,11 @@ watch(empEdit, async (newEmpData) => {
         newEmpData.Shift
             ? (official.value.shift = newEmpData.Shift)
             : (official.value.shift = "");
+        if (newEmpData.Status == 'Y'){
+            inactive.value = true;
+        }else{
+            inactive.value = false;
+        }
     }
 });
 
@@ -132,7 +139,6 @@ const resetForm = () => {
     });
 };
 
-
 const editHandler = async () => {
     try {
         const response = await axios.get(`/api/official/${empId}/edit`);
@@ -144,6 +150,7 @@ const editHandler = async () => {
 
 const submitForm = async () => {
     try {
+        official.value.status = inactive.value ? "Y" : "N";
         const response = await axios.post("/api/official", official.value);
         if (response.data.success) {
             alert("Successfully Inserted");
@@ -156,6 +163,7 @@ const submitForm = async () => {
 
 const update = async () => {
     try {
+        official.value.status = inactive.value ? "Y" : "N";
         const response = await axios.put(
             `/api/official/${empId}`,
             official.value
@@ -211,9 +219,12 @@ onMounted(() => getData());
                     </select>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <label for="" class="">Designation* <span class="text-danger">{{
+                    <label for="" class=""
+                        >Designation*
+                        <span class="text-danger">{{
                             error.designationId ? error.designationId[0] : ""
-                        }}</span></label>
+                        }}</span></label
+                    >
                     <select
                         class="form-control"
                         name="status"
@@ -231,9 +242,12 @@ onMounted(() => getData());
                     </select>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <label for="" class="">Employee Grade* <span class="text-danger">{{
+                    <label for="" class=""
+                        >Employee Grade*
+                        <span class="text-danger">{{
                             error.employeeGrade ? error.employeeGrade[0] : ""
-                        }}</span></label>
+                        }}</span></label
+                    >
                     <select
                         name=""
                         id=""
@@ -303,9 +317,12 @@ onMounted(() => getData());
                     </select>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <label for="" class="">Employee Type* <span class="text-danger">{{
+                    <label for="" class=""
+                        >Employee Type*
+                        <span class="text-danger">{{
                             error.employeeTypeId ? error.employeeTypeId[0] : ""
-                        }}</span></label>
+                        }}</span></label
+                    >
                     <select
                         class="form-control"
                         name="status"
@@ -409,6 +426,13 @@ onMounted(() => getData());
                         <option value="N">Night</option>
                     </select>
                 </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <input
+                type="checkbox"
+                v-model="inactive"
+                />
+                <label class="px-2 pt-0">Inactive</label>
             </div>
 
             <div class="d-flex justify-content-end">

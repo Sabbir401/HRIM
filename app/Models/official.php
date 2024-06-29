@@ -22,6 +22,7 @@ class official extends Model
         'DOC',
         'Job_Location_Id',
         'Shift',
+        'Status',
     ];
 
     public function employee()

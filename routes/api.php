@@ -69,6 +69,7 @@ Route::get('/employee/allemp', [EmployeeController::class, 'allemp']);
 Route::get('/employee/search', [EmployeeController::class, 'search']);
 Route::get('/branch', [BranchController::class, 'index']);
 Route::get('/leave-type', [LeaveTypeController::class, 'index']);
+Route::get('/leave-summery/{id}', [LeaveController::class, 'leaveSummery']);
 
 
 

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->date('DOC')->nullable();
             $table->unsignedBigInteger('Job_Location_Id')->nullable();
             $table->string('Shift',20)->nullable();
+            $table->string('Status',50)->nullable();
             $table->timestamps();
 
             $table->foreign('EID')->references('id')->on('employees')->onDelete('cascade');

@@ -56,6 +56,7 @@ class OfficialController extends Controller
             'DOC' => $request->input('doc'),
             'Job_Location_Id' => $request->input('jobLocation'),
             'Shift' => $request->input('shift'),
+            'Status' => $request->input('status'),
         ]);
 
         $response = [
@@ -125,6 +126,7 @@ class OfficialController extends Controller
             'DOC' => $request->input('doc'),
             'Job_Location_Id' => $request->input('jobLocation'),
             'Shift' => $request->input('shift'),
+            'Status' => $request->input('status'),
         ]);
 
         $response = [

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 
 const department = ref([]);
@@ -10,6 +10,7 @@ const error = ref([]);
 const fileSizeWarning = ref();
 const leaveType = ref();
 const leave = ref();
+const leaveSummery = ref([]);
 
 const form = ref({
     department: "",
@@ -47,16 +48,33 @@ const getEmployee = async (id) => {
 
 const getEmployeeImg = async (id) => {
     try {
-        const [responseimg, responseleave] = await axios.all([
+        const [responseimg, responseleave, responseSummery] = await axios.all([
             axios.get(`/api/empimg/${id}`),
             axios.get(`/api/leave/${id}`),
+            axios.get(`/api/leave-summery/${id}`),
         ]);
         emp_img.value = responseimg.data;
         leave.value = responseleave.data;
+        leaveSummery.value = responseSummery.data;
     } catch (error) {
         console.error("Error updating store:", error);
     }
 };
+
+const totalLeaveDays = computed(() => {
+  const totals = {};
+  leave.value.forEach(l => {
+    const typeName = l.leave_type.Name;
+    if (!totals[typeName]) {
+        totals[typeName] = {
+        totalDays: 0,
+        maxDays: l.leave_type.Max_Days,
+      };
+    }
+    totals[typeName].totalDays += l.daysBetween;
+  });
+  return totals;
+});
 
 const resetForm = () => {
     Object.keys(form.value).forEach((key) => {
@@ -311,11 +329,11 @@ onMounted(() => getData());
                                     <th>Enjoyed</th>
                                     <th>Balance</th>
                                 </tr>
-                                <tr v-for="leave in leaveType" :key="leave.id">
-                                    <th>{{ leave.Name }}</th>
-                                    <td>{{ leave.Max_Days }}</td>
-                                    <td></td>
-                                    <td></td>
+                                <tr v-for="(info, typeName) in totalLeaveDays" :key="typeName">
+                                    <th>{{ typeName  }}</th>
+                                    <td>{{  info.maxDays  }}</td>
+                                    <td>{{ info.totalDays }}</td>
+                                    <td>{{ info.maxDays-info.totalDays }}</td>
                                 </tr>
                             </table>
                         </div>
@@ -352,7 +370,7 @@ onMounted(() => getData());
                                     <td>{{ l.From_Date }}</td>
                                     <td>{{ l.To_Date }}</td>
                                     <td>
-                                        {{ totalDays(l.From_Date, l.To_Date) }}
+                                        {{ l.daysBetween }}
                                     </td>
                                     <td>{{ l.Purpose }}</td>
                                     <td>{{ l.Status }}</td>

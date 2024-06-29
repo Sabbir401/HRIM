@@ -21,10 +21,10 @@ class leave extends Model
 
     public function employee()
     {
-        return $this->belongsTo(employee::class);
+        return $this->belongsTo(employee::class, 'EID');
     }
     public function leave_type()
     {
-        return $this->belongsTo(leave_type::class);
+        return $this->belongsTo(leave_type::class, 'Leave_Type_Id');
     }
 }
