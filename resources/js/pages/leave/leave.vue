@@ -32,7 +32,6 @@ const getEmployee = async (id) => {
 
 onMounted(() => getData());
 </script>
-
 <template>
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="row">

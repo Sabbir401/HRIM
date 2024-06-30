@@ -148,6 +148,14 @@ const routes = [
         },
     },
     {
+        path: "/atten",
+        name: "atten",
+        component: () => import('./pages/employee/atten.vue'),
+        meta: {
+            requireAuth: true,
+        },
+    },
+    {
         path: "/report-attendence",
         name: "AttendenceReport",
         component: () => import('./pages/report/AttendenceReport.vue'),

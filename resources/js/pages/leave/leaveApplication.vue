@@ -9,7 +9,7 @@ const emp_img = ref([]);
 const error = ref([]);
 const fileSizeWarning = ref();
 const leaveType = ref();
-const leave = ref();
+const leave = ref([]);
 const leaveSummery = ref([]);
 
 const form = ref({

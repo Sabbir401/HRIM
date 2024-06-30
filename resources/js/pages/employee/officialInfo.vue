@@ -112,11 +112,7 @@ watch(empEdit, async (newEmpData) => {
         newEmpData.Shift
             ? (official.value.shift = newEmpData.Shift)
             : (official.value.shift = "");
-        if (newEmpData.Status == 'Y'){
-            inactive.value = true;
-        }else{
-            inactive.value = false;
-        }
+            inactive.value = newEmpData.Status === 'Y';
     }
 });
 

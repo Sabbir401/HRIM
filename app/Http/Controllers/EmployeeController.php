@@ -173,9 +173,10 @@ class EmployeeController extends Controller
 
     public function find($id)
     {
-        $employee = Employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'departments.Name',)
+        $employee = Employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'designations.Name')
             ->join('officials', 'officials.EID', '=', 'employees.id')
             ->join('departments', 'officials.Department_Id', '=', 'departments.id')
+            ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
             ->where('departments.id', '=', $id)
             ->get();
 

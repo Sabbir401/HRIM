@@ -84,7 +84,7 @@ onMounted(() => getData());
             <h1 class="mb-5">Manual Attendance Form</h1>
           </div>
           <div class="d-flex">
-            <div class="col-lg-8">
+            <div class="col-lg-8 shadow p-3">
               <form class="forms-sample" @submit.prevent="submit">
                 <div class="row">
                   <div class="col-lg-6">
@@ -195,6 +195,7 @@ onMounted(() => getData());
                   :src="i.img_url"
                   height="100%"
                   width="300px"
+                  class="shadow"
                   style="padding-right: 20%; padding-left: 20%"
                 />
               </div>
@@ -205,3 +206,10 @@ onMounted(() => getData());
     </div>
   </div>
 </template>
+
+<style>
+.shadow{
+  box-shadow: 1px 1px 10px grey;
+  border-radius: 5px;
+}
+</style>

@@ -46,6 +46,11 @@
                             >
                             <Router-Link
                                 class="nav-link"
+                                :to="{ name: 'atten' }"
+                                >Attendence-2</Router-Link
+                            >
+                            <Router-Link
+                                class="nav-link"
                                 :to="{ name: 'Leave' }"
                                 >Leave</Router-Link
                             >

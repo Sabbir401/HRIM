@@ -71,8 +71,6 @@ Route::get('/branch', [BranchController::class, 'index']);
 Route::get('/leave-type', [LeaveTypeController::class, 'index']);
 Route::get('/leave-summery/{id}', [LeaveController::class, 'leaveSummery']);
 
-
-
 Route::put('/nominee/{id}', [NomineeController::class, 'update']);
 
 Route::resource('/blood', BloodGroupController::class);
@@ -98,7 +96,6 @@ Route::resource('/empType', EmployeeTypeController::class);
 Route::resource('/area', AreaController::class);
 Route::resource('/territory', TerritoryController::class);
 Route::resource('/official', OfficialController::class);
-
 
 Route::post('/attendence', [AttendenceController::class, 'store']);
 Route::post('/attendence/edit', [AttendenceController::class, 'edit']);
