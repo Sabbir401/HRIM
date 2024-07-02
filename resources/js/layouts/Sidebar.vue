@@ -54,6 +54,11 @@
                                 :to="{ name: 'Leave' }"
                                 >Leave</Router-Link
                             >
+                            <Router-Link
+                                class="nav-link"
+                                :to="{ name: 'Test' }"
+                                >Test</Router-Link
+                            >
                         </nav>
                     </div>
 

@@ -50,6 +50,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->data);
         $request->validate([
             'companyId' => 'required',
             'employeeId' => 'required|unique:employees,Employee_Id',
