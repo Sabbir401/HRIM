@@ -10,18 +10,13 @@ const error = ref([]);
 const leaveType = ref();
 const leave = ref([]);
 const selectedType = ref("");
-const selectedStatus = ref("");
+const selectedStatus = ref("Pending");
 const leaveSummery = ref([]);
 
 const form = ref({
     department: "",
     Employee_Id: "",
-    From_Date: "",
-    To_Date: "",
-    Purpose: "",
-    Leave_Type_Id: "",
-    Status: "Pending",
-    file: null,
+    Status: "",
 });
 
 const getData = async () => {
@@ -38,10 +33,23 @@ const getData = async () => {
     }
 };
 
-const leaveApproved = async () => {
+const leaveApproved = async (id) => {
+    form.value.Status = 'Approved';
     try {
-        const response = await axios.get(`/api/emp/${id}`);
+        const response = await axios.put(`/api/leave/${id}`, form.value);
         empp.value = response.data;
+        alert('Leave Approved');
+    } catch (error) {
+        console.error("Error updating store:", error);
+    }
+};
+
+const leaveReject = async (id) => {
+    form.value.Status = 'Rejected';
+    try {
+        const response = await axios.put(`/api/leave/${id}`, form.value);
+        empp.value = response.data;
+        alert('Leave Rejected');
     } catch (error) {
         console.error("Error updating store:", error);
     }
@@ -68,16 +76,24 @@ const getEmployee = async (id) => {
     }
 };
 
+const getLeave = async (id) => {
+    try {
+        const response = await axios.get(`/api/leave-summery/${id}`);
+        leaveSummery.value = response.data;
+    } catch (error) {
+        console.error("Error updating store:", error);
+    }
+};
+
 const getEmployeeImg = async (id) => {
     try {
-        const [responseimg, responseleave, responseSummery] = await axios.all([
+        const [responseimg, responseleave] = await axios.all([
             axios.get(`/api/empimg/${id}`),
             axios.get(`/api/leave/${id}`),
-            axios.get(`/api/leave-summery/${id}`),
         ]);
         emp_img.value = responseimg.data;
         leave.value = responseleave.data;
-        leaveSummery.value = responseSummery.data;
+        getLeave(id);
     } catch (error) {
         console.error("Error updating store:", error);
     }
@@ -216,7 +232,7 @@ onMounted(() => getData());
             <div class="card mt-4">
                 <div class="card-body">
                     <div class="text-center">
-                        <h1 class="mb-5">Leave Summery</h1>
+                        <h1 class="mb-5">Leave Summary</h1>
                     </div>
 
                     <div class="row d-flex justify-content-end">
@@ -287,10 +303,10 @@ onMounted(() => getData());
                                         <div v-else></div>
                                     </td>
                                     <td>
-                                        <button class="custom-btn btn-13 mx-1 px-1" @click="leaveApproved">
+                                        <button class="custom-btn btn-13 mx-1 px-1" @click="leaveApproved(l.id)">
                                             <i class="fa-solid fa-check"></i>
                                         </button>
-                                        <button class="custom-btn btn-12 mx-1" @click="leaveReject">
+                                        <button class="custom-btn btn-12 mx-1" @click="leaveReject(l.id)">
                                             <i class="fa-solid fa-xmark"></i>
                                         </button>
                                     </td>

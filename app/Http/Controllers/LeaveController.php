@@ -133,14 +133,17 @@ class LeaveController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, leave $leave)
+    public function update(Request $request, $id)
     {
-        //
+        $leave = leave::find($id);
+        $leave->update([
+            'Status' => $request->input('Status'),
+        ]);
+
+        return response()->json('Updated Successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(leave $leave)
     {
         //

@@ -344,7 +344,7 @@ onMounted(() => getData());
             <div class="card mt-4">
                 <div class="card-body">
                     <div class="text-center">
-                        <h1 class="mb-5">Leave Summery</h1>
+                        <h1 class="mb-5">Leave Summary</h1>
                     </div>
 
                     <div class="table-responsive">
