@@ -70,6 +70,7 @@ Route::get('/employee/search', [EmployeeController::class, 'search']);
 Route::get('/branch', [BranchController::class, 'index']);
 Route::get('/leave-type', [LeaveTypeController::class, 'index']);
 Route::get('/leave-summery/{id}', [LeaveController::class, 'leaveSummery']);
+Route::get('/emp-attendence', [EmployeeController::class, 'attendenceEmployee']);
 
 Route::put('/nominee/{id}', [NomineeController::class, 'update']);
 

@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('attendences', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('EID');
-            $table->date('Date')->unique();
-            $table->string('Time_In',20);
-            $table->string('Time_Out',20)->nullable();
-            $table->enum('Status',['Present', 'Absent', 'Late'])->nullable();
+            $table->date('Date');
+            $table->string('Time',20)->nullable();
+            $table->enum('Status',['P', 'A', 'L'])->nullable();
             $table->timestamps();
 
             $table->foreign('EID')->references('id')->on('employees')->onDelete('cascade');

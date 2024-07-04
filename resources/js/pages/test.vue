@@ -1,12 +1,32 @@
 <template>
+    <div class="col-lg-2 mb-3">
+        <label for="">Select a Month</label>
+        <select
+            class="form-control"
+            name="status"
+            v-model="selectedMonth"
+            @change="generateDays"
+        >
+            <option
+                v-for="(month, index) in months"
+                :key="month"
+                :value="index"
+            >
+                {{ month }}
+            </option>
+        </select>
+    </div>
     <div>
-        <button class="custom-btn btn-15 mb-3" @click="saveData">Save Data</button>
+        <button class="custom-btn btn-15 mb-3" @click="saveData">
+            Save Data
+        </button>
         <hot-table ref="hotTableComponent" :settings="hotSettings"></hot-table>
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
+import axios from "axios";
 import { HotTable } from "@handsontable/vue3";
 import { registerAllModules } from "handsontable/registry";
 import "handsontable/dist/handsontable.full.css";
@@ -14,31 +34,57 @@ import "handsontable/dist/handsontable.full.css";
 // Register Handsontable's modules
 registerAllModules();
 
+const daysInMonth = ref([]);
+const selectedMonth = ref(new Date().getMonth());
 const employee = ref([]);
-const colHeaders = [
-    "ID",
-    "Company ID",
-    "Employee ID",
-    "Card No",
-    "Full Name",
-    "Father Name",
-    "Mother Name",
-    "Spouse Name",
-    "Marital Status",
-    "DOB",
-    "Place of Birth",
-    "Present Address",
-    "Permanent Address",
-    "Contact No",
-    "Emergency Contact",
-    "Gender",
-    "Personal Email",
-    "Official Email",
-    "Blood Group ID",
-    "Religion ID",
-    "Nationality",
-    "NID",
-];
+const hotTableComponent = ref(null);
+
+const months = ref([
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+]);
+
+const generateDays = () => {
+    const year = new Date().getFullYear();
+    const month = selectedMonth.value;
+    const days = new Date(year, month + 1, 0).getDate();
+
+    daysInMonth.value = Array.from({ length: days }, (v, k) => k + 1);
+
+    hotSettings.value.colHeaders = [
+        "ID",
+        "Department",
+        "Employee Name",
+        "Designation",
+        ...daysInMonth.value.map((day) => `${day}`),
+    ];
+
+    hotSettings.value.columns = [
+        { type: "text", data: "id", readOnly: true },
+        { type: "text", data: "department", readOnly: true },
+        { type: "text", data: "Full_Name", readOnly: true },
+        { type: "text", data: "designation", readOnly: true },
+        ...daysInMonth.value.map((day, index) => ({
+            type: "dropdown",
+            source: ["P", "A", "L"],
+            data: `attendance.${day - 1}`,
+            editor: "dropdown",
+        })),
+    ];
+
+    hotTableComponent.value.hotInstance.updateSettings(hotSettings.value);
+    getData();
+};
 
 const hotSettings = ref({
     data: [],
@@ -46,11 +92,20 @@ const hotSettings = ref({
     autoWrapRow: true,
     autoWrapCol: true,
     licenseKey: "non-commercial-and-evaluation",
-    height: window.innerHeight - 150,
-    startRows: 3,
-    startCols: 3,
+    height: window.innerHeight - 200,
+    hiddenColumns: {
+        columns: [0],
+        indicators: false,
+    },
+    fixedColumnsStart: 3,
     rowHeaders: true,
-    colHeaders: true,
+    colHeaders: ["Department", "Employee Name", "Designation"],
+    columns: [
+        { type: "text", data: "id", readOnly: true },
+        { type: "text", data: "department", readOnly: true },
+        { type: "text", data: "Full_Name", readOnly: true },
+        { type: "text", data: "designation", readOnly: true },
+    ],
     minSpareRows: 1,
     minSpareCols: 1,
     manualColumnResize: true,
@@ -78,91 +133,47 @@ const hotSettings = ref({
         "borders",
         "remove_row",
     ],
-    hiddenColumns: {
-        columns: [1, 0],
-        indicators: true,
-    },
-    columns: [
-        { type: "autocomplete", data: "id", className: "", readOnly: true },
-        {
-            type: "autocomplete",
-            data: "Employee_Id",
-            className: "",
-            readOnly: true,
-        },
-        {
-            type: "autocomplete",
-            data: "Full_Name",
-            className: "",
-            readOnly: false,
-        },
-        {
-            type: "autocomplete",
-            data: "Father_Name",
-            className: "",
-            readOnly: false,
-        },
-        {
-            type: "autocomplete",
-            data: "Mother_Name",
-            className: "",
-            readOnly: false,
-        },
-    ],
-    colHeaders: [
-        "Company ID",
-        "Employee ID",
-        "Card No",
-        "Full Name",
-        "Father Name",
-        "Mother Name",
-        "Spouse Name",
-        "Marital Status",
-        "DOB",
-        "Place of Birth",
-        "Present Address",
-        "Permanent Address",
-        "Contact No",
-        "Emergency Contact",
-        "Gender",
-        "Personal Email",
-        "Official Email",
-        "Blood Group ID",
-        "Religion ID",
-        "Nationality",
-        "NID",
-    ],
     afterChange(changes, source) {
-        if (source !== 'loadData') {
+        if (source !== "loadData") {
             hotTableComponent.value.hotInstance.render();
         }
     },
 });
 
-const hotTableComponent = ref(null);
-
 const getData = async () => {
-    const response = await axios.get("/api/employee/allemp");
-    employee.value = response.data;
-    if(employee.value){
-        hotTableComponent.value.hotInstance.loadData(employee.value);
-    }
+    const response = await axios.get("/api/emp-attendence");
+    employee.value = response.data.map((emp) => ({
+        ...emp,
+        attendance: Array.from({ length: daysInMonth.value.length }, () => ""),
+    }));
+
+    hotTableComponent.value.hotInstance.loadData(employee.value);
 };
 
 const saveData = async () => {
     const data = hotTableComponent.value.hotInstance.getData();
+    const attendanceData = data.map((row) => {
+        const attendance = row.slice(4); // only attendance status values
+        return {
+            id: row[0],
+            attendance: attendance,
+        };
+    });
+
     try {
-        const response = await axios.post("/api/employee", { data });
+        const response = await axios.post("/api/attendence", {
+            attendanceData,
+            month: selectedMonth.value,
+        });
         if (response.data.success) {
-            alert('Data saved successfully');
+            alert("Data saved successfully");
         } else {
-            alert('Failed to save data');
+            alert("Failed to save data");
         }
     } catch (error) {
         console.error("Error saving data:", error);
     }
 };
 
-onMounted(() => getData());
+onMounted(() => generateDays());
 </script>
-

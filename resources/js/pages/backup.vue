@@ -1,6 +1,25 @@
 <template>
+    <div class="col-lg-2 mb-3">
+        <label for="">Select a Month</label>
+        <select
+            class="form-control"
+            name="status"
+            v-model="selectedMonth"
+            @change="generateDays"
+        >
+            <option
+                v-for="(month, index) in months"
+                :key="month"
+                :value="index"
+            >
+                {{ month }}
+            </option>
+        </select>
+    </div>
     <div>
-        <button class="custom-btn btn-15 mb-3" @click="saveData">Save Data</button>
+        <button class="custom-btn btn-15 mb-3" @click="saveData">
+            Save Data
+        </button>
         <hot-table ref="hotTableComponent" :settings="hotSettings"></hot-table>
     </div>
 </template>
@@ -14,31 +33,54 @@ import "handsontable/dist/handsontable.full.css";
 // Register Handsontable's modules
 registerAllModules();
 
+const daysInMonth = ref([]);
+const selectedMonth = ref();
 const employee = ref([]);
-const colHeaders = [
-    "ID",
-    "Company ID",
-    "Employee ID",
-    "Card No",
-    "Full Name",
-    "Father Name",
-    "Mother Name",
-    "Spouse Name",
-    "Marital Status",
-    "DOB",
-    "Place of Birth",
-    "Present Address",
-    "Permanent Address",
-    "Contact No",
-    "Emergency Contact",
-    "Gender",
-    "Personal Email",
-    "Official Email",
-    "Blood Group ID",
-    "Religion ID",
-    "Nationality",
-    "NID",
-];
+const hotTableComponent = ref(null);
+
+const months = ref([
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+]);
+
+const generateDays = () => {
+    const year = new Date().getFullYear();
+    const month = selectedMonth.value;
+    const days = new Date(year, month + 1, 0).getDate();
+
+    daysInMonth.value = Array.from({ length: days }, (v, k) => k + 1);
+    hotSettings.value.colHeaders = [
+        "Employee ID",
+        "Employee Name",
+        "Department",
+        ...daysInMonth.value.map(day => `${day}`),
+    ];
+    hotSettings.value.columns = [
+        { type: "text", data: "Employee_Id", readOnly: true },
+        { type: "text", data: "Employee_Name", readOnly: true },
+        { type: "text", data: "Department", readOnly: true },
+        // ...daysInMonth.value.map(() => ({ type: "dropdown", source: ["P", "A"], data: "" })),
+        ...daysInMonth.value.map((day, index) => ({
+            type: "dropdown",
+            source: ["P", "A", "S", "C", "D", "H"],
+            data: row => row.attendance[day - 1],
+            editor: 'dropdown',
+        })),
+    ];
+    getData();
+    // Reload the data to apply the new settings
+    hotTableComponent.value.hotInstance.updateSettings(hotSettings.value);
+};
 
 const hotSettings = ref({
     data: [],
@@ -46,7 +88,6 @@ const hotSettings = ref({
     autoWrapRow: true,
     autoWrapCol: true,
     licenseKey: "non-commercial-and-evaluation",
-    height: window.innerHeight - 150,
     startRows: 3,
     startCols: 3,
     rowHeaders: true,
@@ -78,10 +119,6 @@ const hotSettings = ref({
         "borders",
         "remove_row",
     ],
-    hiddenColumns: {
-        columns: [1, 0],
-        indicators: true,
-    },
     columns: [
         { type: "autocomplete", data: "id", className: "", readOnly: true },
         {
@@ -110,50 +147,49 @@ const hotSettings = ref({
         },
     ],
     colHeaders: [
-        "Company ID",
         "Employee ID",
-        "Card No",
-        "Full Name",
-        "Father Name",
-        "Mother Name",
-        "Spouse Name",
-        "Marital Status",
-        "DOB",
-        "Place of Birth",
-        "Present Address",
-        "Permanent Address",
-        "Contact No",
-        "Emergency Contact",
-        "Gender",
-        "Personal Email",
-        "Official Email",
-        "Blood Group ID",
-        "Religion ID",
-        "Nationality",
-        "NID",
+        "Employee Name",
+        "Department",
     ],
     afterChange(changes, source) {
-        if (source !== 'loadData') {
+        if (source !== "loadData") {
             hotTableComponent.value.hotInstance.render();
         }
     },
 });
 
-const hotTableComponent = ref(null);
+
+// const getData = async () => {
+//     const response = await axios.get("/api/employee/allemp");
+//     employee.value = response.data;
+//     if (employee.value) {
+//         hotTableComponent.value.hotInstance.loadData(employee.value);
+//     }
+// };
 
 const getData = async () => {
     const response = await axios.get("/api/employee/allemp");
-    employee.value = response.data;
-    if(employee.value){
-        hotTableComponent.value.hotInstance.loadData(employee.value);
+    employee.value = response.data.map(emp => ({
+        ...emp,
+        attendance: Array.from({ length: daysInMonth.value.length }, () => ""),
+    }));
+
+    hotTableComponent.value.hotInstance.loadData(employee.value);
+};
+
+const saveData = async () => {
+    const data = hotTableComponent.value.hotInstance.getData();
+    try {
+        const response = await axios.post("/api/employee", { data });
+        if (response.data.success) {
+            alert("Data saved successfully");
+        } else {
+            alert("Failed to save data");
+        }
+    } catch (error) {
+        console.error("Error saving data:", error);
     }
 };
 
-onMounted(() => getData());
+// onMounted(() => getData());
 </script>
-
-<style scoped>
-button {
-    margin-top: 10px;
-}
-</style>

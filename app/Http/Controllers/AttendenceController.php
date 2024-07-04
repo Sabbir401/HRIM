@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\attendence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AttendenceController extends Controller
 {
@@ -27,42 +28,70 @@ class AttendenceController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            DB::beginTransaction();
+        $attendanceData = $request->input('attendanceData');
+        $year = now()->year;
+        $month = $request->input('month');
 
-            $startDate = $request->input('From_Date');
-            $endDate = $request->input('To_Date');
+        foreach ($attendanceData as $employeeData) {
+            $employeeId = $employeeData['id'];
+            $attendance = $employeeData['attendance'];
 
-            $timeIn = $request->input('Time_In');
-            $status = ($timeIn && $timeIn > '11:00:00') ? 'Late' : 'Present';
-
-            $date = $startDate;
-            while ($date <= $endDate) {
-                $employee = attendence::create([
-                    'EID' => $request->input('Employee_Id'),
-                    'Date' => $date,
-                    'Time_In' => $request->input('Time_In'),
-                    'Time_Out' => $request->input('Time_Out'),
-                    'Status' => $status,
-                ]);
-                $date = date('Y-m-d', strtotime($date . ' +1 day'));
+            foreach ($attendance as $day => $status) {
+                if (!empty($status)) {
+                    attendence::updateOrCreate(
+                        [
+                            'EID' => $employeeId,
+                            'Date' => Carbon::create($year, $month + 1, $day + 1)->toDateString(),
+                        ],
+                        [
+                            'Status' => $status,
+                            'Time' => now()->toTimeString()
+                        ]
+                    );
+                }
             }
-
-            DB::commit();
-            $response = [
-                'success'   =>  true,
-                'message'   =>  'Attendance saved successfully',
-            ];
-            return response()->json($response);
-        } catch (\Exception $e) {
-            DB::rollback();
-            $response = [
-                'success'   =>  false,
-                'message'   =>  'Error while inserting attendance: ' . $e->getMessage(),
-            ];
-            return response()->json($response, 500);
         }
+
+        return response()->json(['success' => true]);
     }
+
+    // public function store(Request $request)
+    // {
+    //     try {
+    //         DB::beginTransaction();
+
+    //         $startDate = $request->input('From_Date');
+    //         $endDate = $request->input('To_Date');
+
+    //         $timeIn = $request->input('Time_In');
+    //         $status = ($timeIn && $timeIn > '11:00:00') ? 'L' : 'P';
+
+    //         $date = $startDate;
+    //         while ($date <= $endDate) {
+    //             $employee = attendence::create([
+    //                 'EID' => $request->input('Employee_Id'),
+    //                 'Date' => $date,
+    //                 'Time_In' => $request->input('Time'),
+    //                 'Status' => $status,
+    //             ]);
+    //             $date = date('Y-m-d', strtotime($date . ' +1 day'));
+    //         }
+
+    //         DB::commit();
+    //         $response = [
+    //             'success'   =>  true,
+    //             'message'   =>  'Attendance saved successfully',
+    //         ];
+    //         return response()->json($response);
+    //     } catch (\Exception $e) {
+    //         DB::rollback();
+    //         $response = [
+    //             'success'   =>  false,
+    //             'message'   =>  'Error while inserting attendance: ' . $e->getMessage(),
+    //         ];
+    //         return response()->json($response, 500);
+    //     }
+    // }
 
 
     /**

@@ -50,7 +50,6 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->data);
         $request->validate([
             'companyId' => 'required',
             'employeeId' => 'required|unique:employees,Employee_Id',
@@ -179,6 +178,21 @@ class EmployeeController extends Controller
             ->join('departments', 'officials.Department_Id', '=', 'departments.id')
             ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
             ->where('departments.id', '=', $id)
+            ->get();
+
+        if (!$employee) {
+            return response()->json(['message' => 'Employee not found'], 404);
+        }
+
+        return response()->json($employee);
+    }
+
+    public function attendenceEmployee()
+    {
+        $employee = Employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'designations.Name as designation', 'departments.Name as department')
+            ->join('officials', 'officials.EID', '=', 'employees.id')
+            ->join('departments', 'officials.Department_Id', '=', 'departments.id')
+            ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
             ->get();
 
         if (!$employee) {

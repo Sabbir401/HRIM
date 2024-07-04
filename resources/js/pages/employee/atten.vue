@@ -16,7 +16,7 @@ const months = ref([
     "April",
     "May",
     "June",
-    "July",
+    "July", 
     "August",
     "September",
     "October",
