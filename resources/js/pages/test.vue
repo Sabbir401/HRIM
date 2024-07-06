@@ -162,9 +162,10 @@ const saveData = async () => {
 
     try {
         const response = await axios.post("/api/attendence", {
-            attendanceData,
-            month: selectedMonth.value,
-        });
+             attendanceData,
+             month: selectedMonth.value,
+         });
+        //const response = await axios.get("/api/test2");
         if (response.data.success) {
             alert("Data saved successfully");
         } else {

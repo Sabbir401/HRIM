@@ -2,20 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\attendence;
+use Rats\Zkteco\Lib\ZKTeco;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Artisan;
 
 class AttendenceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+    protected $zk;
+
     public function index()
     {
         $attendence = attendence::get();
         return response()->json($attendence);
+    }
+
+    public function __construct()
+    {
+        $this->zk = new ZKTeco("192.168.68.190", 4370);
     }
 
     /**
@@ -23,7 +33,8 @@ class AttendenceController extends Controller
      */
     public function create()
     {
-        //
+        Artisan::call('zktuser:fetch');
+        return response()->json(['message' => 'Attendance fetched successfully.']);
     }
 
     public function store(Request $request)

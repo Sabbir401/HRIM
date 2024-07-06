@@ -28,6 +28,7 @@ use App\Http\Controllers\TrainingInfoController;
 use App\Http\Controllers\WorkExperienceController;
 use App\Http\Controllers\LevelOfEducationController;
 use App\Http\Controllers\TerritoryController;
+use App\Models\attendence;
 use App\Models\territory;
 
 /*
@@ -71,6 +72,7 @@ Route::get('/branch', [BranchController::class, 'index']);
 Route::get('/leave-type', [LeaveTypeController::class, 'index']);
 Route::get('/leave-summery/{id}', [LeaveController::class, 'leaveSummery']);
 Route::get('/emp-attendence', [EmployeeController::class, 'attendenceEmployee']);
+Route::get('/test2', [AttendenceController::class, 'create']);
 
 Route::put('/nominee/{id}', [NomineeController::class, 'update']);
 

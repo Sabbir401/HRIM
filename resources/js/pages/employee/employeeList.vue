@@ -136,7 +136,7 @@ onMounted(() => getData());
                                 :key="employee.id"
                             >
                                 <td>{{ employees.from + index }}</td>
-                                <td>{{ employee.Employee_Id }}</td>
+                                <td>ABNB{{ employee.Employee_Id }}</td>
                                 <td>{{ employee.Full_Name }}</td>
                                 <td>{{ employee.DOB }}</td>
                                 <td>{{ employee.Contact_No }}</td>
