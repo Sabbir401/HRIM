@@ -236,7 +236,7 @@ onMounted(() => getData());
               <th class="p-2">Job Location</th>
               <td class="p-2">{{ off.branch ? off.branch.Name : '' }}</td>
               <th class="p-2">Shift</th>
-              <td class="p-2">{{ mapShift(emp.Shift) }}</td>
+              <td class="p-2">{{ mapShift(off.Shift) }}</td>
             </tr>
           </table>
         </div>
@@ -268,19 +268,19 @@ onMounted(() => getData());
               <th class="p-2">Designation</th>
               <td class="p-2">{{ work.Designation }}</td>
               <th class="p-2">Department</th>
-              <td class="p-2">{{ emp.DOB }}</td>
+              <td class="p-2">{{ work.Department }}</td>
             </tr>
             <tr>
               <th class="p-2">From Date</th>
-              <td class="p-2">{{ mapStatus(emp.Marital_Status) }}</td>
+              <td class="p-2">{{ work.From_Date }}</td>
               <th class="p-2">To Date</th>
-              <td class="p-2">{{ emp.DOB }}</td>
+              <td class="p-2">{{ work.To_Date }}</td>
             </tr>
             <tr>
               <th class="p-2">Last Salary</th>
-              <td class="p-2">{{ emp.Place_of_Birth }}</td>
+              <td class="p-2">{{ work.Last_Salary }}</td>
               <th class="p-2">Continuing</th>
-              <td class="p-2">{{ emp.Emergency_Contact }}</td>
+              <td class="p-2">{{ work.Continuing }}</td>
             </tr>
           </table>
         </div>

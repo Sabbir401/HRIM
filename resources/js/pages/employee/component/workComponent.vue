@@ -125,7 +125,7 @@ const submit = () => {
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >Company name</label
+                                    >Company name*</label
                                 >
                                 <input
                                     type="text"
@@ -175,7 +175,7 @@ const submit = () => {
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >From Date</label
+                                    >From Date*</label
                                 >
                                 <input
                                     type="date"
@@ -188,7 +188,7 @@ const submit = () => {
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">To Date</label>
+                                <label for="exampleInputEmail1">To Date*</label>
                                 <input
                                     type="date"
                                     class="form-control"
@@ -204,7 +204,7 @@ const submit = () => {
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >Designation</label
+                                    >Designation*</label
                                 >
                                 <input
                                     type="text"
@@ -218,7 +218,7 @@ const submit = () => {
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >Department</label
+                                    >Department*</label
                                 >
                                 <input
                                     type="text"

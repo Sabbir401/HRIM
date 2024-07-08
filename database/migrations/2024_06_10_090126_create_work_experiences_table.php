@@ -16,14 +16,14 @@ return new class extends Migration
             $table->unsignedBigInteger('EID');
             $table->string('Company_Name',255);
             $table->string('Company_Business',255)->nullable();
-            $table->text('Company_Address');
+            $table->text('Company_Address')->nullable();
             $table->string('Designation',100);
             $table->string('Department',100);
             $table->date('From_Date');
             $table->date('To_Date');
-            $table->text('Responsibilities');
-            $table->string('Last_Salary');
-            $table->text('Continuing');
+            $table->text('Responsibilities')->nullable();
+            $table->string('Last_Salary')->nullable();
+            $table->text('Continuing')->nullable();
             $table->timestamps();
 
             $table->foreign('EID')->references('id')->on('employees')->onDelete('cascade');

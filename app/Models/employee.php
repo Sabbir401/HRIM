@@ -77,4 +77,9 @@ class employee extends Model
     {
         return $this->hasMany(leave_balance::class);
     }
+
+    public function attendence()
+    {
+        return $this->hasMany(attendence::class, 'EID');
+    }
 }

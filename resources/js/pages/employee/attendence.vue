@@ -1,215 +1,180 @@
-<script setup>
-import { ref, onMounted, watch } from "vue";
-import axios from "axios";
-import { Bootstrap5Pagination } from "laravel-vue-pagination";
-
-import { useRoute } from "vue-router";
-
-const employee = ref([]);
-const department = ref([]);
-const empp = ref([]);
-const emp_img = ref([]);
-
-const error = ref([]);
-
-const form = ref({
-  department: "",
-  Employee_Id: "",
-  Time_In: "",
-  Time_Out: "",
-  From_Date: "",
-  To_Date: "",
-});
-
-const getData = async () => {
-  try {
-    const responsedept = await axios.get("/api/department");
-    department.value = responsedept.data;
-  } catch (err) {
-    error.value = err.message || "Error fetching data";
-  } finally {
-  }
-};
-
-const getEmployee = async (id) => {
-  try {
-    const response = await axios.get(`/api/emp/${id}`);
-    empp.value = response.data;
-    console.log(empp);
-  } catch (error) {
-    console.error("Error updating store:", error);
-    // Handle the error, e.g., display an error message
-  }
-};
-
-const getEmployeeImg = async (id) => {
-  try {
-    const responseimg = await axios.get(`/api/empimg/${id}`);
-    emp_img.value = responseimg.data;
-  } catch (error) {
-    console.error("Error updating store:", error);
-    // Handle the error, e.g., display an error message
-  }
-};
-
-const resetForm = () => {
-  Object.keys(form.value).forEach((key) => {
-    if (typeof form.value[key] === "string") {
-      form.value[key] = "";
-    }
-  });
-};
-
-const submit = async () => {
-  try {
-    const response = await axios.post("/api/attendence", form.value);
-    if (response.data.success) {
-      resetForm();
-      alert("Successfully Inserted Attendence");
-    }
-  } catch (error) {
-    console.error("Error submitting Attendence:", error);
-  }
-};
-
-onMounted(() => getData());
-</script>
-
 <template>
-  <div class="col-lg-12 grid-margin stretch-card">
-    <div class="container">
-      <div class="card">
-        <div class="card-body">
-          <div class="text-center">
-            <h1 class="mb-5">Manual Attendance Form</h1>
-          </div>
-          <div class="d-flex">
-            <div class="col-lg-8 shadow p-3">
-              <form class="forms-sample" @submit.prevent="submit">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Department</label>
-                      <select
-                        class="form-control"
-                        name="status"
-                        id=""
-                        v-model="form.department"
-                        @change="getEmployee(form.department)"
-                      >
-                        <option selected disabled>select</option>
-                        <option
-                          v-for="dept in department"
-                          :key="dept.id"
-                          :value="dept.id"
-                        >
-                          {{ dept.Name }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Employee Name</label>
-                      <select
-                        class="form-control"
-                        name="status"
-                        id=""
-                        v-model="form.Employee_Id"
-                        @change="getEmployeeImg(form.Employee_Id)"
-                      >
-                        <option v-for="e in empp" :key="e.id" :value="e.id">
-                          {{ e.Full_Name }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Office Time In</label>
-                      <input
-                        type="time"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        placeholder="Address"
-                        v-model="form.Time_In"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Office Time Out</label>
-                      <input
-                        type="time"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        placeholder="Address"
-                        v-model="form.Time_Out"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">From Date</label>
-                      <input
-                        type="date"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        placeholder="Address"
-                        v-model="form.From_Date"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">To Date</label>
-                      <input
-                        type="date"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        placeholder="Address"
-                        v-model="form.To_Date"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <input
-                      type="submit"
-                      class="btn btn-success pl-2 form-control"
-                    />
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            <div class="col-lg-4">
-              <div v-for="i in emp_img" :key="i.id">
-                <img
-                  :src="i.img_url"
-                  height="100%"
-                  width="300px"
-                  class="shadow"
-                  style="padding-right: 20%; padding-left: 20%"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="col-lg-2 mb-3">
+      <label for="">Select a Month</label>
+      <select
+          class="form-control"
+          name="status"
+          v-model="selectedMonth"
+          @change="generateDays"
+      >
+          <option
+              v-for="(month, index) in months"
+              :key="month"
+              :value="index"
+          >
+              {{ month }}
+          </option>
+      </select>
+  </div>
+  <div>
+      <button class="custom-btn btn-15 mb-3" @click="saveData">
+          Save Data
+      </button>
+      <hot-table ref="hotTableComponent" :settings="hotSettings"></hot-table>
   </div>
 </template>
 
-<style>
-.shadow{
-  box-shadow: 1px 1px 10px grey;
-  border-radius: 5px;
-}
-</style>
+<script setup>
+import { ref, onMounted } from "vue";
+import axios from "axios";
+import { HotTable } from "@handsontable/vue3";
+import { registerAllModules } from "handsontable/registry";
+import "handsontable/dist/handsontable.full.css";
+
+// Register Handsontable's modules
+registerAllModules();
+
+const daysInMonth = ref([]);
+const selectedMonth = ref(new Date().getMonth());
+const employee = ref([]);
+const hotTableComponent = ref(null);
+const attendencedata = ref([]);
+
+const months = ref([
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+]);
+
+const generateDays = () => {
+  const year = new Date().getFullYear();
+  const month = selectedMonth.value;
+  const days = new Date(year, month + 1, 0).getDate();
+
+  daysInMonth.value = Array.from({ length: days }, (v, k) => k + 1);
+
+  hotSettings.value.colHeaders = [
+      "ID",
+      "Department",
+      "Employee Name",
+      "Designation",
+      ...daysInMonth.value.map((day) => `${day}`),
+  ];
+
+  hotSettings.value.columns = [
+      { type: "text", data: "id", readOnly: true },
+      { type: "text", data: "department", readOnly: true },
+      { type: "text", data: "Full_Name", readOnly: true },
+      { type: "text", data: "designation", readOnly: true },
+      ...daysInMonth.value.map((day, index) => ({
+          type: "dropdown",
+          source: ["P", "A", "L"],
+          data: `attendance.${day - 1}`,
+          editor: "dropdown",
+      })),
+  ];
+
+  hotTableComponent.value.hotInstance.updateSettings(hotSettings.value);
+  getData();
+};
+
+const hotSettings = ref({
+  data: [],
+  height: "auto",
+  autoWrapRow: true,
+  autoWrapCol: true,
+  licenseKey: "non-commercial-and-evaluation",
+  height: window.innerHeight - 200,
+  hiddenColumns: {
+      columns: [0],
+      indicators: false,
+  },
+  fixedColumnsStart: 4,
+  rowHeaders: true,
+  colHeaders: ["Department", "Employee Name", "Designation"],
+  columns: [
+      { type: "text", data: "id", readOnly: true },
+      { type: "text", data: "department", readOnly: true },
+      { type: "text", data: "Full_Name", readOnly: true },
+      { type: "text", data: "designation", readOnly: true },
+  ],
+  minSpareRows: 1,
+  minSpareCols: 1,
+  manualColumnResize: true,
+  useFormula: true,
+  filters: true,
+  draw: true,
+  stretchH: "all",
+  customBorders: true,
+  columnSorting: true,
+  sortIndicator: true,
+  dropdownMenu: [
+      "make_read_only",
+      "alignment",
+      "---------",
+      "filter_by_condition",
+      "filter_by_value",
+      "filter_action_bar",
+  ],
+  contextMenu: [
+      "undo",
+      "redo",
+      "---------",
+      "make_read_only",
+      "alignment",
+      "borders",
+      "remove_row",
+  ],
+  afterChange(changes, source) {
+      if (source !== "loadData") {
+          hotTableComponent.value.hotInstance.render();
+      }
+  },
+});
+
+const getData = async () => {
+  const response = await axios.get("/api/emp-attendence");
+  employee.value = response.data.map((emp) => ({
+      ...emp,
+      attendance: Array.from({ length: daysInMonth.value.length }, () => ""),
+  }));
+  hotTableComponent.value.hotInstance.loadData(employee.value, attendencedata.value);
+};
+
+const saveData = async () => {
+  const data = hotTableComponent.value.hotInstance.getData();
+  const attendanceData = data.map((row) => {
+      const attendance = row.slice(4); // only attendance status values
+      return {
+          id: row[0],
+          attendance: attendance,
+      };
+  });
+
+  try {
+      const response = await axios.post("/api/attendence", {
+           attendanceData,
+           month: selectedMonth.value,
+       });
+      //const response = await axios.get("/api/test2");
+      if (response.data.success) {
+          alert("Data saved successfully");
+      } else {
+          alert("Failed to save data");
+      }
+  } catch (error) {
+      console.error("Error saving data:", error);
+  }
+};
+
+onMounted(() => generateDays());
+</script>

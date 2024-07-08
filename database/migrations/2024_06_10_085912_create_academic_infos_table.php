@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('EID');
             $table->unsignedBigInteger('Level_of_Education_Id');
-            $table->unsignedBigInteger('Board_Id');
-            $table->string('Group',255);
+            $table->unsignedBigInteger('Board_Id')->nullable();
+            $table->string('Group',255)->nullable();
             $table->string('Institute_Name',255);
-            $table->unsignedBigInteger('Scale_Id');
-            $table->string('Result',100);
-            $table->string('Year_of_Passing');
+            $table->unsignedBigInteger('Scale_Id')->nullable();
+            $table->string('Result',100)->nullable();
+            $table->string('Year_of_Passing')->nullable();
             $table->text('Acheivement')->nullable();
             $table->text('Remarks')->nullable();
             $table->timestamps();

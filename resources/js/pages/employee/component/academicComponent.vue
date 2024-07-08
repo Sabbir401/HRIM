@@ -151,7 +151,7 @@ const submit = () => {
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >Level of Education</label
+                                    >Level of Education*</label
                                 >
                                 <select
                                     class="form-control"
@@ -174,7 +174,7 @@ const submit = () => {
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >Exam/Degree Title</label
+                                    >Exam/Degree Title*</label
                                 >
                                 <select
                                     class="form-control"
@@ -199,7 +199,7 @@ const submit = () => {
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >Institute</label
+                                    >Institute*</label
                                 >
                                 <input
                                     type="text"

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class zkteco_attendence extends Model
+class zkt_attendence extends Model
 {
     use HasFactory;
 
@@ -14,4 +14,9 @@ class zkteco_attendence extends Model
         'date',
         'time',
     ];
+
+    public function attendence()
+    {
+        return $this->belongsTo(zkt_user::class, 'user_id');
+    }
 }

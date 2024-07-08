@@ -38,6 +38,7 @@ const daysInMonth = ref([]);
 const selectedMonth = ref(new Date().getMonth());
 const employee = ref([]);
 const hotTableComponent = ref(null);
+const attendencedata = ref([]);
 
 const months = ref([
     "January",
@@ -146,8 +147,7 @@ const getData = async () => {
         ...emp,
         attendance: Array.from({ length: daysInMonth.value.length }, () => ""),
     }));
-
-    hotTableComponent.value.hotInstance.loadData(employee.value);
+    hotTableComponent.value.hotInstance.loadData(employee.value, attendencedata.value);
 };
 
 const saveData = async () => {

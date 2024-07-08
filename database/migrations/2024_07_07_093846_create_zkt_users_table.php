@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('zkteco_attendences', function (Blueprint $table) {
+        Schema::create('zkt_users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->date('date');
-            $table->time('time');
+            $table->unsignedBigInteger('User_Id')->unique();
+            $table->string('Name');
+            $table->string('Card_No')->nullable();
             $table->timestamps();
-            $table->unique(['user_id', 'date', 'time']);
-
-            $table->foreign('user_id')->references('User_Id')->on('zkteco__users')->onDelete('cascade');
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('zkteco_attendences');
+        Schema::dropIfExists('zkt_users');
     }
 };

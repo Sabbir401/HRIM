@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('EID');
             $table->string('Training_Title',255);
-            $table->string('Organized_By',255);
+            $table->string('Organized_By',255)->nullable();
             $table->text('Topic_Covered')->nullable();
             $table->date('From_Date');
             $table->date('To_Date');

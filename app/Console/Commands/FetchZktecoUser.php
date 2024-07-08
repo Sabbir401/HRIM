@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\zkt_user;
 use App\Models\Zkteco_Users;
 use Carbon\Carbon;
 use Rats\Zkteco\Lib\ZKTeco;
@@ -25,9 +26,9 @@ class FetchZktecoUser extends Command
             $userData = $zk->getUser();
             foreach ($userData as $user) {
                 // Check if the record already exists
-                $existingAttendance = Zkteco_Users::where('User_Id', $user['userid'])->first();
+                $existingAttendance = zkt_user::where('User_Id', $user['userid'])->first();
                 if (!$existingAttendance) {
-                    Zkteco_Users::create([
+                    zkt_user::create([
                         'User_Id' => $user['userid'],
                         'Name' => $user['name'],
                         'Card_No' => $user['cardno'],

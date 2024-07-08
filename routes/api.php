@@ -102,3 +102,4 @@ Route::resource('/official', OfficialController::class);
 
 Route::post('/attendence', [AttendenceController::class, 'store']);
 Route::post('/attendence/edit', [AttendenceController::class, 'edit']);
+Route::get('/attendence', [AttendenceController::class, 'getAttendance']);

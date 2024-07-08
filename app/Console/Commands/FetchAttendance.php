@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use App\Models\attendence;
+use App\Models\zkt_attendence;
 use Rats\Zkteco\Lib\ZKTeco;
 use Illuminate\Console\Command;
 use App\Models\zkteco_attendence;
@@ -30,12 +31,12 @@ class FetchAttendance extends Command
                 $time = $timestamp->toTimeString();
 
                 // Check if the record already exists
-                $existingAttendance = zkteco_attendence::where('user_id', $attendance['id'])
+                $existingAttendance = zkt_attendence::where('user_id', $attendance['id'])
                     ->where('date', $date)
                     ->where('time', $time)
                     ->first();
                 if (!$existingAttendance) {
-                    zkteco_attendence::create([
+                    zkt_attendence::create([
                         'user_id' => $attendance['id'],
                         'date' => $date,
                         'time' => $time,

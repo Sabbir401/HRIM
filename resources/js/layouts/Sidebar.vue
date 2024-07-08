@@ -44,7 +44,7 @@
                                 :to="{ name: 'Attendence' }"
                                 >Attendence</Router-Link
                             >
-                            <Router-Link
+                            <!-- <Router-Link
                                 class="nav-link"
                                 :to="{ name: 'atten' }"
                                 >Attendence-2</Router-Link
@@ -58,7 +58,7 @@
                                 class="nav-link"
                                 :to="{ name: 'Test' }"
                                 >Test</Router-Link
-                            >
+                            > -->
                         </nav>
                     </div>
 

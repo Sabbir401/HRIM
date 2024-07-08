@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Zkteco_Users extends Model
+class zkt_user extends Model
 {
     use HasFactory;
 
@@ -14,4 +14,9 @@ class Zkteco_Users extends Model
         'Name',
         'Card_No',
     ];
+
+    public function attendence()
+    {
+        return $this->hasOne(zkt_attendence::class, 'user_id');
+    }
 }

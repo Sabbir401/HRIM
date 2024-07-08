@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\attendence;
+use App\Models\employee;
 use Rats\Zkteco\Lib\ZKTeco;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,14 +24,20 @@ class AttendenceController extends Controller
         return response()->json($attendence);
     }
 
-    public function __construct()
+    public function getAttendance(Request $request)
     {
-        $this->zk = new ZKTeco("192.168.68.190", 4370);
+        $month = $request->query('month');
+        $year = Carbon::now()->year;
+
+        $employees = employee::with(['attendence' => function($query) use ($month, $year) {
+            $query->whereMonth('Date', $month)->whereYear('Date', $year);
+        }])->get();
+
+        return response()->json($employees);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+
     public function create()
     {
         Artisan::call('zktuser:fetch');

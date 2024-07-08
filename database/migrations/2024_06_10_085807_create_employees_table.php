@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('Company_Id');
             $table->unsignedBigInteger('Employee_Id')->unique();
-            $table->string('Card_No', 50)->nullable();
+            $table->string('Card_No', 50)->nullable()->unique();
             $table->string('Full_Name', 100);
             $table->string('Father_Name', 100)->nullable();
             $table->string('Mother_Name', 100)->nullable();
