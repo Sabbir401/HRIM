@@ -26,7 +26,7 @@ class AttendenceController extends Controller
     public function getAttendance(Request $request)
     {
         $month = $request->query('month');
-        $attendance = attendence::whereMonth('date', $month)->get();
+        $attendance = attendence::whereMonth('date', $month + 1)->get();
         return response()->json($attendance);
     }
 

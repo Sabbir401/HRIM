@@ -108,10 +108,7 @@ const hotSettings = ref({
     autoWrapCol: true,
     licenseKey: "non-commercial-and-evaluation",
     height: window.innerHeight - 200,
-    hiddenColumns: {
-        columns: [0],
-        indicators: false,
-    },
+   
     fixedColumnsStart: 4,
     rowHeaders: true,
     colHeaders: ["Department", "Employee Name", "Designation"],
@@ -160,7 +157,7 @@ const getData = async () => {
     try {
         const response = await axios.get("/api/emp-attendence");
         const responseData = await axios.get("/api/attendence", {
-            params: { month: selectedMonth.value + 1 },
+            params: { month: selectedMonth.value },
         });
 
         employee.value = response.data.map((emp) => {
@@ -218,7 +215,7 @@ const saveData = async () => {
     try {
         const response = await axios.post("/api/attendence", {
             attendanceData,
-            month: selectedMonth.value + 1,
+            month: selectedMonth.value,
         });
 
         if (response.data.success) {

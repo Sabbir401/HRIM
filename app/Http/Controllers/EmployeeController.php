@@ -16,7 +16,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employee = employee::orderBy('Employee_Id', 'asc')->paginate(50);
+        $employee = employee::with('empImg')->orderBy('Employee_Id', 'asc')->paginate(50);
         return response()->json($employee);
     }
 
@@ -29,7 +29,7 @@ class EmployeeController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-        $results = employee::where('Full_Name', 'LIKE', "%{$query}%")
+        $results = employee::with('empImg')->where('Full_Name', 'LIKE', "%{$query}%")
             ->orWhere('Employee_Id', 'LIKE', "%{$query}%")
             ->paginate(50);
 

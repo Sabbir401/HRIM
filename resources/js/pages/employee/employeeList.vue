@@ -122,6 +122,7 @@ onMounted(() => getData());
                         <thead>
                             <tr>
                                 <th>S/N</th>
+                                <th>Photo</th>
                                 <th>Employee ID</th>
                                 <th>Full Name</th>
                                 <th>Date of Birth</th>
@@ -131,11 +132,29 @@ onMounted(() => getData());
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="ver-align"
+                            <tr
+                                class="ver-align"
                                 v-for="(employee, index) in employees.data"
                                 :key="employee.id"
                             >
                                 <td>{{ employees.from + index }}</td>
+                                <template v-if="employee.emp_img.length > 0">
+                                    <td
+                                        v-for="i in employee.emp_img"
+                                        :key="i.id"
+                                    >
+                                        <img
+                                            :src="i.img_url"
+                                            alt="Image"
+                                            height="40px"
+                                            width="40px"
+                                            style="border-radius: 50%"
+                                        />
+                                    </td>
+                                </template>
+                                <template v-else>
+                                    <td>No image</td>
+                                </template>
                                 <td>ABNB{{ employee.Employee_Id }}</td>
                                 <td>{{ employee.Full_Name }}</td>
                                 <td>{{ employee.DOB }}</td>

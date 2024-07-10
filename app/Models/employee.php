@@ -69,6 +69,13 @@ class employee extends Model
     {
         return $this->hasMany(child::class, 'EID');
     }
+
+    public function empImg()
+    {
+        return $this->hasMany(emp_img::class, 'EID');
+    }
+
+
     public function leave()
     {
         return $this->hasMany(leave::class);
