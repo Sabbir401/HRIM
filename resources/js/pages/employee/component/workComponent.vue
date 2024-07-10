@@ -24,6 +24,7 @@ const form = ref({
     companyAddress: "",
     fromDate: "",
     toDate: "",
+    duration: "",
     designation: "",
     department: "",
     jobRes: "",
@@ -145,7 +146,6 @@ const submit = () => {
                                     type="text"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    placeholder="Address"
                                     v-model="form.companyBusiness"
                                 />
                             </div>
@@ -164,7 +164,6 @@ const submit = () => {
                                     cols="30"
                                     rows="3"
                                     class="form-control"
-                                    placeholder="Address ..."
                                     v-model="form.companyAddress"
                                 ></textarea>
                             </div>
@@ -175,25 +174,23 @@ const submit = () => {
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >From Date*</label
+                                    >From Date</label
                                 >
                                 <input
                                     type="date"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    placeholder="Address"
                                     v-model="form.fromDate"
                                 />
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">To Date*</label>
+                                <label for="exampleInputEmail1">To Date</label>
                                 <input
                                     type="date"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    placeholder="Address"
                                     v-model="form.toDate"
                                 />
                             </div>
@@ -201,6 +198,19 @@ const submit = () => {
                     </div>
 
                     <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"
+                                    >Department*</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="exampleInputEmail1"
+                                    v-model="form.department"
+                                />
+                            </div>
+                        </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
@@ -215,17 +225,19 @@ const submit = () => {
                                 />
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >Department*</label
+                                    >Duration</label
                                 >
                                 <input
                                     type="text"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    placeholder="Address"
-                                    v-model="form.department"
+                                    v-model="form.duration"
                                 />
                             </div>
                         </div>
@@ -242,7 +254,6 @@ const submit = () => {
                                     id=""
                                     cols="30"
                                     class="form-control"
-                                    placeholder="Address ..."
                                     v-model="form.jobRes"
                                 ></textarea>
                             </div>
@@ -273,7 +284,6 @@ const submit = () => {
                                     type="date"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    placeholder="Address"
                                     v-model="form.continuing"
                                 />
                             </div>

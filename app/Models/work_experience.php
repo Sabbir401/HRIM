@@ -17,6 +17,7 @@ class work_experience extends Model
         'Department',
         'From_Date',
         'To_Date',
+        'Duration',
         'Responsibilities',
         'Last_Salary',
         'Continuing',

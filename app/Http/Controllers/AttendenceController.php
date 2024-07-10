@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\attendence;
-use App\Models\employee;
-use Rats\Zkteco\Lib\ZKTeco;
+use App\Models\zkt_attendence;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 
 class AttendenceController extends Controller
@@ -18,6 +16,7 @@ class AttendenceController extends Controller
 
     protected $zk;
 
+    //Manual Attendence Save
     public function index()
     {
         $attendence = attendence::get();
@@ -27,16 +26,9 @@ class AttendenceController extends Controller
     public function getAttendance(Request $request)
     {
         $month = $request->query('month');
-        $year = Carbon::now()->year;
-
-        $employees = employee::with(['attendence' => function($query) use ($month, $year) {
-            $query->whereMonth('Date', $month)->whereYear('Date', $year);
-        }])->get();
-
-        return response()->json($employees);
+        $attendance = attendence::whereMonth('date', $month)->get();
+        return response()->json($attendance);
     }
-
-
 
     public function create()
     {
@@ -63,7 +55,7 @@ class AttendenceController extends Controller
                         ],
                         [
                             'Status' => $status,
-                            'Time' => now()->toTimeString()
+                            // 'Time' => now()->toTimeString()
                         ]
                     );
                 }
@@ -73,52 +65,47 @@ class AttendenceController extends Controller
         return response()->json(['success' => true]);
     }
 
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         DB::beginTransaction();
-
-    //         $startDate = $request->input('From_Date');
-    //         $endDate = $request->input('To_Date');
-
-    //         $timeIn = $request->input('Time_In');
-    //         $status = ($timeIn && $timeIn > '11:00:00') ? 'L' : 'P';
-
-    //         $date = $startDate;
-    //         while ($date <= $endDate) {
-    //             $employee = attendence::create([
-    //                 'EID' => $request->input('Employee_Id'),
-    //                 'Date' => $date,
-    //                 'Time_In' => $request->input('Time'),
-    //                 'Status' => $status,
-    //             ]);
-    //             $date = date('Y-m-d', strtotime($date . ' +1 day'));
-    //         }
-
-    //         DB::commit();
-    //         $response = [
-    //             'success'   =>  true,
-    //             'message'   =>  'Attendance saved successfully',
-    //         ];
-    //         return response()->json($response);
-    //     } catch (\Exception $e) {
-    //         DB::rollback();
-    //         $response = [
-    //             'success'   =>  false,
-    //             'message'   =>  'Error while inserting attendance: ' . $e->getMessage(),
-    //         ];
-    //         return response()->json($response, 500);
-    //     }
-    // }
 
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(attendence $attendence)
-    {
-        //
-    }
+    public function fetchZktAttendence()
+{
+    // Fetch all attendance records from zkt_attendence
+    $attendances = zkt_attendence::all()->groupBy(function ($attendance) {
+        return $attendance->user_id . '_' . $attendance->date;
+    });
+
+    // Process each attendance record
+    $attendances->each(function ($userAttendance, $key) {
+        $date = $userAttendance->first()->date;
+        $userId = $userAttendance->first()->user_id;
+
+        // Extract the first punch-in time and last punch-out time for each user each day
+        $timeIn = $userAttendance->sortBy('time')->first()->time;
+        $timeOut = $userAttendance->sortByDesc('time')->first()->time;
+
+        // Determine status based on the first punch-in time
+        $status = 'A'; // Default status is Absent
+
+        if ($timeIn) {
+            $status = ($timeIn > '11:00:00') ? 'L' : 'P';
+        }
+
+        // Update or create the attendance record in the attendence table
+        attendence::updateOrCreate(
+            [
+                'EID' => $userId,
+                'Date' => $date,
+                'Time' => $timeIn,
+            ],
+            [
+                'Status' => $status,
+            ]
+        );
+    });
+
+    return response()->json(['message' => 'Attendance records processed successfully']);
+}
+
 
     /**
      * Show the form for editing the specified resource.

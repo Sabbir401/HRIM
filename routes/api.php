@@ -71,8 +71,6 @@ Route::get('/employee/search', [EmployeeController::class, 'search']);
 Route::get('/branch', [BranchController::class, 'index']);
 Route::get('/leave-type', [LeaveTypeController::class, 'index']);
 Route::get('/leave-summery/{id}', [LeaveController::class, 'leaveSummery']);
-Route::get('/emp-attendence', [EmployeeController::class, 'attendenceEmployee']);
-Route::get('/test2', [AttendenceController::class, 'create']);
 
 Route::put('/nominee/{id}', [NomineeController::class, 'update']);
 
@@ -103,3 +101,6 @@ Route::resource('/official', OfficialController::class);
 Route::post('/attendence', [AttendenceController::class, 'store']);
 Route::post('/attendence/edit', [AttendenceController::class, 'edit']);
 Route::get('/attendence', [AttendenceController::class, 'getAttendance']);
+
+Route::get('/emp-attendence', [EmployeeController::class, 'attendenceEmployee']);
+Route::get('/fetch-zkt-attendence', [AttendenceController::class, 'fetchZktAttendence']);

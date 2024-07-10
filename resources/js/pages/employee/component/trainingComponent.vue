@@ -125,7 +125,6 @@ const submit = () => {
                                     type="text"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    placeholder="Address"
                                     v-model="form.traningTitle"
                                 />
                             </div>
@@ -158,7 +157,6 @@ const submit = () => {
                                     cols="30"
                                     rows="3"
                                     class="form-control"
-                                    placeholder="Address ..."
                                     v-model="form.topicCovered"
                                 ></textarea>
                             </div>
@@ -175,7 +173,6 @@ const submit = () => {
                                     type="date"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    placeholder="Address"
                                     v-model="form.fromDate"
                                 />
                             </div>
@@ -187,7 +184,6 @@ const submit = () => {
                                     type="date"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    placeholder="Address"
                                     v-model="form.toDate"
                                 />
                             </div>

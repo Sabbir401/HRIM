@@ -199,13 +199,12 @@ const submit = () => {
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >Institute*</label
+                                    >Institute</label
                                 >
                                 <input
                                     type="text"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    placeholder="Address"
                                     v-model="form.institute"
                                 />
                             </div>
@@ -242,7 +241,6 @@ const submit = () => {
                                     type="text"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    placeholder="Address"
                                     v-model="form.major"
                                 />
                             </div>
@@ -277,7 +275,6 @@ const submit = () => {
                                     type="text"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    placeholder="Address"
                                     v-model="form.result"
                                 />
                             </div>
@@ -291,7 +288,6 @@ const submit = () => {
                                     type="text"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    placeholder="Address"
                                     v-model="form.yop"
                                 />
                             </div>
@@ -310,7 +306,6 @@ const submit = () => {
                                     cols="30"
                                     rows="3"
                                     class="form-control"
-                                    placeholder="Address ..."
                                     v-model="form.acheivement"
                                 ></textarea>
                             </div>
@@ -327,7 +322,6 @@ const submit = () => {
                                     cols="30"
                                     rows="3"
                                     class="form-control"
-                                    placeholder="Address ..."
                                     v-model="form.remarks"
                                 ></textarea>
                             </div>

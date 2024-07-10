@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('Level_of_Education_Id');
             $table->unsignedBigInteger('Board_Id')->nullable();
             $table->string('Group',255)->nullable();
-            $table->string('Institute_Name',255);
+            $table->string('Institute_Name',255)->nullable();
             $table->unsignedBigInteger('Scale_Id')->nullable();
             $table->string('Result',100)->nullable();
             $table->string('Year_of_Passing')->nullable();

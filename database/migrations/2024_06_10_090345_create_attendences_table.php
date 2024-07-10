@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('Status',['P', 'A', 'L'])->nullable();
             $table->timestamps();
 
-            $table->foreign('EID')->references('id')->on('employees')->onDelete('cascade');
+            // $table->foreign('EID')->references('id')->on('employees')->onDelete('cascade');
         });
     }
 

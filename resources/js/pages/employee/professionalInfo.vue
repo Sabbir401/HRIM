@@ -335,30 +335,24 @@ onMounted(() => getData());
                         <thead>
                             <tr>
                                 <th>Company Name</th>
-                                <th>Company Business</th>
-                                <th>Company Address</th>
                                 <th>Department</th>
                                 <th>Designation</th>
                                 <th>From Date</th>
                                 <th>To Date</th>
-                                <th>Job Responsibility</th>
+                                <th>Duration</th>
                                 <th>Last Salary</th>
-                                <th>Continuing</th>
                                 <th>Operations</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="work in works" :key="work.id">
                                 <td>{{ work.Company_Name }}</td>
-                                <td>{{ work.Company_Business }}</td>
-                                <td>{{ work.Company_Address }}</td>
                                 <td>{{ work.Department }}</td>
                                 <td>{{ work.Designation }}</td>
                                 <td>{{ work.From_Date }}</td>
                                 <td>{{ work.To_Date }}</td>
-                                <td>{{ work.Responsibilities }}</td>
+                                <td>{{ work.Duration }}</td>
                                 <td>{{ work.Last_Salary }}</td>
-                                <td>{{ work.Continuing }}</td>
                                 <td>
                                     <button
                                         class="custom-btn btn-15"

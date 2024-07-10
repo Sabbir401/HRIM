@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('Department',100);
             $table->date('From_Date');
             $table->date('To_Date');
+            $table->string('Duration',50);
             $table->text('Responsibilities')->nullable();
             $table->string('Last_Salary')->nullable();
             $table->text('Continuing')->nullable();

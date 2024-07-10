@@ -189,12 +189,13 @@ class EmployeeController extends Controller
 
     public function attendenceEmployee()
     {
-        $employee = Employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'designations.Name as designation', 'departments.Name as department')
-            ->join('officials', 'officials.EID', '=', 'employees.id')
-            ->join('departments', 'officials.Department_Id', '=', 'departments.id')
-            ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
-            ->get();
-
+        $employee = employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'designations.Name as designation', 'departments.Name as department')
+        ->join('officials', 'officials.EID', '=', 'employees.id')
+        ->join('departments', 'officials.Department_Id', '=', 'departments.id')
+        ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
+        ->orderby('departments.Name', 'asc')
+        ->get();
+        
         if (!$employee) {
             return response()->json(['message' => 'Employee not found'], 404);
         }
