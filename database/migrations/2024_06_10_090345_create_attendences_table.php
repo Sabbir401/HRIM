@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('EID');
             $table->date('Date');
-            $table->string('Time',20)->nullable();
+            $table->string('Time_In',20)->nullable();
+            $table->string('Time_Out',20)->nullable();
             $table->enum('Status',['P', 'A', 'L'])->nullable();
             $table->timestamps();
 

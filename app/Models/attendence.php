@@ -11,7 +11,8 @@ class attendence extends Model
     protected $fillable = [
         'EID',
         'Date',
-        'Time',
+        'Time_In',
+        'Time_Out',
         'Status',
 
     ];

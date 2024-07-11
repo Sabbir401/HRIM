@@ -95,7 +95,8 @@ class AttendenceController extends Controller
             [
                 'EID' => $userId,
                 'Date' => $date,
-                'Time' => $timeIn,
+                'Time_In' => $timeIn,
+                'Time_Out' => $timeOut,
             ],
             [
                 'Status' => $status,

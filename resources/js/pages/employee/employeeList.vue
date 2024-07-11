@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import axios from "axios";
-import { Bootstrap5Pagination } from "laravel-vue-pagination";
+import { Bootstrap4Pagination } from "laravel-vue-pagination";
 import router from "../../router";
 
 const employees = ref([]);
@@ -187,9 +187,9 @@ onMounted(() => getData());
                             </tr>
                         </tbody>
                     </table>
-                    <br />
-                    <Bootstrap5Pagination
+                    <Bootstrap4Pagination
                         :data="employees"
+                        :limit="2"
                         @pagination-change-page="getData"
                     />
                 </div>

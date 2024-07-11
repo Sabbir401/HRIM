@@ -330,12 +330,12 @@ onMounted(() => getData());
               <th class="p-2">Acheivement</th>
             </tr>
             <tr v-for="aca in emp.academic" :key="aca.id">
-              <td>{{ aca.education.Name }}</td>
-              <td>{{ aca.Institute_Name }}</td>
-              <td>{{ aca.board.Name }}</td>
-              <td>{{ aca.Result }} {{ aca.scale.Name }}</td>
-              <td>{{ aca.Year_of_Passing }}</td>
-              <td>{{ aca.Acheivement }}</td>
+              <td>{{ aca.education ? aca.education.Name : '' }}</td>
+              <td>{{ aca.Institute_Name ? aca.Institute_Name : '' }}</td>
+              <td>{{ aca.board ? aca.board.Name : '' }}</td>
+              <td>{{ aca.Result ? aca.Result : '' }} {{ aca.scale ? aca.scale.Name : '' }}</td>
+              <td>{{ aca.Year_of_Passing ? aca.Year_of_Passing : '' }}</td>
+              <td>{{ aca.Acheivement ? aca.Acheivement : '' }}</td>
             </tr>
           </table>
         </div>
