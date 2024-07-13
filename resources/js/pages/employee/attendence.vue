@@ -194,7 +194,7 @@ const getData = async () => {
 const fetchAttendence = async () => {
     loading.value = true;
     try {
-        const response = await axios.get("/api/fetch-zkt-attendence");
+        const response = await axios.get("/api/fetch-attendence");
     } catch (error) {
         console.error("Error fetching data:", error);
     } finally {

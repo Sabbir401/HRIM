@@ -263,8 +263,8 @@ onMounted(() => getData());
                                 <th>Training Infomation</th>
                                 <th>Organized By</th>
                                 <th>Topic Covered</th>
-                                <th>From Date</th>
-                                <th>To Date</th>
+                                <th>Duration</th>
+                                <th>Year</th>
                                 <th>Remarks</th>
                                 <th>Operation</th>
                             </tr>
@@ -277,8 +277,8 @@ onMounted(() => getData());
                                 <td>{{ training.Training_Title }}</td>
                                 <td>{{ training.Organized_By }}</td>
                                 <td>{{ training.Topic_Covered }}</td>
-                                <td>{{ training.From_Date }}</td>
-                                <td>{{ training.To_Date }}</td>
+                                <td>{{ training.Duration }}</td>
+                                <td>{{ training.Year }}</td>
                                 <td>{{ training.Remarks }}</td>
                                 <td>
                                     <button

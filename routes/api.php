@@ -103,4 +103,5 @@ Route::post('/attendence/edit', [AttendenceController::class, 'edit']);
 Route::get('/attendence', [AttendenceController::class, 'getAttendance']);
 
 Route::get('/emp-attendence', [EmployeeController::class, 'attendenceEmployee']);
+Route::get('/fetch-attendence', [AttendenceController::class, 'fetchAttendence']);
 Route::get('/fetch-zkt-attendence', [AttendenceController::class, 'fetchZktAttendence']);

@@ -30,9 +30,9 @@ class AttendenceController extends Controller
         return response()->json($attendance);
     }
 
-    public function create()
+    public function fetchZktAttendence()
     {
-        Artisan::call('zktuser:fetch');
+        Artisan::call('attendance:fetch');
         return response()->json(['message' => 'Attendance fetched successfully.']);
     }
 
@@ -67,7 +67,7 @@ class AttendenceController extends Controller
 
 
 
-    public function fetchZktAttendence()
+    public function fetchAttendence()
 {
     // Fetch all attendance records from zkt_attendence
     $attendances = zkt_attendence::all()->groupBy(function ($attendance) {

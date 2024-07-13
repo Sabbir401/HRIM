@@ -22,8 +22,8 @@ const form = ref({
     traningTitle: "",
     organizedBy: "",
     topicCovered: "",
-    fromDate: "",
-    toDate: "",
+    duration: "",
+    year: "",
     remarks: "",
 });
 
@@ -38,8 +38,8 @@ const getData = async () => {
                 traningTitle: editStore.Training_Title,
                 organizedBy: editStore.Organized_By,
                 topicCovered: editStore.Topic_Covered,
-                fromDate: editStore.From_Date,
-                toDate: editStore.To_Date,
+                duration: editStore.Duration,
+                year: editStore.Year,
                 remarks: editStore.Remarks,
             };
         }
@@ -167,24 +167,26 @@ const submit = () => {
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >From Date</label
+                                    >Duration</label
                                 >
                                 <input
-                                    type="date"
+                                    type="text"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    v-model="form.fromDate"
+                                    v-model="form.duration"
                                 />
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">To Date</label>
+                                <label for="exampleInputEmail1"
+                                    >Year</label
+                                >
                                 <input
-                                    type="date"
+                                    type="text"
                                     class="form-control"
                                     id="exampleInputEmail1"
-                                    v-model="form.toDate"
+                                    v-model="form.year"
                                 />
                             </div>
                         </div>

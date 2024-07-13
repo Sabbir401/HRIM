@@ -30,13 +30,13 @@ class TrainingInfoController extends Controller
      */
     public function store(Request $request)
     {
-        $traning = training_info::create([
+            $traning = training_info::create([
             'EID' => $request->input('eid'),
             'Training_Title' => $request->input('traningTitle'),
             'Organized_By' => $request->input('organizedBy'),
             'Topic_Covered' => $request->input('topicCovered'),
-            'From_Date' => $request->input('fromDate'),
-            'To_Date' => $request->input('toDate'),
+            'Duration' => $request->input('duration'),
+            'Year' => $request->input('year'),
             'Remarks' => $request->input('remarks'),
 
         ]);
@@ -78,8 +78,8 @@ class TrainingInfoController extends Controller
             'Training_Title' => $request->input('traningTitle'),
             'Organized_By' => $request->input('organizedBy'),
             'Topic_Covered' => $request->input('topicCovered'),
-            'From_Date' => $request->input('fromDate'),
-            'To_Date' => $request->input('toDate'),
+            'Duration' => $request->input('duration'),
+            'Year' => $request->input('year'),
             'Remarks' => $request->input('remarks'),
         ]);
         $response = [

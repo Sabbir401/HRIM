@@ -13,8 +13,8 @@ class training_info extends Model
         'Training_Title',
         'Organized_By',
         'Topic_Covered',
-        'From_Date',
-        'To_Date',
+        'Duration',
+        'Year',
         'Country_Id',
         'Remarks',
     ];

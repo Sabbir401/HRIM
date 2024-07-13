@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('training_infos', function (Blueprint $table) {
+        Schema::create('rosters', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('EID');
-            $table->string('Training_Title',255);
-            $table->string('Organized_By',255)->nullable();
-            $table->text('Topic_Covered')->nullable();
-            $table->string('Duration')->nullable();
-            $table->string('Year')->nullable();
-            $table->text('Remarks')->nullable();
+            $table-> unsignedBigInteger('EID');
+            $table->string('In_Time');
+            $table->string('Out_Time');
             $table->timestamps();
 
             $table->foreign('EID')->references('id')->on('employees')->onDelete('cascade');
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('training_infos');
+        Schema::dropIfExists('rosters');
     }
 };

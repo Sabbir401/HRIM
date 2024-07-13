@@ -86,6 +86,7 @@ class WorkExperienceController extends Controller
             'Department' => $request->input('department'),
             'From_Date' => $request->input('fromDate'),
             'To_Date' => $request->input('toDate'),
+            'Duration' => $request->input('duration'),
             'Responsibilities' => $request->input('jobRes'),
             'Last_Salary' => $request->input('lastSalary'),
             'Continuing' => $request->input('continuing'),
