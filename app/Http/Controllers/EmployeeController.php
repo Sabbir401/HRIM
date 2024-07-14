@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\emp_img;
 use App\Models\employee;
+use App\Models\religion;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -139,6 +141,43 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
+    public function generatePdf($id)
+    {
+        $employee = employee::with([
+            'company',
+            'blood',
+            'religion',
+            'academic',
+            'training',
+            'experience',
+            'official',
+            'nominee',
+            'child',
+            'academic.scale',
+            'academic.board',
+            'academic.education',
+            'academic.education.degree',
+            'official.designation',
+            'official.department',
+            'official.area',
+            'official.employeeType',
+            'official.territory', 
+            'official.supervisor',
+            'official.branch',
+        ])->find($id);
+
+        if (!$employee) {
+            return response()->json(['message' => 'Employee not found'], 404);
+        }
+
+        $pdf = Pdf::loadView('js.pages.employee.employeeDetails', compact('employee'));
+
+
+        return $pdf->stream('CV.pdf');
+    }
+
+
     public function edit($id)
     {
         $employee = employee::with([
@@ -190,12 +229,12 @@ class EmployeeController extends Controller
     public function attendenceEmployee()
     {
         $employee = employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'designations.Name as designation', 'departments.Name as department')
-        ->join('officials', 'officials.EID', '=', 'employees.id')
-        ->join('departments', 'officials.Department_Id', '=', 'departments.id')
-        ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
-        ->orderby('departments.Name', 'asc')
-        ->get();
-        
+            ->join('officials', 'officials.EID', '=', 'employees.id')
+            ->join('departments', 'officials.Department_Id', '=', 'departments.id')
+            ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
+            ->orderby('departments.Name', 'asc')
+            ->get();
+
         if (!$employee) {
             return response()->json(['message' => 'Employee not found'], 404);
         }

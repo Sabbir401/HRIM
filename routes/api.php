@@ -28,8 +28,6 @@ use App\Http\Controllers\TrainingInfoController;
 use App\Http\Controllers\WorkExperienceController;
 use App\Http\Controllers\LevelOfEducationController;
 use App\Http\Controllers\TerritoryController;
-use App\Models\attendence;
-use App\Models\territory;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,3 +103,7 @@ Route::get('/attendence', [AttendenceController::class, 'getAttendance']);
 Route::get('/emp-attendence', [EmployeeController::class, 'attendenceEmployee']);
 Route::get('/fetch-attendence', [AttendenceController::class, 'fetchAttendence']);
 Route::get('/fetch-zkt-attendence', [AttendenceController::class, 'fetchZktAttendence']);
+
+
+Route::get('/generate-pdf', [AttendenceController::class, 'generatePdf']);
+Route::get('/cv-pdf/{id}', [EmployeeController::class, 'generatePdf']);

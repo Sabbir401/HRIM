@@ -22,6 +22,11 @@ const getData = async (page = 1) => {
     }
 };
 
+const cvPdf = async (id) => {
+    window.open(`/api/cv-pdf/${id}`, "_blank");
+    // window.open(`/api/generate-pdf`, "_blank");
+};
+
 const searchemp = async () => {
     if (filter.value.length > 0) {
         try {
@@ -182,6 +187,12 @@ onMounted(() => getData());
                                         <i
                                             class="fa-regular fa-pen-to-square"
                                         ></i>
+                                    </button>
+                                    <button
+                                        class="custom-btn btn-13"
+                                        @click="cvPdf(employee.id)"
+                                    >
+                                        <i class="fa-regular fa-file"></i>
                                     </button>
                                 </td>
                             </tr>

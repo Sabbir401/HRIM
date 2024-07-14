@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\employee;
+use App\Models\religion;
 use App\Models\attendence;
-use App\Models\zkt_attendence;
 use Illuminate\Http\Request;
+use App\Models\zkt_attendence;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Artisan;
 
 class AttendenceController extends Controller
@@ -65,47 +68,56 @@ class AttendenceController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function generatePdf()
+    {
+        $attendances = religion::get();
+        $employee = employee::get();
+        $pdf = Pdf::loadView('reports.attendance', compact('employee'));
+        
+        return $pdf->stream('attendance_report.pdf');
+    }
+
 
 
     public function fetchAttendence()
-{
-    // Fetch all attendance records from zkt_attendence
-    $attendances = zkt_attendence::all()->groupBy(function ($attendance) {
-        return $attendance->user_id . '_' . $attendance->date;
-    });
+    {
+        // Fetch all attendance records from zkt_attendence
+        $attendances = zkt_attendence::all()->groupBy(function ($attendance) {
+            return $attendance->user_id . '_' . $attendance->date;
+        });
 
-    // Process each attendance record
-    $attendances->each(function ($userAttendance, $key) {
-        $date = $userAttendance->first()->date;
-        $userId = $userAttendance->first()->user_id;
+        // Process each attendance record
+        $attendances->each(function ($userAttendance, $key) {
+            $date = $userAttendance->first()->date;
+            $userId = $userAttendance->first()->user_id;
 
-        // Extract the first punch-in time and last punch-out time for each user each day
-        $timeIn = $userAttendance->sortBy('time')->first()->time;
-        $timeOut = $userAttendance->sortByDesc('time')->first()->time;
+            // Extract the first punch-in time and last punch-out time for each user each day
+            $timeIn = $userAttendance->sortBy('time')->first()->time;
+            $timeOut = $userAttendance->sortByDesc('time')->first()->time;
 
-        // Determine status based on the first punch-in time
-        $status = 'A'; // Default status is Absent
+            // Determine status based on the first punch-in time
+            $status = 'A'; // Default status is Absent
 
-        if ($timeIn) {
-            $status = ($timeIn > '11:00:00') ? 'L' : 'P';
-        }
+            if ($timeIn) {
+                $status = ($timeIn > '11:00:00') ? 'L' : 'P';
+            }
 
-        // Update or create the attendance record in the attendence table
-        attendence::updateOrCreate(
-            [
-                'EID' => $userId,
-                'Date' => $date,
-                'Time_In' => $timeIn,
-                'Time_Out' => $timeOut,
-            ],
-            [
-                'Status' => $status,
-            ]
-        );
-    });
+            // Update or create the attendance record in the attendence table
+            attendence::updateOrCreate(
+                [
+                    'EID' => $userId,
+                    'Date' => $date,
+                    'Time_In' => $timeIn,
+                    'Time_Out' => $timeOut,
+                ],
+                [
+                    'Status' => $status,
+                ]
+            );
+        });
 
-    return response()->json(['message' => 'Attendance records processed successfully']);
-}
+        return response()->json(['message' => 'Attendance records processed successfully']);
+    }
 
 
     /**

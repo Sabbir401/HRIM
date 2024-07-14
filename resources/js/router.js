@@ -163,14 +163,6 @@ const routes = [
             requireAuth: true,
         },
     },
-    {
-        path: "/test",
-        name: "Test",
-        component: () => import('./pages/test.vue'),
-        meta: {
-            requireAuth: true,
-        },
-    },
 
 ];
 
