@@ -45,6 +45,7 @@ import axios from "axios";
 import { HotTable } from "@handsontable/vue3";
 import { registerAllModules } from "handsontable/registry";
 import "handsontable/dist/handsontable.full.css";
+import Swal from "sweetalert2";
 
 // Register Handsontable's modules
 registerAllModules();
@@ -91,7 +92,7 @@ const generateDays = () => {
         { type: "text", data: "designation", readOnly: true },
         ...daysInMonth.value.map((day, index) => ({
             type: "dropdown",
-            source: ["P", "A", "L"],
+            source: ["", "P", "A", "L"],
             data: `attendance.${day}`,
             editor: "dropdown",
         })),
@@ -108,7 +109,7 @@ const hotSettings = ref({
     autoWrapCol: true,
     licenseKey: "non-commercial-and-evaluation",
     height: window.innerHeight - 200,
-   
+
     fixedColumnsStart: 4,
     rowHeaders: true,
     colHeaders: ["Department", "Employee Name", "Designation"],
@@ -190,7 +191,6 @@ const getData = async () => {
     }
 };
 
-
 const fetchAttendence = async () => {
     loading.value = true;
     try {
@@ -213,15 +213,27 @@ const saveData = async () => {
     });
 
     try {
-        const response = await axios.post("/api/attendence", {
-            attendanceData,
-            month: selectedMonth.value,
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to submit this form?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, submit it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
         });
 
-        if (response.data.success) {
-            alert("Data saved successfully");
-        } else {
-            alert("Failed to save data");
+        if (result.isConfirmed) {
+            const response = await axios.post("/api/attendence", {
+                attendanceData,
+                month: selectedMonth.value,
+            });
+            Swal.fire({
+                    title: "Success!",
+                    text: "Attendence Updated",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                });
         }
     } catch (error) {
         console.error("Error saving data:", error);

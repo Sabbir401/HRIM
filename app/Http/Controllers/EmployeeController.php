@@ -232,6 +232,7 @@ class EmployeeController extends Controller
             ->join('officials', 'officials.EID', '=', 'employees.id')
             ->join('departments', 'officials.Department_Id', '=', 'departments.id')
             ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
+            ->where('officials.Status', '=', 'N')
             ->orderby('departments.Name', 'asc')
             ->get();
 

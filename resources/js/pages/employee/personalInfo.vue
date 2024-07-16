@@ -3,6 +3,7 @@ import { ref, onMounted, watch } from "vue";
 import axios from "axios";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
+import Swal from "sweetalert2";
 
 const route = useRoute();
 const store = useStore();
@@ -78,7 +79,6 @@ const resetForm = () => {
     });
 };
 
-
 const editHandler = async () => {
     try {
         const response = await axios.get(`/api/nominee/${empId}/edit`);
@@ -90,14 +90,26 @@ const editHandler = async () => {
 
 const submitForm = async () => {
     try {
-        const requestData = {
-            nominee: nominee.value,
-            child: child.value,
-        };
-        const response = await axios.post("/api/nominee", requestData);
-        if (response.data.success) {
-            alert("Successfully Inserted");
-            resetForm();
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to submit this form?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, submit it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+        });
+
+        if (result.isConfirmed) {
+            const requestData = {
+                nominee: nominee.value,
+                child: child.value,
+            };
+            const response = await axios.post("/api/nominee", requestData);
+            if (response.data.success) {
+                alert("Successfully Inserted");
+                resetForm();
+            }
         }
     } catch (err) {
         error.value = err.response.data.errors;
@@ -106,13 +118,28 @@ const submitForm = async () => {
 
 const update = async () => {
     try {
-        const requestData = {
-            nominee: nominee.value,
-            child: child.value,
-        };
-        const response = await axios.put(`/api/nominee/${empId}`, requestData);
-        if (response.data.success) {
-            alert("Successfully Updated");
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to submit this form?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, submit it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+        });
+
+        if (result.isConfirmed) {
+            const requestData = {
+                nominee: nominee.value,
+                child: child.value,
+            };
+            const response = await axios.put(
+                `/api/nominee/${empId}`,
+                requestData
+            );
+            if (response.data.success) {
+                alert("Successfully Updated");
+            }
         }
     } catch (error) {
         console.error("Error updating store:", error);
@@ -159,7 +186,7 @@ onMounted(() => getData());
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <label for="exampleInputEmail1" class=""
-                        >Date of Birth* 
+                        >Date of Birth*
                         <span class="text-danger">{{
                             error["nominee.dob"] ? error["nominee.dob"][0] : ""
                         }}</span></label
@@ -174,7 +201,8 @@ onMounted(() => getData());
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <label for="exampleInputEmail1" class=""
-                        >Contact No* <span class="text-danger">{{
+                        >Contact No*
+                        <span class="text-danger">{{
                             error["nominee.contactNo"]
                                 ? error["nominee.contactNo"][0]
                                 : ""

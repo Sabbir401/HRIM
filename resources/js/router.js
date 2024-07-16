@@ -22,7 +22,7 @@ const routes = [
         name: "Register",
         component: () => import('./pages/register.vue'),
         meta: {
-            requireAuth: false,
+            requireAuth: true,
         },
     },
     {
@@ -159,6 +159,14 @@ const routes = [
         path: "/report-attendence",
         name: "AttendenceReport",
         component: () => import('./pages/report/AttendenceReport.vue'),
+        meta: {
+            requireAuth: true,
+        },
+    },
+    {
+        path: "/create-role",
+        name: "CreateRole",
+        component: () => import('./pages/security/createRole.vue'),
         meta: {
             requireAuth: true,
         },

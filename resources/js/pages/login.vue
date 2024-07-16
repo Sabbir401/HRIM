@@ -35,10 +35,10 @@ export default {
 </script>
 <template>
     <div class="text-center mb-5">
-        <h1>Welcome to</h1>
+        <img src="/public/storage/uploads/1718087744_artisan.png" height="300px" width="350px" />
         <h1>Artisan Human Resource Information System</h1>
     </div>
-    <div class="card col-lg-4 mx-auto">
+    <div class="card col-lg-3 mx-auto">
         <div class="card-body px-5 py-5">
             <h3 class="card-title text-left mb-3">Login</h3>
             <form @submit.prevent="login">
@@ -82,6 +82,7 @@ export default {
                 </p>
             </form>
         </div>
+        
     </div>
 </template>
 

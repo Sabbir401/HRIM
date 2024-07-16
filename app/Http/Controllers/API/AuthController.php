@@ -3,23 +3,26 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\employee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
     public function register(Request $request){
+        dd($request->all());
         $validator = Validator::make($request->all(),[
             'name'      =>  'required',
             'email'     =>  'required|email',
             'password'  =>  'required',
-            'c_password'=>  'required|same:password'
+            'c_password'=>  'required|same:password',
         ]);
 
         if($validator->fails()){
-            $response   =   [
+            $response = [
                 'success'   =>  false,
                 'message'   =>  $validator->errors()
             ];
@@ -44,13 +47,14 @@ class AuthController extends Controller
     public function login(Request $request){
         if(Auth::attempt(['email' =>  $request->email, 'password'  =>  $request->password])){
             $user = Auth::user();
+            Session::put('user_email', $request->email);
 
             $success['token']   =   $user->createToken('MyApp')->plainTextToken;
             $success['name']    =   $user->name;
             $response       =   [
                 'success'       =>  true,
                 'data'          =>  $success,
-                'message'       =>  'User register successfully'
+                'message'       =>  'Successfully logged In'
             ];
             return response()->json($response,200);
         }else{

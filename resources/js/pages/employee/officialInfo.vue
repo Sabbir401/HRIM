@@ -2,6 +2,7 @@
 import { ref, onMounted, watch } from "vue";
 import axios from "axios";
 import { useStore } from "vuex";
+import Swal from "sweetalert2";
 
 import { useRoute } from "vue-router";
 
@@ -24,7 +25,7 @@ const official = ref({
     doc: "",
     jobLocation: "",
     shift: "",
-    status: ""
+    status: "",
 });
 
 const departments = ref([]);
@@ -112,7 +113,7 @@ watch(empEdit, async (newEmpData) => {
         newEmpData.Shift
             ? (official.value.shift = newEmpData.Shift)
             : (official.value.shift = "");
-            inactive.value = newEmpData.Status === 'Y';
+        inactive.value = newEmpData.Status === "Y";
     }
 });
 
@@ -146,11 +147,22 @@ const editHandler = async () => {
 
 const submitForm = async () => {
     try {
-        official.value.status = inactive.value ? "Y" : "N";
-        const response = await axios.post("/api/official", official.value);
-        if (response.data.success) {
-            alert("Successfully Inserted");
-            resetForm();
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to submit this form?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, submit it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+        });
+
+        if (result.isConfirmed) {
+            official.value.status = inactive.value ? "Y" : "N";
+            const response = await axios.post("/api/official", official.value);
+            if (response.data.success) {
+                resetForm();
+            }
         }
     } catch (err) {
         error.value = err.response.data.errors;
@@ -424,10 +436,7 @@ onMounted(() => getData());
                 </div>
             </div>
             <div class="d-flex align-items-center">
-                <input
-                type="checkbox"
-                v-model="inactive"
-                />
+                <input type="checkbox" v-model="inactive" />
                 <label class="px-2 pt-0">Inactive</label>
             </div>
 
