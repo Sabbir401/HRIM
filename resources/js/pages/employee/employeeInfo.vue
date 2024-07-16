@@ -2,6 +2,7 @@
 import { ref, onMounted, watch, reactive } from "vue";
 import axios from "axios";
 import { useStore } from "vuex";
+import Swal from "sweetalert2";
 
 import { useRoute } from "vue-router";
 
@@ -164,8 +165,6 @@ const editHandler = async () => {
     }
 };
 
-
-
 const getImage = (e) => {
     const file = e.target.files[0];
     if (file.size > 512000) {
@@ -194,11 +193,26 @@ const submitForm = async () => {
     }
 
     try {
-        const response = await axios.post("/api/employee", formdata, config);
-        if (response.data.success) {
-            store.dispatch("setEmployeeId", response.data.empid);
-            resetForm();
-            alert("Successfully Inserted");
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to submit this form?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, submit it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+        });
+
+        if (result.isConfirmed) {
+            const response = await axios.post(
+                "/api/employee",
+                formdata,
+                config
+            );
+            if (response.data.success) {
+                store.dispatch("setEmployeeId", response.data.empid);
+                resetForm();
+            }
         }
     } catch (err) {
         error.value = err.response.data.errors;
@@ -222,14 +236,25 @@ const update = async () => {
     }
 
     try {
-        const response = await axios.post(
-            `/api/employee/${empId}`,
-            data,
-            config
-        );
-        if (response.data.success) {
-            alert("Successfully Updated");
-            resetForm();
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to update this information?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, submit it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+        });
+
+        if (result.isConfirmed) {
+            const response = await axios.post(
+                `/api/employee/${empId}`,
+                data,
+                config
+            );
+            if (response.data.success) {
+                resetForm();
+            }
         }
     } catch (error) {
         console.error("Error updating employee:", error);
@@ -243,7 +268,6 @@ const submit = () => {
         submitForm();
     }
 };
-
 
 onMounted(() => getData());
 </script>

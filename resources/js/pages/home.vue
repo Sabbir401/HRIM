@@ -1,7 +1,7 @@
 <template>
     <main class="centered-content">
         <div><img src="/public/storage/uploads/1718087744_artisan.png" height="300px" width="350px" /></div>
-        <h1>Welcome to <br><span class="highlight">HUMAN RESOURCE INFORMATION MANAGEMENT</span></h1>
+        <h1><span class="highlight">HUMAN RESOURCE INFORMATION MANAGEMENT</span></h1>
     </main>
 </template>
 

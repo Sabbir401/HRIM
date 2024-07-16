@@ -12,7 +12,9 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "rats/zkteco": "^002.0"
+        "lavela/phpjasper": "^3.0",
+        "rats/zkteco": "^002.0",
+        "spatie/laravel-permission": "^6.9"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",
