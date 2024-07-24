@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\Session;
 class AuthController extends Controller
 {
     public function register(Request $request){
-        dd($request->all());
+        // $name = employee::select('Full_Name')->where('id', $request->input('employee_Id'))->get();
+        $name = employee::where('id', $request->input('employee_Id'))->pluck('Full_Name')->first();
+
         $validator = Validator::make($request->all(),[
-            'name'      =>  'required',
             'email'     =>  'required|email',
             'password'  =>  'required',
             'c_password'=>  'required|same:password',
         ]);
-
+        
         if($validator->fails()){
             $response = [
                 'success'   =>  false,
@@ -28,10 +29,17 @@ class AuthController extends Controller
             ];
             return response()->json($response, 400);
         }
+        
+        // $input = $request->all();   
+        // $input['password']  =  bcrypt($input['password']);
+        // $user = User::create($input);
 
-        $input = $request->all();
-        $input['password']  =  bcrypt($input['password']);
-        $user = User::create($input);
+        $user = User::create([
+            'name' => $name,
+            'email' => $request->input('email'),
+            'EID' => $request->input('employee_Id'),
+            'password' => bcrypt($request->input('password')),
+        ]);
 
         $success['token']   =   $user->createToken('MyApp')->plainTextToken;
         $success['name']    =   $user->name;

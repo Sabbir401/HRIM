@@ -1,6 +1,10 @@
 <script setup>
 import axios from "axios";
 import { onMounted, ref } from "vue";
+import Swal from "sweetalert2";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const department = ref([]);
 const empp = ref([]);
@@ -21,7 +25,11 @@ const getData = async () => {
         const response = await axios.get("/api/department");
         department.value = response.data;
     } catch (err) {
-        error.value = err.message || "Error fetching data";
+        if (err.response && err.response.status === 401) {
+            router.push({ name: 'Login' });
+        } else {
+            error.value = err.message || "Error fetching data";
+        }
     } finally {
     }
 };
@@ -35,13 +43,29 @@ const getEmployee = async (id) => {
     }
 };
 
+const resetForm = () => {
+    Object.keys(employee.value).forEach((key) => {
+        if (typeof employee.value[key] === "string") {
+            employee.value[key] = "";
+        } else {
+            employee.value[key] = null; // or any other default value you prefer
+        }
+    });
+};
+
 const register = async () => {
     await axios
-        .post("/api/register", form)
+        .post("/api/register", form.value)
         .then((res) => {
             if (res.data.success) {
-                // localStorage.setItem("token", res.data.data.token);
                 router.push({ name: "Login" });
+                resetForm();
+                Swal.fire({
+                    title: "Success",
+                    text: "Registered Successfully",
+                    icon: "success",
+                    confirmButtonText: "Ok"
+                });
             }
         })
         .catch((e) => {

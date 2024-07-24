@@ -3,6 +3,7 @@ import { ref, onMounted, watch, reactive } from "vue";
 import axios from "axios";
 import { useStore } from "vuex";
 import Swal from "sweetalert2";
+import router from "../../router";
 
 import { useRoute } from "vue-router";
 
@@ -140,7 +141,6 @@ const getData = async () => {
         }
     } catch (err) {
         error.value = err.message || "Error fetching data";
-    } finally {
     }
 };
 
