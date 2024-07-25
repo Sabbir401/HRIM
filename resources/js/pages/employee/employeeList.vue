@@ -24,7 +24,6 @@ const getData = async (page = 1) => {
 
 const cvPdf = async (id) => {
     window.open(`/api/cv-pdf/${id}`, "_blank");
-    // window.open(`/api/generate-pdf`, "_blank");
 };
 
 const searchemp = async () => {

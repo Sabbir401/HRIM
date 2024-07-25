@@ -171,7 +171,7 @@ class EmployeeController extends Controller
             return response()->json(['message' => 'Employee not found'], 404);
         }
 
-        $pdf = Pdf::loadView('js.pages.employee.employeeDetails', compact('employee'));
+        $pdf = Pdf::loadView('reports.attendance', compact('employee'));
 
 
         return $pdf->stream('CV.pdf');

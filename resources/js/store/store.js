@@ -6,6 +6,7 @@ const store = createStore({
         //variables
         token: localStorage.getItem('token') || 0,
         employeeId: null,
+        tokenTimeout: null,
     },
 
     mutations:{
@@ -16,18 +17,30 @@ const store = createStore({
         SET_EMPLOYEE_ID: function (state, payload) {
             state.employeeId = payload;
         },
-
+        SET_TOKEN_TIMEOUT: function (state, payload) {
+            state.tokenTimeout = payload;
+        },
     },
 
     actions:{
         // action to be performed
-        setToken: function(context,payload){
+        setToken: function(context, payload){
             localStorage.setItem('token',payload);
-            context.commit('UPDATE_TOKEN', payload)
+            context.commit('UPDATE_TOKEN', payload);
+
+            if (context.state.tokenTimeout) {
+                clearTimeout(context.state.tokenTimeout);
+            }
+
+            const timeoutId = setTimeout(() => {
+                context.dispatch('removeToken');
+            }, 7200000);
+
+            context.commit('SET_TOKEN_TIMEOUT', timeoutId);
         },
-        removeToken: function(aaa, bbb){
+        removeToken: function(context){
             localStorage.removeItem('token')
-            aaa.commit('UPDATE_TOKEN',0)
+            context.commit('UPDATE_TOKEN',0)
         },
         setEmployeeId: function (context, payload) {
             context.commit('SET_EMPLOYEE_ID', payload);
