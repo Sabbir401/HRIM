@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Session;
 class AuthController extends Controller
 {
     public function register(Request $request){
-        // $name = employee::select('Full_Name')->where('id', $request->input('employee_Id'))->get();
         $name = employee::where('id', $request->input('employee_Id'))->pluck('Full_Name')->first();
 
         $validator = Validator::make($request->all(),[
@@ -55,7 +54,9 @@ class AuthController extends Controller
     public function login(Request $request){
         if(Auth::attempt(['email' =>  $request->email, 'password'  =>  $request->password])){
             $user = Auth::user();
-            Session::put('user_email', $request->email);
+
+            $user_id = User::where('email', $request->email)->pluck('EID')->first();
+            Session::put('User_Id', $user_id);
 
             $success['token']   =   $user->createToken('MyApp')->plainTextToken;
             $success['name']    =   $user->name;

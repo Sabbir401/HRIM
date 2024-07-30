@@ -2,9 +2,19 @@
 import { useStore } from "vuex";
 import SideBar from "./Sidebar.vue";
 import NavBar from "./Navbar.vue";
+import { onMounted, ref } from "vue";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "../../css/style.css";
 const store = useStore();
+
+const visibility = ref(false);
+const getData = async () => {
+    if(store.getters.getToken !== 0){
+      visibility.value = true;
+    }
+};
+
+onMounted(() => getData());
 
 const loged = false;
 </script>

@@ -8,9 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class LeaveController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
+    function __construct()
+    {
+        $this->middleware(['permission:create user'], ['only' => ['create', 'store']]);
+    }
+
+
     public function index()
     {
         $leave = leave::get();

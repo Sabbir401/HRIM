@@ -6,15 +6,15 @@ import store from "./store/store";
 const routes = [
     {
         path: "/",
-        name: "Home",
-        component: () => import('./pages/home.vue'),
-    },
-    {
-        path: "/login",
         name: "Login",
         component: () => import('./pages/login.vue'),
+    },
+    {
+        path: "/home",
+        name: "Home",
+        component: () => import('./pages/home.vue'),
         meta: {
-            requireAuth: false,
+            requireAuth: true,
         },
     },
     {
@@ -179,12 +179,12 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
     if (to.meta.requireAuth && store.getters.getToken == 0) {
         return { name: "Login" };
     }
     if (to.meta.requireAuth == false && localStorage.getItem("token")) {
-        return { name: "Dashboard" };
+        return { name: "Home" };
     }
 });
 

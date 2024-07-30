@@ -18,7 +18,12 @@ class UserSeeder extends Seeder
                 'name' => 'admin',
                 'email' => 'admin@admin.com',
                 'password' => '1212',
-            ]
+            ],
+            [
+                'name' => 'Kashem',
+                'email' => 'kashem@artisanbn.com',
+                'password' => '1111',
+            ],
         );
     }
 }
