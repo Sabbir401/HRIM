@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('zkt_users', function (Blueprint $table) {
+        Schema::create('zkt_user_vs_employees', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('User_Id')->unique();
+            $table->unsignedBigInteger('EID');
+            $table->unsignedBigInteger('user_Id');
             $table->unsignedBigInteger('Machine_Id');
-            $table->string('Name');
-            $table->string('Card_No')->nullable();
             $table->timestamps();
 
+            $table->foreign('EID')->references('id')->on('employees')->onDelete('cascade');
+            $table->foreign('user_Id')->references('User_Id')->on('zkt_users')->onDelete('cascade');
             $table->foreign('Machine_Id')->references('id')->on('zkt_machines')->onDelete('cascade');
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('zkt_users');
+        Schema::dropIfExists('zkt_user_vs_employees');
     }
 };

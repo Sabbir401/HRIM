@@ -13,6 +13,7 @@ class zkt_user extends Model
         'User_Id',
         'Name',
         'Card_No',
+        'Machine_Id',
     ];
 
     public function attendence()

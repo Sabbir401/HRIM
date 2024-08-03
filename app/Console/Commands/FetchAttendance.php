@@ -3,11 +3,10 @@
 namespace App\Console\Commands;
 
 use Carbon\Carbon;
-use App\Models\attendence;
-use App\Models\zkt_attendence;
 use Rats\Zkteco\Lib\ZKTeco;
+use App\Models\zkt_attendence;
+use App\Models\zkt_machine;
 use Illuminate\Console\Command;
-use App\Models\zkteco_attendence;
 
 class FetchAttendance extends Command
 {
@@ -21,32 +20,39 @@ class FetchAttendance extends Command
 
     public function handle()
     {
-        $zk = new ZKTeco(config('zkteco.ip'), config('zkteco.port'));
+        $zkt_info = zkt_machine::where('Status', 1)->get();
+        foreach ($zkt_info as $info) {
+            $this->info($info->IP);
+            $this->info($info->port);
+            $zk = new ZKTeco($info->IP, $info->port); 
 
-        if ($zk->connect()) {
-            $attendanceData = $zk->getAttendance();
-            foreach ($attendanceData as $attendance) {
-                $timestamp = Carbon::parse($attendance['timestamp']);
-                $date = $timestamp->toDateString();
-                $time = $timestamp->toTimeString();
-
-                // Check if the record already exists
-                $existingAttendance = zkt_attendence::where('user_id', $attendance['id'])
-                    ->where('date', $date)
-                    ->where('time', $time)
-                    ->first();
-                if (!$existingAttendance) {
-                    zkt_attendence::create([
-                        'user_id' => $attendance['id'],
-                        'date' => $date,
-                        'time' => $time,
-                    ]);
+            if ($zk->connect()) {
+                $attendanceData = $zk->getAttendance();
+                foreach ($attendanceData as $attendance) {
+                    $timestamp = Carbon::parse($attendance['timestamp']);
+                    $date = $timestamp->toDateString();
+                    $time = $timestamp->toTimeString();
+    
+                    // Check if the record already exists
+                    $existingAttendance = zkt_attendence::where('user_id', $attendance['id'])
+                        ->where('date', $date)
+                        ->where('time', $time)
+                        ->first();
+                    if (!$existingAttendance) {
+                        zkt_attendence::create([
+                            'user_id' => $attendance['id'],
+                            'Machine_Id' => $info->id,
+                            'date' => $date,
+                            'time' => $time,
+                        ]);
+                    }
                 }
+                $zk->disconnect();
+                $this->info('Attendance data fetched successfully.');
+            } else {
+                $this->error('Unable to connect to the device.');
             }
-            $zk->disconnect();
-            $this->info('Attendance data fetched successfully.');
-        } else {
-            $this->error('Unable to connect to the device.');
         }
+
     }
 }

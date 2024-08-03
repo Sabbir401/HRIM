@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('zkt_attendences', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('User_id');
+            $table->unsignedBigInteger('Machine_Id');
             $table->date('date');
             $table->time('time');
             $table->timestamps();
             $table->unique(['date', 'time']);
+
+            $table->foreign('Machine_Id')->references('id')->on('zkt_machines')->onDelete('cascade');
         });
         
     }

@@ -13,6 +13,7 @@ class zkt_attendence extends Model
         'user_id',
         'date',
         'time',
+        'Machine_Id',
     ];
 
     public function attendence()
