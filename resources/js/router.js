@@ -34,6 +34,14 @@ const routes = [
         },
     },
     {
+        path: "/emplist",
+        name: "EmployeeList",
+        component: () => import('./pages/employee/listView.vue'),
+        meta: {
+            requireAuth: true,
+        },
+    },
+    {
         path: "/empdetails/:id",
         name: "EmpDetails",
         component: () => import('./pages/employee/employeeDetails.vue'),

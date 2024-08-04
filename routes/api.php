@@ -59,57 +59,62 @@ Route::controller(AuthController::class)->group(function () {
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-
-    Route::get('/emp/{id}', [EmployeeController::class, 'find']);
-    Route::get('/empimg/{id}', [EmpImgController::class, 'edit']);
-    Route::post('/employee/{id}', [EmployeeController::class, 'update']);
-    Route::get('/employee/allemp', [EmployeeController::class, 'allemp']);
-    Route::get('/employee/search', [EmployeeController::class, 'search']);
-    Route::get('/branch', [BranchController::class, 'index']);
-    Route::get('/leave-type', [LeaveTypeController::class, 'index']);
-    Route::get('/leave-summery/{id}', [LeaveController::class, 'leaveSummery']);
-
-    Route::put('/nominee/{id}', [NomineeController::class, 'update']);
-
-    Route::resource('/blood', BloodGroupController::class);
-    Route::resource('/religion', ReligionController::class);
-    Route::resource('/company', CompanyController::class);
-    Route::resource('/phone', CountryController::class);
-    Route::resource('/employee', EmployeeController::class);
-    Route::resource('/nominee', NomineeController::class);
-    Route::resource('/child', ChildController::class);
-    Route::resource('/education', LevelOfEducationController::class);
-    Route::resource('/board', BoardController::class);
-    Route::resource('/degree', DegreeController::class);
-    Route::resource('/scale', ScaleController::class);
-    Route::resource('/leave', LeaveController::class);
-
-    Route::resource('/academic', AcademicInfoController::class);
-    Route::resource('/training', TrainingInfoController::class);
-    Route::resource('/work', WorkExperienceController::class);
-
-    Route::resource('/department', DepartmentController::class);
-    Route::resource('/designation', DesignationController::class);
-    Route::resource('/empType', EmployeeTypeController::class);
-    Route::resource('/area', AreaController::class);
-    Route::resource('/territory', TerritoryController::class);
-    Route::resource('/official', OfficialController::class);
-
-    Route::post('/attendence', [AttendenceController::class, 'store']);
-    Route::post('/attendence/edit', [AttendenceController::class, 'edit']);
-    Route::get('/attendence', [AttendenceController::class, 'getAttendance']);
-
-    Route::get('/emp-attendence', [EmployeeController::class, 'attendenceEmployee']);
-    Route::get('/fetch-attendence', [AttendenceController::class, 'fetchAttendence']);
-    Route::get('/fetch-zkt-attendence', [AttendenceController::class, 'fetchZktAttendence']);
-
-
-    Route::get('/generate-pdf', [AttendenceController::class, 'generatePdf']);
-    Route::get('/cv-pdf/{id}', [EmployeeController::class, 'generatePdf']);
-
-    //role and permissions
-    Route::get('/permission', [PermissionController::class, 'index']);
+    
 });
+
+Route::get('/user', function (Request $request) {
+    return $request->user();
+});
+
+//Employee Controller
+Route::get('/emp/{id}', [EmployeeController::class, 'find']);
+Route::post('/employee/{id}', [EmployeeController::class, 'update']);
+Route::get('/employee/allemp', [EmployeeController::class, 'allemp']);
+Route::get('/employee/search', [EmployeeController::class, 'search']);
+Route::get('/employee-list', [EmployeeController::class, 'EmployeeList']);
+
+Route::get('/empimg/{id}', [EmpImgController::class, 'edit']);
+Route::get('/branch', [BranchController::class, 'index']);
+Route::get('/leave-type', [LeaveTypeController::class, 'index']);
+Route::get('/leave-summery/{id}', [LeaveController::class, 'leaveSummery']);
+
+Route::put('/nominee/{id}', [NomineeController::class, 'update']);
+
+Route::resource('/blood', BloodGroupController::class);
+Route::resource('/religion', ReligionController::class);
+Route::resource('/company', CompanyController::class);
+Route::resource('/phone', CountryController::class);
+Route::resource('/employee', EmployeeController::class);
+Route::resource('/nominee', NomineeController::class);
+Route::resource('/child', ChildController::class);
+Route::resource('/education', LevelOfEducationController::class);
+Route::resource('/board', BoardController::class);
+Route::resource('/degree', DegreeController::class);
+Route::resource('/scale', ScaleController::class);
+Route::resource('/leave', LeaveController::class);
+
+Route::resource('/academic', AcademicInfoController::class);
+Route::resource('/training', TrainingInfoController::class);
+Route::resource('/work', WorkExperienceController::class);
+
+Route::resource('/department', DepartmentController::class);
+Route::resource('/designation', DesignationController::class);
+Route::resource('/empType', EmployeeTypeController::class);
+Route::resource('/area', AreaController::class);
+Route::resource('/territory', TerritoryController::class);
+Route::resource('/official', OfficialController::class);
+
+Route::post('/attendence', [AttendenceController::class, 'store']);
+Route::post('/attendence/edit', [AttendenceController::class, 'edit']);
+Route::get('/attendence', [AttendenceController::class, 'getAttendance']);
+
+Route::get('/emp-attendence', [AttendenceController::class, 'attendenceEmployee']);
+Route::get('/fetch-attendence', [AttendenceController::class, 'fetchAttendence']);
+Route::get('/fetch-zkt-attendence', [AttendenceController::class, 'fetchZktAttendence']);
+
+
+Route::get('/generate-pdf', [AttendenceController::class, 'generatePdf']);
+Route::get('/cv-pdf/{id}', [EmployeeController::class, 'generatePdf']);
+
+//role and permissions
+Route::get('/permission', [PermissionController::class, 'index']);

@@ -163,7 +163,7 @@ class EmployeeController extends Controller
             'official.department',
             'official.area',
             'official.employeeType',
-            'official.territory', 
+            'official.territory',
             'official.supervisor',
             'official.branch',
         ])->find($id);
@@ -227,27 +227,26 @@ class EmployeeController extends Controller
         return response()->json($employee);
     }
 
-    public function attendenceEmployee()
+    public function EmployeeList()
     {
         $userId = Session::get('User_Id');
-        
-        if(!$userId){
-            $employee = employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'designations.Name as designation', 'departments.Name as department')
-            ->join('officials', 'officials.EID', '=', 'employees.id')
-            ->join('departments', 'officials.Department_Id', '=', 'departments.id')
-            ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
-            ->where('officials.Status', '=', 'N')
-            ->orderby('departments.Name', 'asc')
-            ->get();
-        }else{
-            $employee = employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'designations.Name as designation', 'departments.Name as department')
-            ->join('officials', 'officials.EID', '=', 'employees.id')
-            ->join('departments', 'officials.Department_Id', '=', 'departments.id')
-            ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
-            ->where('officials.Status', '=', 'N')
-            ->where('officials.Supervisor_Id', '=', $userId)
-            ->orderby('departments.Name', 'asc')
-            ->get();
+
+        if (!$userId) {
+            $employee = employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'employees.DOB', 'employees.Present_Address', 'employees.Official_Email', 'employees.Emergency_Contact', 'designations.Name as designation', 'departments.Name as department', 'officials.Status as status', 'blood_groups.Name as group')
+                ->join('officials', 'officials.EID', '=', 'employees.id')
+                ->join('departments', 'officials.Department_Id', '=', 'departments.id')
+                ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
+                ->join('blood_groups', 'employees.Blood_Group_Id', '=', 'blood_groups.id')
+                ->orderby('employees.Full_Name', 'asc')
+                ->get();
+        } else {
+            $employee = employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'designations.Name as designation', 'departments.Name as department', 'officials.Status as status')
+                ->join('officials', 'officials.EID', '=', 'employees.id')
+                ->join('departments', 'officials.Department_Id', '=', 'departments.id')
+                ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
+                ->where('officials.Supervisor_Id', '=', $userId)
+                ->orderby('departments.Name', 'asc')
+                ->get();
         }
 
         if (!$employee) {

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\zkt_attendence;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Session;
 
 class AttendenceController extends Controller
 {
@@ -77,6 +78,36 @@ class AttendenceController extends Controller
         return $pdf->stream('attendance_report.pdf');
     }
 
+
+    public function attendenceEmployee()
+    {
+        $userId = Session::get('User_Id');
+        
+        if(!$userId){
+            $employee = employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'designations.Name as designation', 'departments.Name as department')
+            ->join('officials', 'officials.EID', '=', 'employees.id')
+            ->join('departments', 'officials.Department_Id', '=', 'departments.id')
+            ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
+            ->where('officials.Status', '=', 'N')
+            ->orderby('departments.Name', 'asc')
+            ->get();
+        }else{
+            $employee = employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'designations.Name as designation', 'departments.Name as department')
+            ->join('officials', 'officials.EID', '=', 'employees.id')
+            ->join('departments', 'officials.Department_Id', '=', 'departments.id')
+            ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
+            ->where('officials.Status', '=', 'N')
+            ->where('officials.Supervisor_Id', '=', $userId)
+            ->orderby('departments.Name', 'asc')
+            ->get();
+        }
+
+        if (!$employee) {
+            return response()->json(['message' => 'Employee not found'], 404);
+        }
+
+        return response()->json($employee);
+    }
 
 
     public function fetchAttendence()

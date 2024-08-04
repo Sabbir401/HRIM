@@ -76,6 +76,11 @@
                             >
                             <Router-Link
                                 class="nav-link"
+                                :to="{ name: 'EmployeeList' }"
+                                >Employee List</Router-Link
+                            >
+                            <Router-Link
+                                class="nav-link"
                                 :to="{ name: 'Attendence' }"
                                 >Attendence</Router-Link
                             >
