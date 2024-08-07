@@ -1,8 +1,10 @@
 <script setup>
-import { ref, onMounted, watch } from "vue";
-import axios from "axios";
+import { ref, onMounted } from "vue";
 import { Bootstrap4Pagination } from "laravel-vue-pagination";
 import router from "../../router";
+
+import api from '../../api';
+
 
 const employees = ref([]);
 const isLoading = ref(true);
@@ -13,12 +15,7 @@ const filter = ref("");
 
 const getData = async (page = 1) => {
     try {
-        const response = await axios.get(`/api/employee?page=${page}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            }
-        });
-
+        const response = await api.get(`/employee?page=${page}`);
         employees.value = response.data;
     } catch (err) {
         error.value = err.message || "Error fetching data";
@@ -34,7 +31,7 @@ const cvPdf = async (id) => {
 const searchemp = async () => {
     if (filter.value.length > 0) {
         try {
-            const response = await axios.get("api/employee/search", {
+            const response = await api.get("/employee/search", {
                 params: {
                     query: filter.value,
                 },
@@ -50,7 +47,7 @@ const searchemp = async () => {
 
 const editHandler = async (id) => {
     try {
-        const response = await axios.get(`api/employee/${id}/edit`);
+        const response = await api.get(`/employee/${id}/edit`);
         empEdit.value = response.data;
         heading.value = "Update";
         openModal();

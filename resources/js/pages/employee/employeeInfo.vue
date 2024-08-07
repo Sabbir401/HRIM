@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted, watch, reactive } from "vue";
-import axios from "axios";
 import { useStore } from "vuex";
 import Swal from "sweetalert2";
 import router from "../../router";
+import api from '../../api';
 
 import { useRoute } from "vue-router";
 
@@ -124,11 +124,11 @@ const getData = async () => {
             responseReligion,
             responseCompany,
             responsePhone,
-        ] = await axios.all([
-            axios.get("/api/blood"),
-            axios.get("/api/religion"),
-            axios.get("/api/company"),
-            axios.get("/api/phone"),
+        ] = await api.all([
+            api.get("/blood"),
+            api.get("/religion"),
+            api.get("/company"),
+            api.get("/phone"),
         ]);
 
         bloods.value = responseBlood.data;
@@ -158,7 +158,7 @@ const resetForm = () => {
 
 const editHandler = async () => {
     try {
-        const response = await axios.get(`/api/employee/${empId}/edit`);
+        const response = await api.get(`/employee/${empId}/edit`);
         empEdit.value = response.data;
     } catch (err) {
         console.error("Error fetching store data for editing:", err);
@@ -204,8 +204,8 @@ const submitForm = async () => {
         });
 
         if (result.isConfirmed) {
-            const response = await axios.post(
-                "/api/employee",
+            const response = await api.post(
+                "/employee",
                 formdata,
                 config
             );
@@ -247,8 +247,8 @@ const update = async () => {
         });
 
         if (result.isConfirmed) {
-            const response = await axios.post(
-                `/api/employee/${empId}`,
+            const response = await api.post(
+                `/employee/${empId}`,
                 data,
                 config
             );
