@@ -13,7 +13,12 @@ const filter = ref("");
 
 const getData = async (page = 1) => {
     try {
-        const response = await axios.get(`/api/employee?page=${page}`);
+        const response = await axios.get(`/api/employee?page=${page}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        });
+
         employees.value = response.data;
     } catch (err) {
         error.value = err.message || "Error fetching data";

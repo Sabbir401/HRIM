@@ -233,19 +233,20 @@ class EmployeeController extends Controller
 
         if (!$userId) {
             $employee = employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'employees.DOB', 'employees.Present_Address', 'employees.Official_Email', 'employees.Emergency_Contact', 'designations.Name as designation', 'departments.Name as department', 'officials.Status as status', 'blood_groups.Name as group')
-                ->join('officials', 'officials.EID', '=', 'employees.id')
-                ->join('departments', 'officials.Department_Id', '=', 'departments.id')
-                ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
-                ->join('blood_groups', 'employees.Blood_Group_Id', '=', 'blood_groups.id')
+                ->leftjoin('officials', 'officials.EID', '=', 'employees.id')
+                ->leftjoin('departments', 'officials.Department_Id', '=', 'departments.id')
+                ->leftjoin('designations', 'officials.Designation_Id', '=', 'designations.id')
+                ->leftjoin('blood_groups', 'employees.Blood_Group_Id', '=', 'blood_groups.id')
                 ->orderby('employees.Full_Name', 'asc')
                 ->get();
         } else {
-            $employee = employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'designations.Name as designation', 'departments.Name as department', 'officials.Status as status')
-                ->join('officials', 'officials.EID', '=', 'employees.id')
-                ->join('departments', 'officials.Department_Id', '=', 'departments.id')
-                ->join('designations', 'officials.Designation_Id', '=', 'designations.id')
+            $employee = employee::select('employees.id', 'employees.Full_Name', 'employees.Employee_Id', 'employees.DOB', 'employees.Present_Address', 'employees.Official_Email', 'employees.Emergency_Contact', 'designations.Name as designation', 'departments.Name as department', 'officials.Status as status', 'blood_groups.Name as group')
+                ->leftjoin('officials', 'officials.EID', '=', 'employees.id')
+                ->leftjoin('departments', 'officials.Department_Id', '=', 'departments.id')
+                ->leftjoin('designations', 'officials.Designation_Id', '=', 'designations.id')
+                ->leftjoin('blood_groups', 'employees.Blood_Group_Id', '=', 'blood_groups.id')
                 ->where('officials.Supervisor_Id', '=', $userId)
-                ->orderby('departments.Name', 'asc')
+                ->orderby('employees.Full_Name', 'asc')
                 ->get();
         }
 

@@ -118,8 +118,7 @@ onMounted(() => getData());
 </template>
 
 <style>
-.nav-link:hover{
-    color: rgb(44, 103, 116)
+.nav-link:hover {
+    color: rgb(44, 103, 116);
 }
 </style>
-
